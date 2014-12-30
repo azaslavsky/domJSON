@@ -13,18 +13,17 @@ Convert DOM trees into compact JSON objects, and vice versa, as fast as possible
 Installing hashMate is easy.  You can pull it from Bower...
 
 ```
-bower install backbone-hashMate
+bower install domjson
 ```
 
 ...or grab it from NPM and manually include it as a script tag...
 
 ```
-npm install backbone-hashMate --save
+npm install domjson --save
 ```
 
-or just download this repo manually and include the file as a dependency.  Make sure you load Backbone _before_ loading Backbone.hashMate, otherwise you'll cause all sorts of trouble for yourself!
+or just download this repo manually and include the file as a dependency.
 
 ```html
-<script src="./lib/backbone.js"></script>
-<script src="./lib/backbone-hashMate.js"></script>
+<script src="./lib/domJSON.js"></script>
 ```
