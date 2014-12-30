@@ -20,7 +20,7 @@
     "url": "https://github.com/azaslavsky/domJSON"
   },
   "ignore": [
-    "!dist/domJSON.*(js|min.js)"
+    "!dist/domJSON.*(js|min.js)",
     "README.md",
     "LICENSE.md"
   ]
