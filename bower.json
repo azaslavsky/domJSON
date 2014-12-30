@@ -1,0 +1,27 @@
+{
+  "name": "domjson",
+  "version": "0.0.1",
+  "description": "Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.",
+  "main": "dist/domJSON.js",
+  "license": "MIT",
+  "authors": [
+    "Alex Zaslavsky <alex.y.zaslavsky@gmail.com>"
+  ],
+  "keywords": [
+    "dom",
+    "json",
+    "convert",
+    "tree",
+    "domtree"
+  ],
+  "homepage": "https://github.com/azaslavsky/backbone-hashMate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azaslavsky/domJSON"
+  },
+  "ignore": [
+    "!dist/domJSON.*(js|min.js)"
+    "README.md",
+    "LICENSE.md"
+  ]
+}

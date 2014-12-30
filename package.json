@@ -1,0 +1,68 @@
+{
+  "name": "domjson",
+  "author": "Alex Zaslavsky <alex.y.zaslavsky@gmail.com>",
+  "version": "0.0.1",
+  "description": "Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.",
+  "contributors": [
+    {
+      "name": "Alex Zaslavsky",
+      "email": "alex.y.zaslavsky@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azaslavsky/domJSON"
+  },
+  "bugs": {
+    "url": "https://github.com/azaslavsky/domJSON/issues"
+  },
+  "keywords": [
+    "dom",
+    "json",
+    "convert",
+    "tree",
+    "domtree"
+  ],
+  "scripts": {
+    "coveralls": "gulp coveralls"
+  },
+  "main": "dist/domJSON.js",
+  "files": [
+    "dist/domJSON.js",
+    "dist/domJSON.min.js",
+    "LICENSE.md"
+  ],
+  "devDependencies": {
+    "fs-extra": "~0.13.0",
+    "gulp": "~3.8.8",
+    "gulp-bump": "~0.1.11",
+    "gulp-concat": "~2.4.1",
+    "gulp-coveralls": "~0.1.3",
+    "gulp-debug": "~2.0.0",
+    "gulp-filter": "~2.0.0",
+    "gulp-foreach": "0.1.0",
+    "gulp-if": "~1.2.5",
+    "gulp-jsdoc-to-markdown": "~0.1.6",
+    "gulp-karma": "0.0.4",
+    "gulp-open": "~0.3.1",
+    "gulp-regex-replace": "~0.2.3",
+    "gulp-rename": "~1.2.0",
+    "gulp-replace": "~0.5.0",
+    "gulp-uglify": "~1.0.1",
+    "gulp-util": "^3.0.1",
+    "jasmine-core": "^2.0.4",
+    "karma": "~0.12.28",
+    "karma-chrome-launcher": "~0.1.7",
+    "karma-coverage": "~0.2.7",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-htmlfile-reporter": "~0.1.2",
+    "karma-ie-launcher": "~0.1.5",
+    "karma-jasmine": "~0.3.2",
+    "karma-jasmine-matchers": "~0.1.3",
+    "karma-mocha-reporter": "~0.3.1",
+    "log4js": "^0.6.21",
+    "node-static-alias": "^0.1.2",
+    "yargs": "~1.3.1"
+  }
+}
