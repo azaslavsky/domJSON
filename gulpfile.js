@@ -18,6 +18,7 @@ var open = require('gulp-open');
 var regrep = require('gulp-regex-replace');
 var rename = require('gulp-rename');
 var replace = require('gulp-replace');
+var strip = require('gulp-strip-code');
 var uglify = require('gulp-uglify');
 var util = require('gulp-util');
 
@@ -111,7 +112,7 @@ gulp.task('api', function() {
 });
 
 //Make the readme file
-gulp.task('docs', ['api'], function() {
+gulp.task('docs', /*['api'],*/ function() {
 	return gulp.src(['./docs/INTRO.md', './docs/USAGE.md', './docs/API.md', './docs/ENDNOTES.md', 'LICENSE.md'])
 		.pipe(concat('README.md'))
 		.pipe(gulp.dest('./'))
@@ -119,7 +120,11 @@ gulp.task('docs', ['api'], function() {
 
 //Copy the original file to the dist folder
 gulp.task('copy', ['docs'], function() {
-	return gulp.src(['./src/backbone-hashMate.js'])
+	return gulp.src(['./src/domJSON.js'])
+		.pipe(strip({
+			start_comment: 'test-code',
+			end_comment: 'end-test-code'
+		}))
 		.pipe(uglify({
 			output: {
 				beautify: true
@@ -132,7 +137,7 @@ gulp.task('copy', ['docs'], function() {
 
 //Build this sucker!
 gulp.task('build', ['copy'], function() {
-	return gulp.src(['./src/**/*.js'])
+	return gulp.src(['./dist/domJSON.js'])
 		.pipe(uglify())
 		.pipe(rename(function(path){
 			path.basename += '.min';

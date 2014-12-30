@@ -171,37 +171,6 @@ var domJSON = {};
 
 
 
-	//Create a copy of a node's properties
-	var copyJSON = function(node, opts) {
-		var copy = {};
-		//Copy all of the node's properties
-		for (var n in node){
-			//Make sure this is an own property, and isn't a live javascript function for security reasons
-			try {
-				if (node.hasOwnProperty(n) && typeof node[n] !== 'function') {
-					//Only allowed objects are arrays
-					if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
-						//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
-						if (opts.cull) {
-							if (typeof node[n] !== 'null' && node[n] !== null) {
-								copy[n] = node[n];
-							}
-						} else {
-							copy[n] = node[n];
-						}
-					}
-				}
-			} catch(e) {
-				console.log(e);
-			}
-		}
-
-		copy = boolFilter(copy, opts.filter);
-		return copy;
-	};
-
-
-
 	//Check if the supplied attribute contains a path, and convert it from a relative path to an absolute; some code shamelessly copped from here: http://stackoverflow.com/a/14780463/2230156
 	var toAbsolute = function(node, name, value, settings) {
 		if (settings.keys.indexOf(name) !== -1){
@@ -244,6 +213,37 @@ var domJSON = {};
 			return stack.join('/');
 		}
 		return value;
+	};
+
+
+
+	//Create a copy of a node's properties
+	var copyJSON = function(node, opts) {
+		var copy = {};
+		//Copy all of the node's properties
+		for (var n in node){
+			//Make sure this is an own property, and isn't a live javascript function for security reasons
+			try {
+				if (node.hasOwnProperty(n) && typeof node[n] !== 'function') {
+					//Only allowed objects are arrays
+					if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
+						//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
+						if (opts.cull) {
+							if (typeof node[n] !== 'null' && node[n] !== null) {
+								copy[n] = node[n];
+							}
+						} else {
+							copy[n] = node[n];
+						}
+					}
+				}
+			} catch(e) {
+				console.log(e);
+			}
+		}
+
+		copy = boolFilter(copy, opts.filter);
+		return copy;
 	};
 
 
@@ -582,4 +582,15 @@ var domJSON = {};
 		}
 		return node;
 	};
+
+
+
+	//The code below is only included for private API testing, and needs to be removed in distributed builds
+	/* test-code */
+	domJSON.__boolFilter = boolFilter;
+	domJSON.__boolInter = boolInter;
+	domJSON.__boolDiff = boolDiff;
+	domJSON.__boolUnion = boolUnion;
+	domJSON.__toAbsolute = toAbsolute;
+	/* end-test-code */
 })(domJSON, window);
