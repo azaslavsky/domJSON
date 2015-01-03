@@ -112,7 +112,13 @@
 
 
 
-	//Utility function to extend an object - useful for synchronizing interface submitted options with default values; same API as underscore extend
+	/**
+	 * Utility function to extend an object - useful for synchronizing user-submitted options with default values; same API as underscore extend
+	 * @param {Object} [target] The object that will be extended
+	 * @param {...Object} [added] Additional objects that will extend the target
+	 * @private
+	 * @ignore
+	*/
 	var extend = function(target) {
 		if (!arguments.length) {
 			return arguments[0] || {};
@@ -134,8 +140,17 @@
 
 
 
-	//Get all of the unique values (in the order they first appeared) from one or more arrays
+	/**
+	 * Get all of the unique values (in the order they first appeared) from one or more arrays
+	 * @param {...Array} constituent An array to combine into a larger array of unique values
+	 * @private
+	 * @ignore
+	*/
 	var unique = function() {
+		if (!arguments.length) {
+			return [];
+		}
+
 		var all = Array.prototype.concat.apply([], arguments);
 		for (var a = 0; a < all.length; a++) {
 			if (all.indexOf(all[a]) < a) {
@@ -147,7 +162,12 @@
 	};
 
 
-	//Make a shallow copy of an object or array
+	/**
+	 * Make a shallow copy of an object or array
+	 * @param {Object|Array} item The object/array that will be copied
+	 * @private
+	 * @ignore
+	*/
 	var copy = function(item) {
 		if (item instanceof Array) {
 			return item.slice();
@@ -162,11 +182,17 @@
 
 
 
-	//Do a boolean intersection between an array/object and a filter array
+	/**
+	 * Do a boolean intersection between an array/object and a filter array
+	 * @param {Object|Array} item The object/array that will be intersected with the filter
+	 * @param {boolean|Array} filter Specifies which properties to select from the "item" (or element to keep, if "item is an array")
+	 * @private
+	 * @ignore
+	*/
 	var boolInter = function(item, filter) {
 		var output;
 		if (item instanceof Array) {
-			output = item.filter(function(val) { return filter.indexOf(val) > -1; });
+			output = unique(item.filter(function(val) { return filter.indexOf(val) > -1; }));
 		} else {
 			output = {};
 			for (var f in filter) {
@@ -180,11 +206,17 @@
 
 
 
-	//Do a boolean difference between an array/object and a filter array
+	/**
+	 * Do a boolean difference between an array/object and a filter array
+	 * @param {Object|Array} item The object/array that will be differntiated with the filter
+	 * @param {boolean|Array} filter Specifies which properties to exclude from the "item" (or element to remove, if "item is an array")
+	 * @private
+	 * @ignore
+	*/
 	var boolDiff = function(item, filter) {
 		var output;
 		if (item instanceof Array) {
-			output = item.filter(function(val) { return filter.indexOf(val) === -1; });
+			output = unique(item.filter(function(val) { return filter.indexOf(val) === -1; }));
 		} else {
 			output = {};
 			for (var i in item) {
@@ -201,7 +233,13 @@
 
 
 
-	//Determine whether we want to do a boolean intersection or difference
+	/**
+	 * Determine whether we want to do a boolean intersection or difference
+	 * @param {Object|Array} item The object/array that will be differntiated with the filter
+	 * @param {boolean|Array} filter Specifies which a filter behavior; if it is an array, the first value can be a boolean, indicating whether the filter array is intended for differentiation (true) or intersection (false)
+	 * @private
+	 * @ignore
+	*/
 	var boolFilter = function(item, filter) {
 		//A "false" filter means we return an empty copy of item
 		if (filter === false){
