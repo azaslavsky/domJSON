@@ -7,17 +7,36 @@
  * @license The MIT License: Copyright (c) 2013 Alex Zaslavsky
  */
 
-/** 
- * A global variable to store domJSON
- * @namespace
- * @singleton
- */
-var domJSON = {};
-
 
 
 //Load the library
-(function(domJSON, win){
+;(function(root, factory) {
+	/* istanbul ignore next */
+	if (typeof define === 'function' && define.amd) { //AMD
+		define(function(){
+			return factory(root);
+		});
+	} else if (typeof exports !== 'undefined') { //CommonJS/node.js
+		var domJSON = factory(root);
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = domJSON;
+		}
+		exports = dmoJSON;
+	} else { //Browser global
+		window.domJSON = factory(root);
+	}
+})(this, function(win){
+	"use strict";
+
+	/** 
+	 * A global variable to store domJSON
+	 * @namespace
+	 * @global
+	 */
+	var domJSON = {};
+
+
+
 	//The default metadata for a JSON object
 	var metadata = {
 		node: null,
@@ -642,4 +661,6 @@ var domJSON = {};
 	domJSON.__boolDiff = boolDiff;
 	domJSON.__toAbsolute = toAbsolute;
 	/* end-test-code */
-})(domJSON, window);
+
+	return domJSON;
+});
