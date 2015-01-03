@@ -17,4 +17,4 @@ require('http').createServer(function(request, response) {
     fileServer.serve(request, response);
   }).resume();
 }).listen(5050);
-console.log('Server running at http://localhost:4040/');
+console.log('Server running at http://localhost:5050/');
