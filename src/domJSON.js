@@ -21,7 +21,7 @@ var domJSON = {};
 	//The default metadata for a JSON object
 	var metadata = {
 		node: null,
-		domain: win.location.href
+		domain: win.location.href || null
 	};
 	
 	
@@ -93,31 +93,51 @@ var domJSON = {};
 
 
 
-	//Determine whether we want to do a boolean intersection or difference
-	var boolFilter = function(item, filter) {
-		if (filter && filter instanceof Array && filter.length) {
-			if (typeof filter[0] === 'boolean') {
-				if (filter.length > 1) {
-					//The filter operation has been set explicitly; true = difference
-					if (filter[0] === true) {
-						return boolDiff(item, filter.slice(1));
-					} else {
-						return boolInter(item, filter.slice(1));
-					}
-				} else {
-					//There is a filter array, but its only a sigle boolean
-					if (filter[0] === true) {
-						return item;
-					} else {
-						return {};
-					}
-				}
-			} else {
-				//There is no explicit operation on the filter, meaning it defaults to an intersection
-				return boolInter(item, filter);
-			}
+	//Utility function to extend an object - useful for synchronizing interface submitted options with default values; same API as underscore extend
+	var extend = function(target) {
+		if (!arguments.length) {
+			return arguments[0] || {};
+		}
+
+		//Overwrite matching properties on the target from the added object
+		for (var p in arguments[1]) {
+			target[p] = arguments[1][p];
+		}
+
+		//If we have more arguments, run the function recursively
+		if (arguments.length > 2) {
+			var moreArgs = [target].concat(Array.prototype.slice.call(arguments, 2));
+			return extend.apply( null, moreArgs);
 		} else {
-			return item;
+			return target;
+		}
+	};
+
+
+
+	//Get all of the unique values (in the order they first appeared) from one or more arrays
+	var unique = function() {
+		var all = Array.prototype.concat.apply([], arguments);
+		for (var a = 0; a < all.length; a++) {
+			if (all.indexOf(all[a]) < a) {
+				all.splice(a, 1);
+				a--;
+			}
+		}
+		return all;
+	};
+
+
+	//Make a shallow copy of an object or array
+	var copy = function(item) {
+		if (item instanceof Array) {
+			return item.slice();
+		} else {
+			var output = {};
+			for (var i in item) {
+				output[i] = item[i];
+			}
+			return output;
 		}
 	};
 
@@ -127,7 +147,7 @@ var domJSON = {};
 	var boolInter = function(item, filter) {
 		var output;
 		if (item instanceof Array) {
-			output = filter.filter(function(val) { return item.indexOf(val) > -1; });
+			output = item.filter(function(val) { return filter.indexOf(val) > -1; });
 		} else {
 			output = {};
 			for (var f in filter) {
@@ -143,30 +163,56 @@ var domJSON = {};
 
 	//Do a boolean difference between an array/object and a filter array
 	var boolDiff = function(item, filter) {
+		var output;
 		if (item instanceof Array) {
-			item = item.filter(function(val) { return filter.indexOf(val) === -1; });
+			output = item.filter(function(val) { return filter.indexOf(val) === -1; });
 		} else {
+			output = {};
+			for (var i in item) {
+				output[i] = item[i];
+			}
 			for (var f in filter) {
-				if (item.hasOwnProperty(filter[f])) {
-					delete item[filter[f]];
+				if (output.hasOwnProperty(filter[f])) {
+					delete output[filter[f]];
 				}
 			}
 		}
-		return item;
+		return output;
 	};
 
 
 
-	//Do a boolean union of the unique values of x arrays
-	var boolUnion = function() {
-		var all = [].concat.apply([], arguments);
-		for (var a = 0; a < all.length; a++) {
-			if (all.indexOf(all[a]) < a) {
-				all.splice(a, 1);
-				a--;
-			}
+	//Determine whether we want to do a boolean intersection or difference
+	var boolFilter = function(item, filter) {
+		//A "false" filter means we return an empty copy of item
+		if (filter === false){
+			return (item instanceof Array) ? [] : {};
 		}
-		return all;
+
+		if (filter instanceof Array && filter.length) {
+			if (typeof filter[0] === 'boolean') {
+				if (filter.length == 1 && typeof(filter[0]) === 'boolean') {
+					//There is a filter array, but its only a sigle boolean
+					if (filter[0] === true) {
+						return copy(item);
+					} else {
+						return (item instanceof Array) ? [] : {};
+					}
+				} else {
+					//The filter operation has been set explicitly; true = difference
+					if (filter[0] === true) {
+						return boolDiff(item, filter.slice(1));
+					} else {
+						return boolInter(item, filter.slice(1));
+					}
+				}
+			} else {
+				//There is no explicit operation on the filter, meaning it defaults to an intersection
+				return boolInter(item, filter);
+			}
+		} else {
+			return copy(item);
+		}
 	};
 
 
@@ -375,10 +421,11 @@ var domJSON = {};
 	 * @param {Object|Boolean} [opts.absolute=false] Specify attributes for which relative paths are to be converted to absolute
  	 * @param {String} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the location of this file!
  	 * @param {Boolean} [opts.absolute.action=false] TRUE means relative paths in "action" attributes are converted to absolute paths
+ 	 * @param {Boolean} [opts.absolute.data=false] TRUE means relative paths in "data" attributes are converted to absolute paths
 	 * @param {Boolean} [opts.absolute.href=false] TRUE means relative paths in "href" attributes are converted to absolute paths
 	 * @param {Boolean} [opts.absolute.style=false] TRUE means relative paths in "style" attributes are converted to absolute paths
 	 * @param {Boolean} [opts.absolute.src=false] TRUE means relative paths in "src" attributes are converted to absolute paths
-	 * @param {Boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
+	 * @param {Boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
 	*/
 	domJSON.toJSON = function(node, opts) {
 		var copy, options = {}, output = {}, timer = new Date().getTime();
@@ -424,9 +471,9 @@ var domJSON = {};
 		}
 		if (options.filter instanceof Array) {
 			if (options.filter[0] === true) {
-				options.filter = boolDiff(boolUnion(options.filter, ignoring), requiring);
+				options.filter = boolDiff(unique(options.filter, ignoring), requiring);
 			} else {
-				options.filter = boolDiff(boolUnion(options.filter, requiring), ignoring);
+				options.filter = boolDiff(unique(options.filter, requiring), ignoring);
 			}
 		} else {
 			options.filter = [true].concat(ignoring);
@@ -587,10 +634,12 @@ var domJSON = {};
 
 	//The code below is only included for private API testing, and needs to be removed in distributed builds
 	/* test-code */
+	domJSON.__extend = extend;
+	domJSON.__unique = unique;
+	domJSON.__copy = copy;
 	domJSON.__boolFilter = boolFilter;
 	domJSON.__boolInter = boolInter;
 	domJSON.__boolDiff = boolDiff;
-	domJSON.__boolUnion = boolUnion;
 	domJSON.__toAbsolute = toAbsolute;
 	/* end-test-code */
 })(domJSON, window);
