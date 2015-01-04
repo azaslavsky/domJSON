@@ -39,8 +39,9 @@
 
 	//The default metadata for a JSON object
 	var metadata = {
-		node: null,
-		domain: win.location.href || null
+		domain: win.location.href || null,
+		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
+		version: /* version */'0.1.0'/* end-version */
 	};
 	
 	
@@ -541,13 +542,11 @@
 		
 		//Wrap our copy object in a nice object of its own to save some metadata
 		if (options.metadata) {
-			for (var m in metadata) {
-				output[m] = metadata[m];
-			}
+			output.meta = extend({}, metadata, {
+				options: options,
+				clock: new Date().getTime() - timer
+			});
 			output.node = copy;
-			output.options = options;
-			output.domain = win.location.href;
-			output.clock = new Date().getTime() - timer;
 		} else {
 			output = copy;
 		}
