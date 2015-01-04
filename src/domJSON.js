@@ -49,12 +49,12 @@
 	//A list of default options for creating the JSON object
 	var defaults = {
 		deep: true,
-		html: false,
-		cull: false,
+		htmlOnly: false,
+		cull: true,
 		computed: false,
 		style: true,
 		attributes: true,
-		serials: false,
+		noSerials: true,
 		//parse: false,
 		filter: false,
 		stringify: false,
@@ -327,22 +327,18 @@
 		//Copy all of the node's properties
 		for (var n in node){
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
-			try {
-				if (node.hasOwnProperty(n) && typeof node[n] !== 'function') {
-					//Only allowed objects are arrays
-					if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
-						//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
-						if (opts.cull) {
-							if (typeof node[n] !== 'null' && node[n] !== null) {
-								copy[n] = node[n];
-							}
-						} else {
+			if (node.hasOwnProperty(n) && typeof node[n] !== 'function') {
+				//Only allowed objects are arrays
+				if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
+					//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
+					if (opts.cull) {
+						if (node[n] || node[n] === 0 || node[n] === false) {
 							copy[n] = node[n];
 						}
+					} else {
+						copy[n] = node[n];
 					}
 				}
-			} catch(e) {
-				console.log(e);
 			}
 		}
 
@@ -384,8 +380,10 @@
 		var style, css = [];
 		if (opts.computed) {
 			style = win.getComputedStyle(node);
-		} else {
+		} else if (node.style instanceof CSSStyleDeclaration) {
 			style = node.style;
+		} else {
+			return null;
 		}
 
 		//If we have a properties filter, discard all the properties that don't match it
@@ -428,6 +426,9 @@
 					return null;
 				}
 			}
+		} else if (node.nodeType === 3 && !node.nodeValue.trim()) {
+			//Ignore empty buffer text nodes
+			return null;
 		}
 
 		//Copy all attributes and styles, if allowed
@@ -436,15 +437,16 @@
 		}
 		if (opts.style && node.hasOwnProperty('style')) {
 			var style = styleJSON(node, opts);
-			copy.attributes = copy.attributes || {};
-			copy.attributes.style = style;
+			if (style) {
+				copy.style = style;
+			}
 		}
 		
 		//Should we continue iterating?
 		if (opts.deep === true || (typeof opts.deep === 'number' && opts.deep > depth)) {
 			//We should!
 			var kids, kidCount, thisChild, children = [];
-			kids = (opts.html) ? node.children : node.childNodes;
+			kids = (opts.htmlOnly) ? node.children : node.childNodes;
 			kidCount = kids.length;
 			for (var c = 0; c < kidCount; c++) {
 				thisChild = toJSON(kids[c], opts, depth + 1);
@@ -466,38 +468,29 @@
 	 * @param {DOMNode} node The actual DOM Node in to be parsed
 	 * @param {Object} [opts] A list of all method options
 	 * @param {Boolean|Number} [opts.deep=true] TRUE to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {Boolean} [opts.html=false] TRUE to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if opts.deep is FALSE
+	 * @param {Boolean} [opts.htmlOnly=false] TRUE to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if opts.deep is FALSE
 	 * @param {Boolean} [opts.cull=false] TRUE to ignore empty element properties
 	 * @param {Boolean} [opts.computed=false] TRUE to ignore the node's default CSSStyleDeclaration, and instead parse the results of window.getComputedStyle(); irrelevant if opts.style is false
 	 * @param {Boolean|String[]} [opts.style=true] TRUE to retrieve the key-value pairs of all relevant styles (see: opts.computed), or specify an ARRAY of CSS properties to boolean search
 	 * @param {Boolean|String[]} [opts.attributes=true] TRUE to copy all attribute key-value pairs, or specify an ARRAY of keys to boolean search
-	 * @param {Boolean|String[]} [opts.serials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
+	 * @param {Boolean|String[]} [opts.noSerials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
 	 * @param {String[]|Boolean} [opts.filter=false] An ARRAY of all the non-required properties to be copied
-	 * @param {String[]|Boolean} [opts.parse=false] An ARRAY of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @todo {String[]|Boolean} [opts.parse=false] An ARRAY of properties that are DOM nodes, but will still be copied **PLANNED**
 	 * @param {Boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
 	 * @param {Boolean} [opts.metadata=false] Output a special object of the domJSON class, which includes metadata about this operation
 	 * @param {Object|Boolean} [opts.absolute=false] Specify attributes for which relative paths are to be converted to absolute
- 	 * @param {String} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the location of this file!
+ 	 * @param {String} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the domain origin
  	 * @param {Boolean} [opts.absolute.action=false] TRUE means relative paths in "action" attributes are converted to absolute paths
  	 * @param {Boolean} [opts.absolute.data=false] TRUE means relative paths in "data" attributes are converted to absolute paths
 	 * @param {Boolean} [opts.absolute.href=false] TRUE means relative paths in "href" attributes are converted to absolute paths
 	 * @param {Boolean} [opts.absolute.style=false] TRUE means relative paths in "style" attributes are converted to absolute paths
 	 * @param {Boolean} [opts.absolute.src=false] TRUE means relative paths in "src" attributes are converted to absolute paths
-	 * @param {Boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
+	 * @todo {Boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
 	*/
 	domJSON.toJSON = function(node, opts) {
 		var copy, options = {}, output = {}, timer = new Date().getTime();
 		//Update the default options w/ the user's custom settings
-		for (var d in defaults) {
-			options[d] = defaults[d];
-		}
-		for (var o in opts) {
-			if (!options.hasOwnProperty(o)) {
-				delete opts[o];
-				continue;
-			}
-			options[o] = opts[o];
-		}
+		options = extend({}, defaults, opts);
 
 		//Make sure the "attributes" option is properly formatted
 		options.absolute = {
@@ -518,11 +511,11 @@
 		options.absolute.keys = keys;
 
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
-		var requiring = required.concat();
-		var ignoring = ignored.concat();
-		if (options.serials) {
-			if (options.serials instanceof Array) {
-				ignoring = ignoring.concat(options.serials);
+		var requiring = required.slice();
+		var ignoring = ignored.slice();
+		if (options.noSerials) {
+			if (options.noSerials instanceof Array) {
+				ignoring = ignoring.concat(options.noSerials);
 			} else {
 				ignoring = ignoring.concat(serials);
 			}
