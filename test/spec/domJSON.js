@@ -281,28 +281,26 @@
 			var container, testArea = $('<div class="testArea" style="padding-left: 100%; position: absolute; top: 0; left: 0; z-index: -1;"></div>');
 			$('body').append(testArea);
 
-			afterEach(function(){
-				container.remove();
-			});
-
-
-
 			describe('for various options', function(){
 				beforeEach(function(){
 					//Make a DOM Tree with some standard test elements
 					container = $('<div class="container otherClass"></div>');
 
 					$(' \
-						<div data-test-a="foo" data-test-b="bar" style="margin-top: 10px;"> \
-							<div data-test-c="quux" data-test-d="baz" style="color: red;"> \
-								<div data-test-e="norf" data-test-f="woop" style="border: 1px solid green;"> \
-									<p>This is a test paragraph <span>with a span in the middle</span> of it.</p> \
+						<div class="alpha" data-test-a="foo" data-test-b="bar" style="margin-top: 10px;"> \
+							<div class="beta" data-test-c="quux" data-test-d="baz" style="color: red;"> \
+								<div class="charlie" data-test-e="norf" data-test-f="woop" style="border: 1px solid green;"> \
+									<p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p> \
 								</div> \
 							</div> \
 						</div> \
 					').appendTo(container);
 
 					testArea.append(container);
+				});
+
+				afterEach(function(){
+					container.remove();
 				});
 
 
@@ -404,41 +402,120 @@
 
 
 
-				/*describe('about filtering which DOM properties to include in the output', function(){
-					it('should perform no custom filtering if passed a non-array value, or not specified', function(){
-						var result = domJSON.toJSON(container.get(0));
+				describe('about filtering which DOM properties to include in the output', function(){
+					var noWhiteSpaceAroundTags = function(str){
+						if (typeof str === 'string') {
+							return str.replace(/[\t\r\n]*/gi, '').replace(/>[\s]*</gi, '><').replace(/>[\s]*$/gi, '>').replace(/^[\s]*</gi, '<') //https://regex101.com/r/xX6iW2/3  and  https://regex101.com/r/zE0fQ9/1
+						}
+						return str;
+					};
+
+					it('should not perform custom filtering if passed a non-array value, or not specified', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							filter: true
+						});
+						var result2 = domJSON.toJSON(container.get(0), {
+							filter: false
+						});
+						var result3 = domJSON.toJSON(container.get(0), {
+							filter: 12345
+						});
+
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
+						expect(result2.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
+						expect(result3.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
 					});
 
 					it('should be able to output only the specified DOM properties if provided an array of strings', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							filter: ['className', 'offsetTop', 'offsetLeft']
+						});
+
+						expect(result.node.className).toBe('container otherClass');
+						expect(result.node.childNodes[0].offsetLeft).toBeNumber();
+						expect(result.node.childNodes[0].offsetHeight).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].offsetTop).toBeNumber();
+						expect(result.node.childNodes[0].childNodes[0].clientTop).toBeUndefined();
 					});
 
 					it('should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							filter: [true, 'className', 'offsetTop', 'offsetLeft']
+						});
+
+						expect(result.node.className).toBeUndefined();
+						expect(result.node.childNodes[0].offsetLeft).toBeUndefined();
+						expect(result.node.childNodes[0].offsetHeight).toBeNumber();
+						expect(result.node.childNodes[0].childNodes[0].offsetTop).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].clientTop).toBeNumber();
 					});
 
-					it('should always exclude the following DOM properties in the output, even if they are included in a filter array: children, classList, dataset', function(){
-						var result = domJSON.toJSON(container.get(0));
+					it('should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							filter: ['className', 'offsetTop', 'offsetLeft', 'children', 'dataset', 'classList']
+						});
+
+						expect(result.node.classList).toBeUndefined();
+						expect(result.node.childNodes[0].children).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].dataset).toBeUndefined();
 					});
 
 					it('should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							filter: [true, 'className', 'offsetTop', 'offsetLeft', 'nodeType', 'nodeValue', 'tagName']
+						});
+
+						expect(result.node.tagName).toBe('DIV');
+						expect(result.node.childNodes[0].nodeType).toBe(1);
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].tagName).toBe('P');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeType).toBe(3);
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeValue).toBe('This is a test paragraph ');
 					});
 
 					it('should be able to ignore all serialized DOM properties (like outerText, innerText, prefix, etc), overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							serials: false
+						});
+
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBeUndefined();
 					});
 
 					it('should be able to include all serialized DOM properties, overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							serials: true
+						});
+
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBe('This is a test paragraph with a span in the middle of it.');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBe('<div class="charlie" data-test-e="norf" data-test-f="woop" style="border: 1px solid green;"><p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p></div>');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph ');
 					});
 
 					it('should be able to include a specific set of serialized DOM properties, overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							serials: [true, 'innerText', 'outerHTML', 'textContent']
+						});
+
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBe('This is a test paragraph with a span in the middle of it.');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].outerText )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].innerHTML )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBe('<div class="charlie" data-test-e="norf" data-test-f="woop" style="border: 1px solid green;"><p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p></div>');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph ');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].wholeText )).toBeUndefined();
 					});
 
 					it('should be able to exclude a specific set of serialized DOM properties, overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							serials: [false, 'innerText', 'outerHTML', 'textContent']
+						});
+
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].outerText )).toBe('This is a test paragraph with a span in the middle of it.');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].innerHTML )).toBe('<p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p>');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].wholeText )).toBe('This is a test paragraph ');
 					});
 				});
 
@@ -446,25 +523,67 @@
 
 				describe('about enumerating which attributes to include in the output', function(){
 					it('should be able to ignore all HTML attributes', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							attributes: false
+						});
+
+						expect(result.node.childNodes[0].attributes).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].attributes).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes).toBeUndefined();
 					});
 
 					it('should be able to include all HTML attributes', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(container.get(0), {
+							attributes: true
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('foo');
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBe('bar');
+						expect(result.node.childNodes[0].attributes['style']).toBe('margin-top: 10px;');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBe('quux');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-d']).toBe('baz');
+						expect(result.node.childNodes[0].childNodes[0].attributes['style']).toBe('color: red;');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe('norf');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBe('woop');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBe('border: 1px solid green;');
 					});
 
-					it('should be able to include a set of HTML attributes as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0));
+					it('should be able to include a set of HTML attributes, as specified by an array', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							attributes: ['data-test-a', 'data-test-c', 'style']
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('foo');
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBeUndefined();
+						expect(result.node.childNodes[0].attributes['style']).toBe('margin-top: 10px;');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBe('quux');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-d']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].attributes['style']).toBe('color: red;');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBe('border: 1px solid green;');
 					});
 
-					it('should be able to exclude a set of HTML attributes as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0));
+					it('should be able to exclude a set of HTML attributes, as specified by an array', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							attributes: [true, 'data-test-a', 'data-test-c', 'style']
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBeUndefined();
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBe('bar');
+						expect(result.node.childNodes[0].attributes['style']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-d']).toBe('baz');
+						expect(result.node.childNodes[0].childNodes[0].attributes['style']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe('norf');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBe('woop');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBeUndefined();
 					});
 				});
 
 
 
-				describe('about enumerating which style properties to include in the output', function(){
+				/*describe('about enumerating which style properties to include in the output', function(){
 					it('should be able to ignore all styles specified on the element', function(){
 						var result = domJSON.toJSON(container.get(0));
 					});

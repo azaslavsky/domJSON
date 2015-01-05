@@ -54,7 +54,7 @@
 		computed: false,
 		style: true,
 		attributes: true,
-		noSerials: true,
+		serials: false,
 		//parse: false,
 		filter: false,
 		stringify: false,
@@ -108,7 +108,8 @@
 		'outerText',
 		'prefix',
 		'text',
-		'textContent'
+		'textContent',
+		'wholeText'
 	];
 
 
@@ -473,7 +474,7 @@
 	 * @param {Boolean} [opts.computed=false] TRUE to ignore the node's default CSSStyleDeclaration, and instead parse the results of window.getComputedStyle(); irrelevant if opts.style is false
 	 * @param {Boolean|String[]} [opts.style=true] TRUE to retrieve the key-value pairs of all relevant styles (see: opts.computed), or specify an ARRAY of CSS properties to boolean search
 	 * @param {Boolean|String[]} [opts.attributes=true] TRUE to copy all attribute key-value pairs, or specify an ARRAY of keys to boolean search
-	 * @param {Boolean|String[]} [opts.noSerials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
+	 * @param {Boolean|String[]} [opts.serials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
 	 * @param {String[]|Boolean} [opts.filter=false] An ARRAY of all the non-required properties to be copied
 	 * @todo {String[]|Boolean} [opts.parse=false] An ARRAY of properties that are DOM nodes, but will still be copied **PLANNED**
 	 * @param {Boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
@@ -513,18 +514,22 @@
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
 		var requiring = required.slice();
 		var ignoring = ignored.slice();
-		if (options.noSerials) {
-			if (options.noSerials instanceof Array) {
-				ignoring = ignoring.concat(options.noSerials);
+		if (options.serials !== true) {
+			if (options.serials instanceof Array && options.serials.length) {
+				if (options.serials[0]) {
+					ignoring = ignoring.concat( boolDiff(serials, options.serials) );
+				} else {
+					ignoring = ignoring.concat( boolInter(serials, options.serials) );
+				}
 			} else {
-				ignoring = ignoring.concat(serials);
+				ignoring = ignoring.concat( serials );
 			}
 		}
 		if (options.filter instanceof Array) {
 			if (options.filter[0] === true) {
-				options.filter = boolDiff(unique(options.filter, ignoring), requiring);
+				options.filter = boolDiff( unique(options.filter, ignoring), requiring );
 			} else {
-				options.filter = boolDiff(unique(options.filter, requiring), ignoring);
+				options.filter = boolDiff( unique(options.filter, requiring), ignoring );
 			}
 		} else {
 			options.filter = [true].concat(ignoring);
