@@ -3,6 +3,9 @@
  */
 (function() {
 	describe('domJSON', function(){
+		var testArea = $('<div class="testArea" style="padding-left: 100%; position: absolute; top: 0; left: 0; z-index: -1;"></div>');
+		$('body').append(testArea);
+
 		describe('private utility APIs', function(){
 			/*describe('FieldSpec custom typing', function(){
 			});*/
@@ -278,8 +281,7 @@
 
 
 		describe('JSON object creation [.toJSON() method]', function(){
-			var container, testArea = $('<div class="testArea" style="padding-left: 100%; position: absolute; top: 0; left: 0; z-index: -1;"></div>');
-			$('body').append(testArea);
+			var container, containerNode;
 
 			describe('for various options', function(){
 				beforeEach(function(){
@@ -297,6 +299,7 @@
 					').appendTo(container);
 
 					testArea.append(container);
+					containerNode = container.get(0);
 				});
 
 				afterEach(function(){
@@ -307,7 +310,7 @@
 
 				describe('about basic output control', function(){
 					it('should work with the default settings', function(){
-						var result = domJSON.toJSON(container.get(0));
+						var result = domJSON.toJSON(containerNode);
 						
 						expect(result.node.className).toBe('container otherClass');
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('foo');
@@ -334,7 +337,7 @@
 					});
 
 					it('should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							cull: false
 						});
 
@@ -344,7 +347,7 @@
 					});
 
 					it('should be able to produce a stringified JSON output', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							stringify: true
 						});
 
@@ -352,7 +355,7 @@
 					});
 
 					it('should be able to produce an output of just the JSONified DOM node, excluding all metadata', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							metadata: false
 						});
 
@@ -365,7 +368,7 @@
 
 				describe('about recursion depth control', function(){
 					it('should be able to ignore child nodes if requested (aka, no recursion)', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							deep: false
 						});
 
@@ -373,7 +376,7 @@
 					});
 
 					it('should be able to recurse through the entire depth of the DOM tree', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							deep: true
 						});
 
@@ -381,7 +384,7 @@
 					});
 
 					it('should be able to recurse to an arbitrary level of depth', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							deep: 2
 						});
 
@@ -391,7 +394,7 @@
 					});
 
 					it('should be able only recurse through only HTML Elements (nodeType = 1)', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							deep: true,
 							htmlOnly: true
 						});
@@ -411,13 +414,13 @@
 					};
 
 					it('should not perform custom filtering if passed a non-array value, or not specified', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							filter: true
 						});
-						var result2 = domJSON.toJSON(container.get(0), {
+						var result2 = domJSON.toJSON(containerNode, {
 							filter: false
 						});
-						var result3 = domJSON.toJSON(container.get(0), {
+						var result3 = domJSON.toJSON(containerNode, {
 							filter: 12345
 						});
 
@@ -427,7 +430,7 @@
 					});
 
 					it('should be able to output only the specified DOM properties if provided an array of strings', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							filter: ['className', 'offsetTop', 'offsetLeft']
 						});
 
@@ -439,7 +442,7 @@
 					});
 
 					it('should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							filter: [true, 'className', 'offsetTop', 'offsetLeft']
 						});
 
@@ -451,7 +454,7 @@
 					});
 
 					it('should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							filter: ['className', 'offsetTop', 'offsetLeft', 'children', 'dataset', 'classList']
 						});
 
@@ -461,7 +464,7 @@
 					});
 
 					it('should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							filter: [true, 'className', 'offsetTop', 'offsetLeft', 'nodeType', 'nodeValue', 'tagName']
 						});
 
@@ -473,7 +476,7 @@
 					});
 
 					it('should be able to ignore all serialized DOM properties (like outerText, innerText, prefix, etc), overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							serials: false
 						});
 
@@ -483,7 +486,7 @@
 					});
 
 					it('should be able to include all serialized DOM properties, overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							serials: true
 						});
 
@@ -493,7 +496,7 @@
 					});
 
 					it('should be able to include a specific set of serialized DOM properties, overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							serials: [true, 'innerText', 'outerHTML', 'textContent']
 						});
 
@@ -506,7 +509,7 @@
 					});
 
 					it('should be able to exclude a specific set of serialized DOM properties, overriding other property filters', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							serials: [false, 'innerText', 'outerHTML', 'textContent']
 						});
 
@@ -523,7 +526,7 @@
 
 				describe('about enumerating which attributes to include in the output', function(){
 					it('should be able to ignore all HTML attributes', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							attributes: false
 						});
 
@@ -533,7 +536,7 @@
 					});
 
 					it('should be able to include all HTML attributes', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							attributes: true
 						});
 
@@ -549,7 +552,7 @@
 					});
 
 					it('should be able to include a set of HTML attributes, as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							attributes: ['data-test-a', 'data-test-c', 'style']
 						});
 
@@ -565,7 +568,7 @@
 					});
 
 					it('should be able to exclude a set of HTML attributes, as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							attributes: [true, 'data-test-a', 'data-test-c', 'style']
 						});
 
@@ -585,7 +588,7 @@
 
 				describe('about enumerating which computed style properties to include in the output', function(){
 					it('should be able to ignore computed styles', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							computedStyle: false
 						});
 
@@ -595,7 +598,7 @@
 					});
 
 					it('should be able to include all computed styles', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							computedStyle: true
 						});
 
@@ -609,7 +612,7 @@
 					});
 
 					it('should be able to include a set of computed style properties on the given nodes, as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							computedStyle: ['bottom', 'display', 'direction']
 						});
 
@@ -623,7 +626,7 @@
 					});
 
 					it('should be able to exclude a set of computed style properties on the given nodes, as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0), {
+						var result = domJSON.toJSON(containerNode, {
 							computedStyle: [true, 'bottom', 'display', 'direction']
 						});
 
@@ -664,6 +667,93 @@
 		});
 
 		describe('DOM node creation [.toDOM() method]', function(){
+			//A stringified version of the "container" variable from the previous test suite, created using the default options (except stringify = true)
+			var jsonString = '{"meta":{"domain":"http://localhost:5050/#","userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36","version":"0.1.0","options":{"absolute":{"base":"http://localhost:5050/","action":false,"href":false,"style":false,"src":false,"other":false,"keys":[]},"attributes":true,"computedStyle":false,"cull":true,"deep":true,"filter":[true,"attributes","childNodes","children","classList","dataset","style","innerHTML","innerText","outerHTML","outerText","prefix","text","textContent","wholeText"],"htmlOnly":false,"metadata":true,"serials":false,"stringify":true},"clock":8},"node":{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"container otherClass","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"container otherClass"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"alpha","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"alpha","data-test-a":"foo","data-test-b":"bar","style":"margin-top: 10px;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"beta","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"beta","data-test-c":"quux","data-test-d":"baz","style":"color: red;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"charlie","scrollHeight":176,"scrollWidth":63,"scrollTop":0,"scrollLeft":0,"clientHeight":176,"clientWidth":64,"clientTop":1,"clientLeft":1,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"charlie","data-test-e":"norf","data-test-f":"woop","style":"border: 1px solid green;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"delta","scrollHeight":144,"scrollWidth":63,"scrollTop":0,"scrollLeft":0,"clientHeight":144,"clientWidth":64,"clientTop":0,"clientLeft":0,"offsetHeight":144,"offsetWidth":64,"offsetTop":27,"offsetLeft":1512,"localName":"p","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"P","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"P","attributes":{"class":"delta"},"childNodes":[{"length":25,"data":"This is a test paragraph ","baseURI":"http://localhost:5050/","nodeType":3,"nodeValue":"This is a test paragraph ","nodeName":"#text","childNodes":[]},{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":0,"className":"epsilon","scrollHeight":0,"scrollWidth":0,"scrollTop":0,"scrollLeft":0,"clientHeight":0,"clientWidth":0,"clientTop":0,"clientLeft":0,"offsetHeight":71,"offsetWidth":46,"offsetTop":81,"offsetLeft":1512,"localName":"span","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"SPAN","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"SPAN","attributes":{"class":"epsilon"},"childNodes":[{"length":25,"data":"with a span in the middle","baseURI":"http://localhost:5050/","nodeType":3,"nodeValue":"with a span in the middle","nodeName":"#text","childNodes":[]}]},{"length":7,"data":" of it.","baseURI":"http://localhost:5050/","nodeType":3,"nodeValue":" of it.","nodeName":"#text","childNodes":[]}]}]}]}]}]}}';
+			var jsonParsed = JSON.parse(jsonString);
+			var jsonNoMetaString = JSON.stringify(jsonParsed.node);
+			var jsonNoMetaParsed = JSON.parse(jsonNoMetaString);
+
+			afterEach(function(){
+				testArea.html('');
+			})
+
+			it('should output a document fragment', function(){
+				var result = domJSON.toDOM(jsonParsed);
+
+				expect(result).toEqual(jasmine.any(DocumentFragment));
+			});
+
+			it('should be able to process a JSON string, with metadata', function(){
+				var result = domJSON.toDOM(jsonString);
+				testArea.append(result);
+
+				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
+				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
+				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
+				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
+				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
+				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
+				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
+				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
+			});
+
+			it('should be able to process a JSON friendly object, with metadata', function(){
+				var result = domJSON.toDOM(jsonParsed);
+				testArea.append(result);
+
+				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
+				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
+				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
+				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
+				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
+				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
+				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
+				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
+			});
+
+			it('should be able to process a JSON string, without metadata', function(){
+				var result = domJSON.toDOM(jsonNoMetaString, {
+					noMeta: true
+				});
+				testArea.append(result);
+
+				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
+				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
+				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
+				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
+				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
+				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
+				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
+				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
+			});
+
+			it('should be able to process a JSON friendly object, without metadata', function(){
+				var result = domJSON.toDOM(jsonNoMetaParsed, {
+					noMeta: true
+				});
+				testArea.append(result);
+
+				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
+				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
+				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
+				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
+				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
+				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
+				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
+				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
+			});
 		});
 	});
 })();
