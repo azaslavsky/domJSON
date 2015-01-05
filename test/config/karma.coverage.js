@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/lib/polyfill/*.js',
+      'test/lib/jquery-1.11.2.min.js',
       'src/**/*.js',
       'test/spec/**/*.js',
     ],
