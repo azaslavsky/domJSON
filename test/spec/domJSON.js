@@ -475,6 +475,17 @@
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeValue).toBe('This is a test paragraph ');
 					});
 
+					it('should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops', function(){
+						var nodeProps = ['children', 'parentNode', 'parentElement', 'previousSibling', 'previousElementSibling', 'nextSibling', 'nextElementSibling', 'firstChild', 'firstElementChild', 'lastChild', 'lastElementChild', 'offsetParent', 'ownerDocument']
+						var result = domJSON.toJSON(containerNode, {
+							filter: nodeProps
+						});
+
+						nodeProps.forEach(function(v){
+							expect(result.node[v]).toBeUndefined();
+						})
+					});
+
 					it('should be able to ignore all serialized DOM properties (like outerText, innerText, prefix, etc), overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
 							serials: false
