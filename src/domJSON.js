@@ -46,19 +46,8 @@
 	
 	
 	
-	//A list of default options for creating the JSON object
-	var defaults = {
-		deep: true,
-		htmlOnly: false,
-		cull: true,
-		computed: false,
-		style: true,
-		attributes: true,
-		serials: false,
-		//parse: false,
-		filter: false,
-		stringify: false,
-		metadata: true,
+	//Default options for creating the JSON object
+	var defaultsForToJSON = {
 		absolute: {
 			base: win.location.origin + '/',
 			action: false,
@@ -66,7 +55,24 @@
 			style: false,
 			src: false,
 			other: false
-		}
+		},
+		attributes: true,
+		computedStyle: false,
+		cull: true,
+		deep: true,
+		filter: false,
+		htmlOnly: false,
+		metadata: true,
+		//parse: false,
+		serials: false,
+		stringify: false
+	};
+
+
+
+	//Default options for creating a DOM node from a previously generated domJSON object
+	var defaultsForToDOM = {
+		noMeta: false
 	};
 
 
@@ -166,7 +172,7 @@
 
 	/**
 	 * Make a shallow copy of an object or array
-	 * @param {Object|Array} item The object/array that will be copied
+	 * @param {Object|string[]} item The object/array that will be copied
 	 * @private
 	 * @ignore
 	*/
@@ -186,8 +192,8 @@
 
 	/**
 	 * Do a boolean intersection between an array/object and a filter array
-	 * @param {Object|Array} item The object/array that will be intersected with the filter
-	 * @param {boolean|Array} filter Specifies which properties to select from the "item" (or element to keep, if "item is an array")
+	 * @param {Object|string[]} item The object/array that will be intersected with the filter
+	 * @param {boolean|string[]} filter Specifies which properties to select from the "item" (or element to keep, if "item is an array")
 	 * @private
 	 * @ignore
 	*/
@@ -210,8 +216,8 @@
 
 	/**
 	 * Do a boolean difference between an array/object and a filter array
-	 * @param {Object|Array} item The object/array that will be differntiated with the filter
-	 * @param {boolean|Array} filter Specifies which properties to exclude from the "item" (or element to remove, if "item is an array")
+	 * @param {Object|string[]} item The object/array that will be differntiated with the filter
+	 * @param {boolean|string[]} filter Specifies which properties to exclude from the "item" (or element to remove, if "item is an array")
 	 * @private
 	 * @ignore
 	*/
@@ -237,7 +243,7 @@
 
 	/**
 	 * Determine whether we want to do a boolean intersection or difference
-	 * @param {Object|Array} item The object/array that will be differntiated with the filter
+	 * @param {Object|string[]} item The object/array that will be differntiated with the filter
 	 * @param {boolean|Array} filter Specifies which a filter behavior; if it is an array, the first value can be a boolean, indicating whether the filter array is intended for differentiation (true) or intersection (false)
 	 * @private
 	 * @ignore
@@ -449,30 +455,33 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {DOMNode} node The actual DOM Node in to be parsed
 	 * @param {Object} [opts] A list of all method options
-	 * @param {Boolean|Number} [opts.deep=true] TRUE to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {Boolean} [opts.htmlOnly=false] TRUE to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if opts.deep is FALSE
-	 * @param {Boolean} [opts.cull=false] TRUE to ignore empty element properties
-	 * @param {Boolean} [opts.computed=false] TRUE to ignore the node's default CSSStyleDeclaration, and instead parse the results of window.getComputedStyle(); irrelevant if opts.style is false
-	 * @param {Boolean|String[]} [opts.style=true] TRUE to retrieve the key-value pairs of all relevant styles (see: opts.computed), or specify an ARRAY of CSS properties to boolean search
-	 * @param {Boolean|String[]} [opts.attributes=true] TRUE to copy all attribute key-value pairs, or specify an ARRAY of keys to boolean search
-	 * @param {Boolean|String[]} [opts.serials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
-	 * @param {String[]|Boolean} [opts.filter=false] An ARRAY of all the non-required properties to be copied
-	 * @todo {String[]|Boolean} [opts.parse=false] An ARRAY of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {Boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
-	 * @param {Boolean} [opts.metadata=false] Output a special object of the domJSON class, which includes metadata about this operation
 	 * @param {Object|Boolean} [opts.absolute=false] Specify attributes for which relative paths are to be converted to absolute
- 	 * @param {String} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the domain origin
- 	 * @param {Boolean} [opts.absolute.action=false] TRUE means relative paths in "action" attributes are converted to absolute paths
- 	 * @param {Boolean} [opts.absolute.data=false] TRUE means relative paths in "data" attributes are converted to absolute paths
-	 * @param {Boolean} [opts.absolute.href=false] TRUE means relative paths in "href" attributes are converted to absolute paths
-	 * @param {Boolean} [opts.absolute.style=false] TRUE means relative paths in "style" attributes are converted to absolute paths
-	 * @param {Boolean} [opts.absolute.src=false] TRUE means relative paths in "src" attributes are converted to absolute paths
-	 * @todo {Boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
+	 * @param {string} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the domain origin
+ 	 * @param {boolean} [opts.absolute.action=false] TRUE means relative paths in "action" attributes are converted to absolute paths
+ 	 * @param {boolean} [opts.absolute.data=false] TRUE means relative paths in "data" attributes are converted to absolute paths
+	 * @param {boolean} [opts.absolute.href=false] TRUE means relative paths in "href" attributes are converted to absolute paths
+	 * @param {boolean} [opts.absolute.style=false] TRUE means relative paths in "style" attributes are converted to absolute paths
+	 * @param {boolean} [opts.absolute.src=false] TRUE means relative paths in "src" attributes are converted to absolute paths
+	 * @todo {boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
+	 * @param {boolean|string[]} [opts.attributes=true] TRUE to copy all attribute key-value pairs, or specify an ARRAY of keys to boolean search
+	 * @param {boolean|string[]} [opts.computedStyle=false] TRUE parse the results of "window.getComputedStyle()"" on every node (specify an ARRAY of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
+	 * @param {boolean} [opts.cull=false] TRUE to ignore empty element properties
+	 * @param {boolean|number} [opts.deep=true] TRUE to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
+	 * @param {string[]|boolean} [opts.filter=false] An ARRAY of all the non-required properties to be copied
+	 * @param {boolean} [opts.htmlOnly=false] TRUE to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if opts.deep is FALSE
+	 * @param {boolean} [opts.metadata=false] Output a special object of the domJSON class, which includes metadata about this operation
+	 * @todo {string[]|boolean} [opts.parse=false] An ARRAY of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @param {boolean|string[]} [opts.serials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
+	 * @param {boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
+	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
 	*/
 	domJSON.toJSON = function(node, opts) {
-		var copy, options = {}, output = {}, timer = new Date().getTime();
+		var copy, keys = [], options = {}, output = {};
+		var timer = new Date().getTime();
+		var requiring = required.slice();
+		var ignoring = ignored.slice();
 		//Update the default options w/ the user's custom settings
-		options = extend({}, defaults, opts);
+		options = extend({}, defaultsForToJSON, opts);
 
 		//Make sure the "attributes" option is properly formatted
 		options.absolute = {
@@ -484,7 +493,6 @@
 			other: (typeof options.absolute === 'boolean') ? options.absolute : ((options.absolute.other) || false),
 		};
 		options.absolute.other = false; //Disable "other" absolute pathing for now
-		var keys = [];
 		for (var k in options.absolute) {
 			if (options.absolute[k] && k !== 'base') {
 				keys.push(k);
@@ -493,8 +501,6 @@
 		options.absolute.keys = keys;
 
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
-		var requiring = required.slice();
-		var ignoring = ignored.slice();
 		if (options.serials !== true) {
 			if (options.serials instanceof Array && options.serials.length) {
 				if (options.serials[0]) {
@@ -647,17 +653,22 @@
 	/**
 	 * Take the JSON-friendly object created by the toJSON() method and rebuild it back into a DOM Node
 	 * @param {Object} obj A JSON friendly object, or even JSON string, of some DOM Node
-	 * @param {Boolean} [noMeta] TRUE means that this object is not wrapped in metadata, which it makes it somewhat harder to rebuild properly...
+	 * @param {Object} [opts] A list of all method options
+	 * @param {boolean} [opts.noMeta] TRUE means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
+	 * @return {DocumentFragment} A DocumentFragment (nodeType 11) containing the result of unpacking the input "obj"
 	*/
-	domJSON.toDOM = function(obj, noMeta) {
+	domJSON.toDOM = function(obj, opts) {
+		var options, node;
 		//Parse the JSON string if necessary
 		if (typeof obj === 'string') {
 			obj = JSON.parse(obj);
 		}
+		//Update the default options w/ the user's custom settings
+		options = extend({}, defaultsForToDOM, opts);
 
 		//Create a document fragment, and away we go!
-		var node = document.createDocumentFragment();
-		if (noMeta) {
+		node = document.createDocumentFragment();
+		if (options.noMeta) {
 			toDOM(obj, node, node);
 		} else {
 			toDOM(obj.node, node, node);
