@@ -354,6 +354,7 @@
 		var attributes = {};
 		var attr = node.attributes;
 		var length = attr.length;
+
 		//Are we going to replace relative paths?
 		if (opts.absolute.keys.length > 1 || (opts.absolute.keys.length === 1 && opts.absolute.keys[0] !== 'style') ) {
 			//Yes - we need to test for absolute paths
@@ -377,48 +378,31 @@
 
 	//Convert the style property of a DOM Node to a JSON ready object
 	var styleJSON = function(node, opts) {
-		//Are we copying the computed style?
-		var style, css = [];
-		if (opts.computed) {
+		//Grab the computed style
+		var style, css = {};
+		if (opts.computedStyle && node.style instanceof CSSStyleDeclaration) {
 			style = win.getComputedStyle(node);
-		} else if (node.style instanceof CSSStyleDeclaration) {
-			style = node.style;
 		} else {
 			return null;
 		}
 
-		//If we have a properties filter, discard all the properties that don't match it
-		if (opts.style) {
-			if (style.constructor.name !== Object) {
-				//This is not a simple object - change it to one, removing all frivolous methods along the way
-				var newStyle = {};
-				for (var s in style) {
-					if (typeof style[s] !== 'function') {
-						newStyle[s] = style[s];
-					}
-				}
+		//Get the relevant properties from the computed style
+		for (var k in style) {
+			if ( k !== 'cssText' && !k.match(/\d/) && typeof style[k] === 'string' && style[k].length ) {
+				//css.push(k+ ': ' +style[k]+ ';');
+				css[k] = style[k];
 			}
-			style = boolFilter(newStyle, opts.style);
 		}
 
-		//Copy the style array into a new object
-		if (opts.computed) {
-			for (var k in style) {
-				if ( k !== 'cssText' && !k.match(/\d/) && typeof style[k] === 'string' && style[k].length ) {
-					css.push(k+ ': ' +style[k]+ ';');
-				}
-			}
-			return css.join(' ');
-		} else {
-			return style.cssText;
-		}
+		//Filter the style object
+		return (opts.computedStyle instanceof Array) ? boolFilter(css, opts.computedStyle) : css;
 	};
 	
 	
 	
 	//Convert a cloned DOM node to a simple object
 	var toJSON = function(node, opts, depth) {
-		var copy = copyJSON(node, opts);
+		var style, kids, kidCount, thisChild, children, copy = copyJSON(node, opts);
 
 		//Some tags are not allowed
 		if (node.nodeType === 1) {
@@ -436,17 +420,14 @@
 		if (opts.attributes && node.hasOwnProperty('attributes')) { 
 			copy.attributes = attrJSON(node, opts);
 		}
-		if (opts.style && node.hasOwnProperty('style')) {
-			var style = styleJSON(node, opts);
-			if (style) {
-				copy.style = style;
-			}
+		if (opts.computedStyle && (style = styleJSON(node, opts))) {
+			copy.style = style;
 		}
 		
 		//Should we continue iterating?
 		if (opts.deep === true || (typeof opts.deep === 'number' && opts.deep > depth)) {
 			//We should!
-			var kids, kidCount, thisChild, children = [];
+			children = [];
 			kids = (opts.htmlOnly) ? node.children : node.childNodes;
 			kidCount = kids.length;
 			for (var c = 0; c < kidCount; c++) {

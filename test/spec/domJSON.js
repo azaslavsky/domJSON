@@ -311,7 +311,7 @@
 						
 						expect(result.node.className).toBe('container otherClass');
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('foo');
-						expect(result.node.childNodes[0].childNodes[0].style).toBe('color: red;');
+						expect(result.node.childNodes[0].childNodes[0].attributes.style).toBe('color: red;');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBe('woop');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].tagName).toBe('P');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeType).toBe(3);
@@ -583,35 +583,59 @@
 
 
 
-				/*describe('about enumerating which style properties to include in the output', function(){
-					it('should be able to ignore all styles specified on the element', function(){
-						var result = domJSON.toJSON(container.get(0));
+				describe('about enumerating which computed style properties to include in the output', function(){
+					it('should be able to ignore computed styles', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							computedStyle: false
+						});
+
+						expect(result.node.childNodes[0].style).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].style).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style).toBeUndefined();
 					});
 
-					it('should be able to include all styles specified on the element', function(){
-						var result = domJSON.toJSON(container.get(0));
+					it('should be able to include all computed styles', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							computedStyle: true
+						});
+
+						expect(result.node.childNodes[0].style['bottom']).toBe('auto');
+						expect(result.node.childNodes[0].style['float']).toBe('none');
+						expect(result.node.childNodes[0].childNodes[0].style['display']).toBe('block');
+						expect(result.node.childNodes[0].childNodes[0].style['right']).toBe('auto');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['direction']).toBe('ltr');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['padding']).toBe('0px');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBe('inline');
 					});
 
-					it('should be able to include all computed styles specified on the element', function(){
-						var result = domJSON.toJSON(container.get(0));
+					it('should be able to include a set of computed style properties on the given nodes, as specified by an array', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							computedStyle: ['bottom', 'display', 'direction']
+						});
+
+						expect(result.node.childNodes[0].style['bottom']).toBe('auto');
+						expect(result.node.childNodes[0].style['float']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].style['display']).toBe('block');
+						expect(result.node.childNodes[0].childNodes[0].style['right']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['direction']).toBe('ltr');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['padding']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBe('inline');
 					});
 
-					it('should be able to include a set of style properties on the element as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0));
-					});
+					it('should be able to exclude a set of computed style properties on the given nodes, as specified by an array', function(){
+						var result = domJSON.toJSON(container.get(0), {
+							computedStyle: [true, 'bottom', 'display', 'direction']
+						});
 
-					it('should be able to include a set of computed style properties on the element as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0));
+						expect(result.node.childNodes[0].style['bottom']).toBeUndefined();
+						expect(result.node.childNodes[0].style['float']).toBe('none');
+						expect(result.node.childNodes[0].childNodes[0].style['display']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].style['right']).toBe('auto');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['direction']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['padding']).toBe('0px');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBeUndefined();
 					});
-
-					it('should be able to exclude a set of style properties on the element as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0));
-					});
-
-					it('should be able to exclude a set of computed style properties on the element as specified by an array', function(){
-						var result = domJSON.toJSON(container.get(0));
-					});
-				});*/
+				});
 			});
 
 
