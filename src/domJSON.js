@@ -557,23 +557,11 @@
 			}
 			return false;
 
-		case 2: //Attribute
-			if (typeof data.nodeName === 'string' && data.nodeName.length) {
-				return doc.createAttribute(data.nodeName);
-			}
-			return false;
-
 		case 3: //Text Node
 			if (typeof data.nodeValue === 'string' && data.nodeValue.length) {
 				return doc.createTextNode(data.nodeValue);
 			}
 			return doc.createTextNode('');
-
-		case 4: //CDATA Section
-			if (typeof data === 'string') {
-				return doc.createCDATASection(data);
-			}
-			return false;
 
 		case 7: //Processing Instruction
 			if (data.hasOwnProperty('target') && data.hasOwnProperty('data')) {
