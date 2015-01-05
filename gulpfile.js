@@ -106,8 +106,8 @@ gulp.task('api', function() {
 			path.extname = ".md";
 		}))
 		//.pipe(replace('##', '\n* * *\n###')) //Using v0.6.x of jsdoc-to-markdown plugin, this is no longer necessary
-		.pipe(replace('####', '\n* * *\n####'))
-		.pipe(replace(/^[\s\S]*?(?:###class: )/, '##API\n###')) //https://regex101.com/r/hO4fW4/2
+		.pipe(replace('###', '\n* * *\n####'))
+		.pipe(replace(/^[\s\S]*?(?:##domJSON)/, '##API')) //https://regex101.com/r/hO4fW4/2
 		.pipe(gulp.dest('./docs'))
 });
 

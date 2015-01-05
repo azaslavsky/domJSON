@@ -29,15 +29,19 @@
 	"use strict";
 
 	/** 
-	 * A global variable to store domJSON
-	 * @namespace
+	 * domJSON is a global variable to store two methods: `.toJSON()` to convert a DOM Node into a JSON object, and `.toDOM()` to turn that JSON object back into a DOM Node
+	 * @namespace domJSON
 	 * @global
 	 */
 	var domJSON = {};
 
 
 
-	//The default metadata for a JSON object
+	/** 
+	 * Default metadata for a JSON object
+	 * @private
+	 * @ignore
+	 */
 	var metadata = {
 		domain: win.location.href || null,
 		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
@@ -46,7 +50,11 @@
 	
 	
 	
-	//Default options for creating the JSON object
+	/** 
+	 * Default options for creating the JSON object
+	 * @private
+	 * @ignore
+	 */
 	var defaultsForToJSON = {
 		absolute: {
 			base: win.location.origin + '/',
@@ -70,14 +78,22 @@
 
 
 
-	//Default options for creating a DOM node from a previously generated domJSON object
+	/** 
+	 * Default options for creating a DOM node from a previously generated domJSON object
+	 * @private
+	 * @ignore
+	 */
 	var defaultsForToDOM = {
 		noMeta: false
 	};
 
 
 
-	//A list of disallowed HTMLElement tags - there is no flexibility here, these cannot be processed by domJSON for security reasons!
+	/** 
+	 * A list of disallowed HTMLElement tags - there is no flexibility here, these cannot be processed by domJSON for security reasons!
+	 * @private
+	 * @ignore
+	 */
 	var banned = [
 		'link',
 		'script'
@@ -85,7 +101,11 @@
 
 
 
-	//A list of node properties that must be copied if they exist; there is no user option that will remove these
+	/** 
+	 * A list of node properties that must be copied if they exist; there is no user option that will remove these
+	 * @private
+	 * @ignore
+	 */
 	var required = [
 		'nodeType',
 		'nodeValue',
@@ -94,7 +114,11 @@
 	
 	
 	
-	//A list of node properties to specifically avoid simply copying; there is no user option that will allow these to be copied directly
+	/** 
+	 * A list of node properties to specifically avoid simply copying; there is no user option that will allow these to be copied directly
+	 * @private
+	 * @ignore
+	 */
 	var ignored = [
 		'attributes',
 		'childNodes',
@@ -106,7 +130,11 @@
 	
 	
 	
-	//A list of serialized read-only nodes to ignore; is ovewritten if the user specifies the "filter" option
+	/** 
+	 * A list of serialized read-only nodes to ignore; these can ovewritten if the user specifies the "filter" option
+	 * @private
+	 * @ignore
+	 */
 	var serials = [
 		'innerHTML',
 		'innerText',
@@ -282,7 +310,15 @@
 
 
 
-	//Check if the supplied attribute contains a path, and convert it from a relative path to an absolute; some code shamelessly copped from here: http://stackoverflow.com/a/14780463/2230156
+	/**
+	 * Check if the supplied attribute contains a path, and convert it from a relative path to an absolute; some code shamelessly copped from here: http://stackoverflow.com/a/14780463/2230156
+	 * @param {Node} node The DOM Node whose path containing attributes will be converted to absolute paths
+	 * @param {string} name The name of the attribute to try and convert
+	 * @param {string} value The value of that attribute
+	 * @param {Object} settings The previously specified path conversion settings
+	 * @private
+	 * @ignore
+	*/
 	var toAbsolute = function(node, name, value, settings) {
 		if (settings.keys.indexOf(name) !== -1){
 			if (node[name]){
@@ -328,7 +364,13 @@
 
 
 
-	//Create a copy of a node's properties
+	/**
+	 * Create a copy of a node's properties, ignoring nasty things like event handles and functions
+	 * @param {Node} node The DOM Node whose properties will be copied
+	 * @param {Object} [opts] The options object passed down from the .toJSON() method; includes all options, even those not relevant to this function
+	 * @private
+	 * @ignore
+	*/
 	var copyJSON = function(node, opts) {
 		var copy = {};
 		//Copy all of the node's properties
@@ -355,7 +397,13 @@
 
 
 
-	//Convert the attributes property of a DOM Node to a JSON ready object
+	/**
+	 * Convert the attributes property of a DOM Node to a JSON ready object
+	 * @param {Node} node The DOM Node whose attributes will be copied
+	 * @param {Object} [opts] The options object passed down from the .toJSON() method; includes all options, even those not relevant to this function
+	 * @private
+	 * @ignore
+	*/
 	var attrJSON = function(node, opts) {
 		var attributes = {};
 		var attr = node.attributes;
@@ -382,7 +430,13 @@
 
 
 
-	//Convert the style property of a DOM Node to a JSON ready object
+	/**
+	 * Grab a DOM Node's computed style
+	 * @param {Node} node The DOM Node whose computed style will be calculated
+	 * @param {Object} [opts] The options object passed down from the .toJSON() method; includes all options, even those not relevant to this function
+	 * @private
+	 * @ignore
+	*/
 	var styleJSON = function(node, opts) {
 		//Grab the computed style
 		var style, css = {};
@@ -406,7 +460,14 @@
 	
 	
 	
-	//Convert a cloned DOM node to a simple object
+	//Convert a single DOM node into a simple object
+	/**
+	 * Convert a single DOM Node into a simple object
+	 * @param {Node} node The DOM Node that will be converted
+	 * @param {Object} [opts] The options object passed down from the .toJSON() method; includes all options, even those not relevant to this function
+	 * @private
+	 * @ignore
+	*/
 	var toJSON = function(node, opts, depth) {
 		var style, kids, kidCount, thisChild, children, copy = copyJSON(node, opts);
 
@@ -453,27 +514,29 @@
 	
 	/**
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
-	 * @param {DOMNode} node The actual DOM Node in to be parsed
+	 * @param {Node} node The actual DOM Node in to be parsed
 	 * @param {Object} [opts] A list of all method options
 	 * @param {Object|Boolean} [opts.absolute=false] Specify attributes for which relative paths are to be converted to absolute
 	 * @param {string} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the domain origin
- 	 * @param {boolean} [opts.absolute.action=false] TRUE means relative paths in "action" attributes are converted to absolute paths
- 	 * @param {boolean} [opts.absolute.data=false] TRUE means relative paths in "data" attributes are converted to absolute paths
-	 * @param {boolean} [opts.absolute.href=false] TRUE means relative paths in "href" attributes are converted to absolute paths
-	 * @param {boolean} [opts.absolute.style=false] TRUE means relative paths in "style" attributes are converted to absolute paths
-	 * @param {boolean} [opts.absolute.src=false] TRUE means relative paths in "src" attributes are converted to absolute paths
-	 * @todo {boolean} [opts.absolute.other=false] TRUE means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
-	 * @param {boolean|string[]} [opts.attributes=true] TRUE to copy all attribute key-value pairs, or specify an ARRAY of keys to boolean search
-	 * @param {boolean|string[]} [opts.computedStyle=false] TRUE parse the results of "window.getComputedStyle()"" on every node (specify an ARRAY of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
-	 * @param {boolean} [opts.cull=false] TRUE to ignore empty element properties
-	 * @param {boolean|number} [opts.deep=true] TRUE to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {string[]|boolean} [opts.filter=false] An ARRAY of all the non-required properties to be copied
-	 * @param {boolean} [opts.htmlOnly=false] TRUE to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if opts.deep is FALSE
+ 	 * @param {boolean} [opts.absolute.action=false] `true` means relative paths in "action" attributes are converted to absolute paths
+ 	 * @param {boolean} [opts.absolute.data=false] `true` means relative paths in "data" attributes are converted to absolute paths
+	 * @param {boolean} [opts.absolute.href=false] `true` means relative paths in "href" attributes are converted to absolute paths
+	 * @param {boolean} [opts.absolute.style=false] `true` means relative paths in "style" attributes are converted to absolute paths
+	 * @param {boolean} [opts.absolute.src=false] `true` means relative paths in "src" attributes are converted to absolute paths
+	 * @todo {boolean} [opts.absolute.other=false] `true` means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
+	 * @param {boolean|string[]} [opts.attributes=true] `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
+	 * @param {boolean|string[]} [opts.computedStyle=false] `true` parse the results of "window.getComputedStyle()"" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
+	 * @param {boolean} [opts.cull=false] `true` to ignore empty element properties
+	 * @param {boolean|number} [opts.deep=true] `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
+	 * @param {string[]|boolean} [opts.filter=false] An `Array` of all the non-required properties to be copied
+	 * @param {boolean} [opts.htmlOnly=false] `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
 	 * @param {boolean} [opts.metadata=false] Output a special object of the domJSON class, which includes metadata about this operation
-	 * @todo {string[]|boolean} [opts.parse=false] An ARRAY of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {boolean|string[]} [opts.serials=true] TRUE to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an ARRAY of serials (no boolean search!)
+	 * @todo {string[]|boolean} [opts.parse=false] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @param {boolean|string[]} [opts.serials=true] `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!)
 	 * @param {boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
 	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
+	 * @method
+	 * @memberof domJSON
 	*/
 	domJSON.toJSON = function(node, opts) {
 		var copy, keys = [], options = {}, output = {};
@@ -545,7 +608,14 @@
 
 
 
-	//Create a node based on a given node type
+	/**
+	 * Create a node based on a given nodeType
+	 * @param {number} type The type of DOM Node (only the integers 1, 3, 7, 8, 9, 10, 11 are valid, see https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType); currently, only nodeTypes 1,3, and 11 have been tested and are officially supported
+	 * @param {DocumentFragment} doc The document fragment to which this newly created DOM Node will be added
+	 * @param {Object} data The saved DOM properties that are part of the JSON representation of this DOM Node
+	 * @private
+	 * @ignore
+	*/
 	var createNode = function(type, doc, data) {
 		if (doc instanceof DocumentFragment) {
 			doc = doc.ownerDocument;
@@ -594,7 +664,15 @@
 
 
 
-	//Convert a JSON object/string generated by domJSON to a DOM Node
+	//Recursively convert a JSON object generated by domJSON to a DOM Node
+	/**
+	 * Do the work of converting a JSON object/string generated by domJSON to a DOM Node
+	 * @param {Object} obj The JSON representation of the DOM Node we are about to create
+	 * @param {HTMLElement} parent The HTML Element to which this DOM Node will be appended
+	 * @param {DocumentFragment} doc The document fragment to which this newly created DOM Node will be added
+	 * @private
+	 * @ignore
+	*/
 	var toDOM = function(obj, parent, doc) {
 		//Create the node, if possible
 		if (obj.nodeType) {
@@ -639,11 +717,13 @@
 
 
 	/**
-	 * Take the JSON-friendly object created by the toJSON() method and rebuild it back into a DOM Node
+	 * Take the JSON-friendly object created by the `.toJSON()` method and rebuild it back into a DOM Node
 	 * @param {Object} obj A JSON friendly object, or even JSON string, of some DOM Node
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean} [opts.noMeta] TRUE means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
-	 * @return {DocumentFragment} A DocumentFragment (nodeType 11) containing the result of unpacking the input "obj"
+	 * @param {boolean} [opts.noMeta] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
+	 * @return {DocumentFragment} A `DocumentFragment` (nodeType 11) containing the result of unpacking the input `obj`
+	 * @method
+	 * @memberof domJSON
 	*/
 	domJSON.toDOM = function(obj, opts) {
 		var options, node;
