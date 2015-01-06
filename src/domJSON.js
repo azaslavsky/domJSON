@@ -420,7 +420,7 @@
 		//Copy all of the node's properties
 		for (var n in node){
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
-			if (node.hasOwnProperty(n) && typeof node[n] !== 'function') {
+			if (typeof node[n] !== 'undefined' && typeof node[n] !== 'function' && n.charAt(0).toLowerCase() === n.charAt(0)) {
 				//Only allowed objects are arrays
 				if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
 					//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
@@ -523,7 +523,7 @@
 		}
 
 		//Copy all attributes and styles, if allowed
-		if (opts.attributes && node.hasOwnProperty('attributes')) { 
+		if (opts.attributes && node.attributes) { 
 			copy.attributes = attrJSON(node, opts);
 		}
 		if (opts.computedStyle && (style = styleJSON(node, opts))) {
@@ -721,8 +721,12 @@
 
 		//Copy all available properties that are not arrays or objects
 		for (var x in obj) {
-			if (!(obj[x] instanceof Object)) {
-				node[x] = obj[x];
+			if (!(obj[x] instanceof Object) && x !== 'isContentEditable') {
+				try {
+					node[x] = obj[x];
+				} catch(e) {
+					continue;
+				}
 			}
 		}
 
