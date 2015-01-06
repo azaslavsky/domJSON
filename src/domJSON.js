@@ -505,17 +505,17 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean|string[]} [opts.absolutePaths=['action', 'data', 'href', 'src']] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
-	 * @param {boolean|string[]} [opts.attributes=true] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
-	 * @param {boolean|string[]} [opts.computedStyle=false] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
-	 * @param {boolean} [opts.cull=false] Use `true` to ignore empty element properties
-	 * @param {boolean|number} [opts.deep=true] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {string[]|boolean} [opts.filter=false] An `Array` of all the non-required properties to be copied
-	 * @param {boolean} [opts.htmlOnly=false] Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
-	 * @param {boolean} [opts.metadata=false] Output a special object of the domJSON class, which includes metadata about this operation
-	 * @todo {string[]|boolean} [opts.parse=false] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {boolean|string[]} [opts.serials=true] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!)
-	 * @param {boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
+	 * @param {boolean|string[]} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
+	 * @param {boolean|string[]} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
+	 * @param {boolean|string[]} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
+	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
+	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
+	 * @param {string[]|boolean} [opts.filter=`false`] An `Array` of all the non-required properties to be copied
+	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
+	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
+	 * @todo {string[]|boolean} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @param {boolean|string[]} [opts.serials=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!)
+	 * @param {boolean} [opts.stringify=`false`] Output a JSON string, or just a JSON-ready javascript object?
 	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
 	 * @method
 	 * @memberof domJSON
@@ -689,7 +689,7 @@
 	 * Take the JSON-friendly object created by the `.toJSON()` method and rebuild it back into a DOM Node
 	 * @param {Object} obj A JSON friendly object, or even JSON string, of some DOM Node
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean} [opts.noMeta] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
+	 * @param {boolean} [opts.noMeta=`false`] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
 	 * @return {DocumentFragment} A `DocumentFragment` (nodeType 11) containing the result of unpacking the input `obj`
 	 * @method
 	 * @memberof domJSON
