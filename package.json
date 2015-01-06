@@ -34,7 +34,7 @@
     "LICENSE.md"
   ],
   "devDependencies": {
-    "fs-extra": "~0.13.0",
+    "fs-extra": "^0.14.0",
     "gulp": "~3.8.8",
     "gulp-bump": "~0.1.11",
     "gulp-concat": "~2.4.1",

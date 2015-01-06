@@ -460,7 +460,6 @@
 	
 	
 	
-	//Convert a single DOM node into a simple object
 	/**
 	 * Convert a single DOM Node into a simple object
 	 * @param {Node} node The DOM Node that will be converted
@@ -514,7 +513,7 @@
 	
 	/**
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
-	 * @param {Node} node The actual DOM Node in to be parsed
+	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
 	 * @param {Object|Boolean} [opts.absolute=false] Specify attributes for which relative paths are to be converted to absolute
 	 * @param {string} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the domain origin
@@ -746,8 +745,8 @@
 
 
 
-	//The code below is only included for private API testing, and needs to be removed in distributed builds
 	/* test-code */
+	//The code below is only included for private API testing, and needs to be removed in distributed builds
 	domJSON.__extend = extend;
 	domJSON.__unique = unique;
 	domJSON.__copy = copy;

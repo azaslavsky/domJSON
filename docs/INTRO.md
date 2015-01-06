@@ -10,7 +10,7 @@ Convert DOM trees into compact JSON objects, and vice versa, as fast as possible
 
 ## Installation
 
-Installing hashMate is easy.  You can pull it from Bower...
+Installing domJSON is easy.  You can pull it from Bower...
 
 ```
 bower install domjson
