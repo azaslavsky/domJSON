@@ -5,9 +5,15 @@ domJSON
 Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.
 
 ## Jump To
+* [Description](#description)
 * [Installation](#installation)
+* [Demos](#demos)
+* [Usage](#usage)
 * [FilterLists](#filterlists)
 * [API](#api)
+* [Performance](#performance)
+* [Tests](#tests)
+* [Contributing](#contributing)
 * [License](#license)
 
 ## Installation
@@ -30,10 +36,54 @@ or just download this repo manually and include the file as a dependency.
 <script src="./lib/domJSON.js"></script>
 ```
 
+## Description
 
-##FilterLists
+The purpose of domJSON is create very accurate representations of the DOM as JSON, and to do it very quickly.  While many uses could be imagined for the project, two stick out in my mind.  The first is as a front-end debugging or snapshotting tool, but allowing end users to send reports that include "snashots" of the DOM (including computed CSS) at any given point in time.  The second is as a poor man's [virtual DOM](http://stackoverflow.com/a/21117404/2230156).  In theory, rather than updating the DOM piecemeal, forcing a redraw each time, developers can grab a branch of the DOM tree, convert it to JSON, make all of the changes in JS (much more performant than the DOM), then re-build the DOM and replace the branch they were working on with the updated segment.  I'm sure there are even more use cases for JSON representations of the DOM that I'm not even considering, but these are the two that stick out in my mind.
 
-A `FilterList` is a custom type for certain options passed to domJSON's [`.toJSON()` method](#domJSON.toJSON).  It allows for very granular control over which fields are included in the final JSON output, allowing developers to eliminate useless information from the result, and produce extremely compact JSON objects.  It operates based on boolean logic: an _inclusive_ `FilterList` allows the developer to explicity sepcify which fields they would like to see in the output, while an _exclusive_ `FilterList` allows them to specify which fields they would like to omity (e.g., "Copy every available field _except_ X, Y, and Z").  The `FilterList` accepts an object as an argument, or a shorthand array (which is the recommended style, since it's much less verbose).
+Broadly speaking, the goals of this project are:
+
+* Provide as accurate a copy of a given node's DOM properties as possible, but allow option filtering to remove useless information
+* Be able to rebuild JSON nodes into DOM nodes as performantly as possible
+* Speed, speed, speed
+* No frivolous data: produce JSON objects that are as compact as possible, removing all information not relevant to the developer
+* Keep the library lightweight, with no dependencies
+
+## Demos
+
+Coming soon...
+
+## Usage
+
+Using domJSON is super simple: use the [`.toJSON()`](#domJSON.toJSON) method to create a JSON representation of the DOM tree:
+
+```javascript
+var someDOMElement = document.getElementById('sampleId');
+var jsonOutput = domJSON.toJSON(myDiv);
+```
+
+And then rebuild the DOM Node from that JSON using [`.toDOM()`](#domJSON.toDOM):
+
+```javascript
+var DOMDocumentFragment = domJSON.toDOM(jsonOutput);
+someDOMElement.parentNode.replaceChild(someDOMElement, DOMDocumentFragment);
+```
+When creating the JSON object, there are many precise options available, ensuring that developers can produce very specific and compact outputs.  For example, the following will produce a JSON copy of `someDOMElement`'s DOM tree that is only two levels deep, contains no "offset*," "client*," or "scroll*" type DOM properties, only keeps the "id" attribute on each DOM Node, and outputs a string (rather than a JSON-friendly object):
+
+```javascript
+var jsonOutput = domJSON.toJSON(myDiv, {
+	attributes: ['id'],
+	domProperties: {
+		exclude: true,
+		values: ['clientHeight', 'clientLeft', 'clientTop', 'offsetWidth', 'offsetHeight', 'offsetLeft', 'offsetTop', 'offsetWidth', 'scrollHeight', 'scrollLeft', 'scrollTop', 'scrollWidth']
+	},
+	deep: 2,
+	stringify: true
+});
+```
+
+## FilterLists
+
+A `FilterList` is a custom type for certain options passed to domJSON's [`.toJSON()`](#domJSON.toJSON) method.  It allows for very granular control over which fields are included in the final JSON output, allowing developers to eliminate useless information from the result, and produce extremely compact JSON objects.  It operates based on boolean logic: an _inclusive_ `FilterList` allows the developer to explicity sepcify which fields they would like to see in the output, while an _exclusive_ `FilterList` allows them to specify which fields they would like to omity (e.g., "Copy every available field _except_ X, Y, and Z").  The `FilterList` accepts an object as an argument, or a shorthand array (which is the recommended style, since it's much less verbose).
 
 Take this example: suppose we have a single `div` that we would like to convert into a JSON object using domJSON.  It looks like this in its native HTML:
 
@@ -178,6 +228,41 @@ Take the JSON-friendly object created by the `.toJSON()` method and rebuild it b
 
 **Returns**: <code>DocumentFragment</code> - A `DocumentFragment` (nodeType 11) containing the result of unpacking the input `obj`  
 
+
+## Performance
+A major goal of this library is performance.  That being said, there is one way to _significantly_ slow it down: setting `opts.computedStyle` to `true`.  This forces the browser to run [`window.getComputedStyle()`](https://developer.mozilla.org/en-US/docs/Web/API/Window.getComputedStyle) on every node in the DOM Tree, which is [really, really slow](http://jsperf.com/getcomputedstyle-vs-style-vs-css/2), since it forces a redraw _each time it does it!_  Obviously, there are situations where this you need the computed style and this performance hit is unavoidable, but otherwise, keep `opts.computedStyle` set to `false`.  Beides that, I'm working on writing some benchmark tests to give developers an idea of how each option affects the speed of domJSON, but this will take some time!
+
+## Tests
+
+You can give the test suite for domJSON a quick run through in the browser of your choice [here](http://cdn.rawgit.com/azaslavsky/domJSON/v0.1.0/test/jasmine.html).  You can also view results from local [Chrome tests](http://cdn.rawgit.com/azaslavsky/domJSON/master/test/results/spec/chrome.html), or the entire [browser compatibility suite](http://cdn.rawgit.com/azaslavsky/domJSON/master/test/results/spec/compatibility.html).
+
+## Contributing
+
+Feel free to pull and contribute!  If you do, please make a separate branch on your Pull Request, rather than pushing your changes to the Master.  It would also be greatly appreciated if you ran the appropriate tests before submitting the request (there are three sets, listed below).
+
+For unit testing the Chrome browser, which is the most basic target for functionality, type the following in the CLI:
+
+```
+gulp unit-chrome
+```
+
+To record the code coverage after your changes, use:
+
+```
+gulp coverage
+```
+
+And, if you have them all installed and are feeling so kind, you can also do the entire browser compatibility suite (Chrome, Canary, Firefox ESR, Firefox Developer Edition, IE 11, IE 10):
+
+```
+gulp unit-browsers
+```
+
+If you make changes that you feel need to be documented in the readme, please update the relevant files in the `/docs` directory, then run:
+
+```
+gulp docs
+```
 ##License
 
 The MIT License (MIT)

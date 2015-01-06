@@ -1,7 +1,36 @@
 
-##FilterLists
+## Usage
 
-A `FilterList` is a custom type for certain options passed to domJSON's [`.toJSON()` method](#domJSON.toJSON).  It allows for very granular control over which fields are included in the final JSON output, allowing developers to eliminate useless information from the result, and produce extremely compact JSON objects.  It operates based on boolean logic: an _inclusive_ `FilterList` allows the developer to explicity sepcify which fields they would like to see in the output, while an _exclusive_ `FilterList` allows them to specify which fields they would like to omity (e.g., "Copy every available field _except_ X, Y, and Z").  The `FilterList` accepts an object as an argument, or a shorthand array (which is the recommended style, since it's much less verbose).
+Using domJSON is super simple: use the [`.toJSON()`](#domJSON.toJSON) method to create a JSON representation of the DOM tree:
+
+```javascript
+var someDOMElement = document.getElementById('sampleId');
+var jsonOutput = domJSON.toJSON(myDiv);
+```
+
+And then rebuild the DOM Node from that JSON using [`.toDOM()`](#domJSON.toDOM):
+
+```javascript
+var DOMDocumentFragment = domJSON.toDOM(jsonOutput);
+someDOMElement.parentNode.replaceChild(someDOMElement, DOMDocumentFragment);
+```
+When creating the JSON object, there are many precise options available, ensuring that developers can produce very specific and compact outputs.  For example, the following will produce a JSON copy of `someDOMElement`'s DOM tree that is only two levels deep, contains no "offset*," "client*," or "scroll*" type DOM properties, only keeps the "id" attribute on each DOM Node, and outputs a string (rather than a JSON-friendly object):
+
+```javascript
+var jsonOutput = domJSON.toJSON(myDiv, {
+	attributes: ['id'],
+	domProperties: {
+		exclude: true,
+		values: ['clientHeight', 'clientLeft', 'clientTop', 'offsetWidth', 'offsetHeight', 'offsetLeft', 'offsetTop', 'offsetWidth', 'scrollHeight', 'scrollLeft', 'scrollTop', 'scrollWidth']
+	},
+	deep: 2,
+	stringify: true
+});
+```
+
+## FilterLists
+
+A `FilterList` is a custom type for certain options passed to domJSON's [`.toJSON()`](#domJSON.toJSON) method.  It allows for very granular control over which fields are included in the final JSON output, allowing developers to eliminate useless information from the result, and produce extremely compact JSON objects.  It operates based on boolean logic: an _inclusive_ `FilterList` allows the developer to explicity sepcify which fields they would like to see in the output, while an _exclusive_ `FilterList` allows them to specify which fields they would like to omity (e.g., "Copy every available field _except_ X, Y, and Z").  The `FilterList` accepts an object as an argument, or a shorthand array (which is the recommended style, since it's much less verbose).
 
 Take this example: suppose we have a single `div` that we would like to convert into a JSON object using domJSON.  It looks like this in its native HTML:
 
