@@ -52,7 +52,7 @@
 	 * @ignore
 	 */
 	var metadata = {
-		domain: win.location.href || null,
+		href: win.location.href || null,
 		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
 		version: /* version */'0.1.0'/* end-version */
 	};
@@ -617,8 +617,19 @@
 		//Wrap our copy object in a nice object of its own to save some metadata
 		if (options.metadata) {
 			output.meta = extend({}, metadata, {
-				options: options,
-				clock: new Date().getTime() - timer
+				clock: new Date().getTime() - timer,
+				date: new Date().toISOString(),
+				dimensions: {
+					inner: {
+						x: window.innerWidth,
+						y: window.innerHeight
+					},
+					outer: {
+						x: window.outerWidth,
+						y: window.outerHeight
+					}
+				},
+				options: options
 			});
 			output.node = copy;
 		} else {
