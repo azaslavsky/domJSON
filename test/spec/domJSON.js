@@ -443,6 +443,62 @@
 
 
 
+				describe('about metadata output', function(){
+					it('should note the version number domJSON when the operation was performed', function(){
+						var result = domJSON.toJSON(containerNode);
+
+						expect(result.meta.version.split('.')).toBeArrayOfSize(3);
+					});
+
+					it('should sotre the options used to generate this JSON object', function(){
+						var result = domJSON.toJSON(containerNode);
+
+						expect(result.meta.options.metadata).toBeTrue();
+					});
+
+					it('should note the UTC time when the operation was performed', function(){
+						var result = domJSON.toJSON(containerNode);
+						var timestamp = new Date(result.meta.date).getTime();
+
+						expect(timestamp).toBeGreaterThan(new Date().getTime() - 10);
+					});
+
+					it('should note how long it took to perform the operation', function(){
+						var result = domJSON.toJSON(containerNode);
+
+						expect(result.meta.clock).toMatch(/\d{1,}/);
+					});
+
+					it('should note the domain of the browser when the operation was performed', function(){
+						var result = domJSON.toJSON(containerNode);
+
+						expect(result.meta.href).toBe(window.location.href);
+					});
+
+					it('should note the userAgent information when the operation was performed', function(){
+						var result = domJSON.toJSON(containerNode);
+
+						expect(result.meta.userAgent).toBe(window.navigator.userAgent);
+					});
+
+					it('should note both the inner and outer dimensions of the window when the operation was performed', function(){
+						var result = domJSON.toJSON(containerNode);
+
+						expect(result.meta.dimensions).toEqual({
+							inner: {
+								x: window.innerWidth,
+								y: window.innerHeight
+							},
+							outer: {
+								x: window.outerWidth,
+								y: window.outerHeight
+							}
+						});
+					});
+				});
+
+
+
 				describe('about recursion depth control', function(){
 					it('should be able to ignore child nodes if requested (aka, no recursion)', function(){
 						var result = domJSON.toJSON(containerNode, {
