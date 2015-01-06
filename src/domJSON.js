@@ -723,7 +723,7 @@
 	domJSON.__boolFilter = boolFilter;
 	domJSON.__boolInter = boolInter;
 	domJSON.__boolDiff = boolDiff;
-	domJSON.__toAbsolute = toAbsolute;
+	domJSON.__toShorthand = toShorthand;
 	/* end-test-code */
 
 	return domJSON;

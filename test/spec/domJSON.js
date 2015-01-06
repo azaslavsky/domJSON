@@ -8,8 +8,69 @@
 		$('body').append(testArea);
 
 		describe('private utility APIs', function(){
-			/*describe('FieldSpec custom typing', function(){
-			});*/
+			describe('FilterList custom type processing', function(){
+				it('should return a boolean if provided one', function(){
+					expect(domJSON.__toShorthand(true)).toBe(true);
+					expect(domJSON.__toShorthand(false)).toBe(false);
+				});
+
+				it('should return true if provided a truthy value that isn\'t an object', function(){
+					expect(domJSON.__toShorthand(1234)).toBe(true);
+					expect(domJSON.__toShorthand('abcd')).toBe(true);
+					expect(domJSON.__toShorthand(function(){})).toBe(true);
+				});
+
+				it('should return false if provided falsey value, or an invalid object (no "values" property)', function(){
+					expect(domJSON.__toShorthand(null)).toBe(false);
+					expect(domJSON.__toShorthand()).toBe(false);
+					expect(domJSON.__toShorthand(0)).toBe(false);
+					expect(domJSON.__toShorthand('')).toBe(false);
+					expect(domJSON.__toShorthand({})).toBe(false);
+					expect(domJSON.__toShorthand({
+						exclude: true,
+						val: ['abc']
+					})).toBe(false);
+					expect(domJSON.__toShorthand({
+						exclude: true,
+						values: []
+					})).toBe(false);
+					expect(domJSON.__toShorthand({
+						exclude: true,
+						values: [true, 345, function(){}]
+					})).toBe(false);
+				});
+
+				it('should return a shorthand array if provided a valid object', function(){
+					expect(domJSON.__toShorthand({
+						exclude: true,
+						values: ['a', 'b', 'c']
+					})).toEqual([true, 'a', 'b', 'c']);
+					expect(domJSON.__toShorthand({
+						exclude: false,
+						values: ['a', 'b', 'c']
+					})).toEqual(['a', 'b', 'c']);
+					expect(domJSON.__toShorthand({
+						values: ['a', 'b', 'c']
+					})).toEqual(['a', 'b', 'c']);
+				});
+
+				it('should return a shorthand array if provided a shorthand array', function(){
+					expect(domJSON.__toShorthand(['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
+					expect(domJSON.__toShorthand([false, 'a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
+					expect(domJSON.__toShorthand([true, 'a', 'b', 'c'])).toEqual([true, 'a', 'b', 'c']);
+				});
+
+				it('should clean input arrays, and only return strings and shorthand exclude booleans in the output array', function(){
+					expect(domJSON.__toShorthand({
+						exclude: true,
+						values: ['a', 'b', 'c', true, 1234]
+					})).toEqual([true, 'a', 'b', 'c']);
+					expect(domJSON.__toShorthand({
+						values: ['a', 'b', 'c', true, 1234]
+					})).toEqual(['a', 'b', 'c']);
+					expect(domJSON.__toShorthand([true, 'a', 'b', 'c', true, 1234])).toEqual([true, 'a', 'b', 'c']);
+				});
+			});
 
 
 
@@ -536,6 +597,7 @@
 					});
 
 					it('should be able to exclude a specific set of serialized DOM properties, overriding other property filters', function(){
+						debugger;
 						var result = domJSON.toJSON(containerNode, {
 							serialProperties: [false, 'innerText', 'outerHTML', 'textContent']
 						});
@@ -580,7 +642,9 @@
 
 					it('should be able to include a set of HTML attributes, as specified by an array', function(){
 						var result = domJSON.toJSON(containerNode, {
-							attributes: ['data-test-a', 'data-test-c', 'style']
+							attributes: {
+								values: ['data-test-a', 'data-test-c', 'style']
+							}
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('foo');
@@ -596,7 +660,10 @@
 
 					it('should be able to exclude a set of HTML attributes, as specified by an array', function(){
 						var result = domJSON.toJSON(containerNode, {
-							attributes: [true, 'data-test-a', 'data-test-c', 'style']
+							attributes: {
+								exclude: true,
+								values: ['data-test-a', 'data-test-c', 'style']
+							}
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBeUndefined();
@@ -713,7 +780,10 @@
 
 					it('should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absolutePaths: ['data-test-a', 'href', 'action']
+							absolutePaths: {
+								exclude: false,
+								values: ['data-test-a', 'href', 'action']
+							}
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe(window.location.origin +'/fake.html');
@@ -728,7 +798,10 @@
 
 					it('should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absolutePaths: [true, 'data-test-a', 'href', 'action']
+							absolutePaths: {
+								exclude: true,
+								values: ['data-test-a', 'href', 'action']
+							}
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('../fake.html');
