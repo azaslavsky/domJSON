@@ -3,7 +3,7 @@
  *
  * @fileOverview
  * @author  Alex Zaslavsky
- * @version 0.3
+ * @version 0.1.0
  * @license The MIT License: Copyright (c) 2013 Alex Zaslavsky
  */
 
@@ -56,14 +56,8 @@
 	 * @ignore
 	 */
 	var defaultsForToJSON = {
-		absolute: {
-			base: win.location.origin + '/',
-			action: false,
-			href: false,
-			style: false,
-			src: false,
-			other: false
-		},
+		absolutePaths: ['action', 'data', 'href', 'src'],
+		//absStylePaths: ['attr', 'background', 'background-image', 'border-image', 'border-image-source', 'content', 'list-style-image', 'mask-image'], //http://stackoverflow.com/questions/27790925/what-are-all-the-css3-properties-that-accept-urls-or-uris
 		attributes: true,
 		computedStyle: false,
 		cull: true,
@@ -311,55 +305,55 @@
 
 
 	/**
-	 * Check if the supplied attribute contains a path, and convert it from a relative path to an absolute; some code shamelessly copped from here: http://stackoverflow.com/a/14780463/2230156
-	 * @param {Node} node The DOM Node whose path containing attributes will be converted to absolute paths
-	 * @param {string} name The name of the attribute to try and convert
-	 * @param {string} value The value of that attribute
-	 * @param {Object} settings The previously specified path conversion settings
+	 * Check if the supplied string value is a relative path, and convert it to an absolute one if necessary; the segment processing paths leading with "../" was inspired by: http://stackoverflow.com/a/14780463/2230156
+	 * @param {string} value The value that might be a relative path, and would thus need conversion
+	 * @param {Object} origin The origin URL from which to which non-absolute paths are relative
 	 * @private
 	 * @ignore
 	*/
-	var toAbsolute = function(node, name, value, settings) {
-		if (settings.keys.indexOf(name) !== -1){
-			if (node[name]){
-				//We can just grab the compiled URL directly from the DOM element - easy peasy
-				var sub = node[name].indexOf(value);
-				if (sub !== -1) {
-					return node[name];
-				}
+	var toAbsolute = function(value, origin) {
+		var protocol, stack, parts;
+		//Sometimes, we get lucky and the DOM Node we're working on already has the absolute URL as a DOM property, so we can just use that
+		/*if (node[name]){
+			//We can just grab the compiled URL directly from the DOM element - easy peasy
+			var sub = node[name].indexOf(value);
+			if (sub !== -1) {
+				return node[name];
 			}
+		}*/
 
-			//Check to make sure we don't already have an absolute path, or even a dataURI
-			if ( value.match(/(?:^data\:|^[\w\-\+\.]*?\:\/\/|^\/\/)/i) ){
-				return value;
-			}
-
-			//If we are using the root URL, start from there
-			if ( value.substr(0,1) === '/' ){
-				return settings.base + value.substr(1);
-			}
-
-			//Gotta do it the hard way and figure this sucker out...
-			var stack = settings.base.split('/');
-			var parts = value.split('/');
-
-			//The value after the last slash is ALWAYS considered a filename, not a directory, so always have trailing slashes on paths ending at directories!
-			stack.pop();
-
-			//Cycle through the relative path, changing the stack as we go
-			for (var i=0; i<parts.length; i++) {
-				if (parts[i] == '.') {
-					continue;
-				}
-				if (parts[i] == '..') {
-					stack.pop();
-				} else {
-					stack.push(parts[i]);
-				}
-			}
-			return stack.join('/');
+		//Check to make sure we don't already have an absolute path, or even a dataURI
+		if ( value.match(/(?:^data\:|^[\w\-\+\.]*?\:\/\/|^\/\/)/i) ){
+			return value;
 		}
-		return value;
+
+		//If we are using the root URL, start from there
+		if ( value.charAt(0) === '/' ){
+			return origin + value.substr(1);
+		}
+
+		//Uh-oh, the relative path is leading with a single or double dot ("./" or "../"); things get a bit harder...
+		protocol = origin.indexOf('://') > -1 ? origin.substring(0, origin.indexOf('://') + 3) : '';
+		stack = (protocol.length ? origin.substring(protocol.length) : origin).split('/');
+		parts = value.split('/');
+
+		//The value after the last slash is ALWAYS considered a filename, not a directory, so always have trailing slashes on paths ending at directories!
+		stack.pop();
+
+		//Cycle through the relative path, changing the stack as we go
+		for (var i=0; i<parts.length; i++) {
+			if (parts[i] == '.') {
+				continue;
+			}
+			if (parts[i] == '..') {
+				if (stack.length > 1) {
+					stack.pop();
+				}
+			} else {
+				stack.push(parts[i]);
+			}
+		}
+		return (protocol + stack.join('/'));
 	};
 
 
@@ -408,23 +402,19 @@
 		var attributes = {};
 		var attr = node.attributes;
 		var length = attr.length;
+		var absAttr;
 
-		//Are we going to replace relative paths?
-		if (opts.absolute.keys.length > 1 || (opts.absolute.keys.length === 1 && opts.absolute.keys[0] !== 'style') ) {
-			//Yes - we need to test for absolute paths
-			for (var i = 0; i < length; i++) {
-				attributes[attr[i].name] = toAbsolute(node, attr[i].name, attr[i].value, opts.absolute);
-			}
-		} else {
-			//Make a simple object storing just the attribute name-value pairs
-			for (var i = 0; i < length; i++) {
-				attributes[attr[i].name] = attr[i].value;
-			}
+		for (var i = 0; i < length; i++) {
+			attributes[attr[i].name] = attr[i].value;
+		}
+		attributes = opts.attributes ? boolFilter(attributes, opts.attributes) : null;
+
+		//Add the attributes object, converting any specified absolute paths along the way
+		absAttr = boolFilter(attributes, opts.absolutePaths);
+		for (var i in absAttr) {
+			attributes[i] = toAbsolute(absAttr[i], opts.absoluteBase);
 		}
 
-		if (opts.attributes) {
-			attributes = boolFilter(attributes, opts.attributes);
-		}
 		return attributes;
 	};
 
@@ -460,7 +450,6 @@
 	
 	
 	
-	//Convert a single DOM node into a simple object
 	/**
 	 * Convert a single DOM Node into a simple object
 	 * @param {Node} node The DOM Node that will be converted
@@ -514,26 +503,19 @@
 	
 	/**
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
-	 * @param {Node} node The actual DOM Node in to be parsed
+	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
-	 * @param {Object|Boolean} [opts.absolute=false] Specify attributes for which relative paths are to be converted to absolute
-	 * @param {string} [opts.absolute.base] The basepath from which the relative path will be "measured" to create an absolute path; will default to the domain origin
- 	 * @param {boolean} [opts.absolute.action=false] `true` means relative paths in "action" attributes are converted to absolute paths
- 	 * @param {boolean} [opts.absolute.data=false] `true` means relative paths in "data" attributes are converted to absolute paths
-	 * @param {boolean} [opts.absolute.href=false] `true` means relative paths in "href" attributes are converted to absolute paths
-	 * @param {boolean} [opts.absolute.style=false] `true` means relative paths in "style" attributes are converted to absolute paths
-	 * @param {boolean} [opts.absolute.src=false] `true` means relative paths in "src" attributes are converted to absolute paths
-	 * @todo {boolean} [opts.absolute.other=false] `true` means all fields that are NOT "acton," "data," "href", "style," or "src" will be checked for paths and converted to absolute if necessary - this operation is very expensive! **PLANNED**
-	 * @param {boolean|string[]} [opts.attributes=true] `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
-	 * @param {boolean|string[]} [opts.computedStyle=false] `true` parse the results of "window.getComputedStyle()"" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
-	 * @param {boolean} [opts.cull=false] `true` to ignore empty element properties
-	 * @param {boolean|number} [opts.deep=true] `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {string[]|boolean} [opts.filter=false] An `Array` of all the non-required properties to be copied
-	 * @param {boolean} [opts.htmlOnly=false] `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
-	 * @param {boolean} [opts.metadata=false] Output a special object of the domJSON class, which includes metadata about this operation
-	 * @todo {string[]|boolean} [opts.parse=false] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {boolean|string[]} [opts.serials=true] `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!)
-	 * @param {boolean} [opts.stringify=false] Output a JSON string, or just a JSON-ready javascript object?
+	 * @param {boolean|string[]} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
+	 * @param {boolean|string[]} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
+	 * @param {boolean|string[]} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
+	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
+	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
+	 * @param {string[]|boolean} [opts.filter=`false`] An `Array` of all the non-required properties to be copied
+	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
+	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
+	 * @todo {string[]|boolean} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @param {boolean|string[]} [opts.serials=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!)
+	 * @param {boolean} [opts.stringify=`false`] Output a JSON string, or just a JSON-ready javascript object?
 	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
 	 * @method
 	 * @memberof domJSON
@@ -543,25 +525,12 @@
 		var timer = new Date().getTime();
 		var requiring = required.slice();
 		var ignoring = ignored.slice();
+
 		//Update the default options w/ the user's custom settings
 		options = extend({}, defaultsForToJSON, opts);
 
-		//Make sure the "attributes" option is properly formatted
-		options.absolute = {
-			base: (typeof options.absolute === 'string') ? (win.location.origin + '/') : ((options.absolute.base) || (win.location.origin + '/') ),
-			action: (typeof options.absolute === 'boolean') ? options.absolute : ((options.absolute.action) || false),
-			href: (typeof options.absolute === 'boolean') ? options.absolute : ((options.absolute.href) || false),
-			style: (typeof options.absolute === 'boolean') ? options.absolute : ((options.absolute.style) || false),
-			src: (typeof options.absolute === 'boolean') ? options.absolute : ((options.absolute.src) || false),
-			other: (typeof options.absolute === 'boolean') ? options.absolute : ((options.absolute.other) || false),
-		};
-		options.absolute.other = false; //Disable "other" absolute pathing for now
-		for (var k in options.absolute) {
-			if (options.absolute[k] && k !== 'base') {
-				keys.push(k);
-			}
-		}
-		options.absolute.keys = keys;
+		//Make sure there is a base URL for absolute path conversions
+		options.absoluteBase = win.location.origin + '/';
 
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
 		if (options.serials !== true) {
@@ -635,13 +604,13 @@
 
 		case 7: //Processing Instruction
 			if (data.hasOwnProperty('target') && data.hasOwnProperty('data')) {
-				return doc.implementation.createHTMLDocument(data.target, data.data);
+				return doc.createProcessingInstruction(data.target, data.data);
 			}
 			return false;
 
 		case 8: //Comment Node
-			if (typeof data === 'string') {
-				return doc.createComment(data);
+			if (typeof data.nodeValue === 'string') {
+				return doc.createComment(data.nodeValue);
 			}
 			return doc.createComment('');
 
@@ -655,7 +624,7 @@
 			return false;
 
 		case 11: //Document Fragment
-			return doc.implementation.createDocumentFragment();
+			return doc;
 
 		default: //Failed
 			return false;
@@ -720,7 +689,7 @@
 	 * Take the JSON-friendly object created by the `.toJSON()` method and rebuild it back into a DOM Node
 	 * @param {Object} obj A JSON friendly object, or even JSON string, of some DOM Node
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean} [opts.noMeta] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
+	 * @param {boolean} [opts.noMeta=`false`] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
 	 * @return {DocumentFragment} A `DocumentFragment` (nodeType 11) containing the result of unpacking the input `obj`
 	 * @method
 	 * @memberof domJSON
@@ -746,8 +715,8 @@
 
 
 
-	//The code below is only included for private API testing, and needs to be removed in distributed builds
 	/* test-code */
+	//The code below is only included for private API testing, and needs to be removed in distributed builds
 	domJSON.__extend = extend;
 	domJSON.__unique = unique;
 	domJSON.__copy = copy;

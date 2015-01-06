@@ -112,7 +112,7 @@ gulp.task('api', function() {
 });
 
 //Make the readme file
-gulp.task('docs', /*['api'],*/ function() {
+gulp.task('docs', ['api'], function() {
 	return gulp.src(['./docs/INTRO.md', './docs/USAGE.md', './docs/API.md', './docs/ENDNOTES.md', 'LICENSE.md'])
 		.pipe(concat('README.md'))
 		.pipe(gulp.dest('./'))
