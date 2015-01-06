@@ -38,6 +38,15 @@
 
 
 	/** 
+	 * An object specifying a list of fields and how to filter it, or an array with the first value being an optional boolean to convey the same information
+	 * @typedef {Object|Array} FilterList
+	 * @property {boolean} [exclude=false] If this is set to `true`, the `filter` property will specify which fields to exclude from the result (boolean difference), not which ones to include (boolean intersection)
+	 * @property {string[]} values An array of strings which specify the fields to include/exclude from some broader list
+	 */
+
+
+
+	/** 
 	 * Default metadata for a JSON object
 	 * @private
 	 * @ignore
@@ -305,6 +314,48 @@
 
 
 	/**
+	 * Ensure that a FilterList type input is converted into its shorthand array form
+	 * @param {boolean|FilterList} filterList The FilterList, or boolean, that will converted into the shorthand form
+	 * @private
+	 * @ignore
+	*/
+	var toShorthand = function(filterList) {
+		var outputArray;
+		if (typeof filterList === 'boolean') {
+			return filterList;
+		} else if (typeof filterList === 'object' && filterList !== null) {
+			if (filterList instanceof Array) {
+				return filterList.filter(function(v, i){
+					var x = (typeof v === 'string' || (i === 0 && v === true)) ? true : false;
+					return x;
+				});
+			} else {
+				if (!(filterList.values instanceof Array)) {
+					return false;
+				}
+
+				outputArray = filterList.values.filter(function(v){
+					return (typeof v === 'string') ? true : false;
+				});
+
+				if (!outputArray.length) {
+					return false;
+				}
+
+				if (filterList.exclude) {
+					outputArray.unshift(filterList.exclude);
+				}
+				return outputArray;
+			}
+		} else if (filterList) {
+			return true;
+		}
+		return false;
+	};
+
+
+
+	/**
 	 * Check if the supplied string value is a relative path, and convert it to an absolute one if necessary; the segment processing paths leading with "../" was inspired by: http://stackoverflow.com/a/14780463/2230156
 	 * @param {string} value The value that might be a relative path, and would thus need conversion
 	 * @param {Object} origin The origin URL from which to which non-absolute paths are relative
@@ -505,16 +556,16 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean|string[]} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
-	 * @param {boolean|string[]} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
-	 * @param {boolean|string[]} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
+	 * @param {boolean|FilterList} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
+	 * @param {boolean|FilterList} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
+	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
 	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
 	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {string[]|boolean} [opts.domProperties=`false`] An `Array` of all the non-required properties to be copied
+	 * @param {FilterList} [opts.domProperties] An `Array` of all the non-required properties to be copied; if unspecified, all of the DOM properties will be copied (except for ones which serialize the DOM Node, which are handled separately by `opts.serialProperties`)
 	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
 	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
-	 * @todo {string[]|boolean} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {boolean|string[]} [opts.serialProperties=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serial properties (no boolean search!)
+	 * @todo {boolean|FilterList} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @param {boolean|FilterList} [opts.serialProperties=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML, innerText, etc), or specify an `Array` of serial properties (no boolean search!)
 	 * @param {boolean} [opts.stringify=`false`] Output a JSON string, or just a JSON-ready javascript object?
 	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
 	 * @method
@@ -529,13 +580,20 @@
 		//Update the default options w/ the user's custom settings
 		options = extend({}, defaultsForToJSON, opts);
 
+		//Convert all options that accept FilterList type inputs into the shorthand notation
+		options.absolutePaths = toShorthand(options.absolutePaths);
+		options.attributes = toShorthand(options.attributes);
+		options.computedStyle = toShorthand(options.computedStyle);
+		options.domProperties = toShorthand(options.domProperties);
+		options.serialProperties = toShorthand(options.serialProperties);
+
 		//Make sure there is a base URL for absolute path conversions
 		options.absoluteBase = win.location.origin + '/';
 
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
 		if (options.serialProperties !== true) {
 			if (options.serialProperties instanceof Array && options.serialProperties.length) {
-				if (options.serialProperties[0]) {
+				if (options.serialProperties[0] === true) {
 					ignoring = ignoring.concat( boolDiff(serials, options.serialProperties) );
 				} else {
 					ignoring = ignoring.concat( boolInter(serials, options.serialProperties) );
