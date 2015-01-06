@@ -431,13 +431,13 @@
 
 					it('should not perform custom filtering if passed a non-array value, or not specified', function(){
 						var result = domJSON.toJSON(containerNode, {
-							filter: true
+							domProperties: true
 						});
 						var result2 = domJSON.toJSON(containerNode, {
-							filter: false
+							domProperties: false
 						});
 						var result3 = domJSON.toJSON(containerNode, {
-							filter: 12345
+							domProperties: 12345
 						});
 
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
@@ -447,7 +447,7 @@
 
 					it('should be able to output only the specified DOM properties if provided an array of strings', function(){
 						var result = domJSON.toJSON(containerNode, {
-							filter: ['className', 'offsetTop', 'offsetLeft']
+							domProperties: ['className', 'offsetTop', 'offsetLeft']
 						});
 
 						expect(result.node.className).toBe('container otherClass');
@@ -459,7 +459,7 @@
 
 					it('should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true', function(){
 						var result = domJSON.toJSON(containerNode, {
-							filter: [true, 'className', 'offsetTop', 'offsetLeft']
+							domProperties: [true, 'className', 'offsetTop', 'offsetLeft']
 						});
 
 						expect(result.node.className).toBeUndefined();
@@ -471,7 +471,7 @@
 
 					it('should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset', function(){
 						var result = domJSON.toJSON(containerNode, {
-							filter: ['className', 'offsetTop', 'offsetLeft', 'children', 'dataset', 'classList']
+							domProperties: ['className', 'offsetTop', 'offsetLeft', 'children', 'dataset', 'classList']
 						});
 
 						expect(result.node.classList).toBeUndefined();
@@ -481,7 +481,7 @@
 
 					it('should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName', function(){
 						var result = domJSON.toJSON(containerNode, {
-							filter: [true, 'className', 'offsetTop', 'offsetLeft', 'nodeType', 'nodeValue', 'tagName']
+							domProperties: [true, 'className', 'offsetTop', 'offsetLeft', 'nodeType', 'nodeValue', 'tagName']
 						});
 
 						expect(result.node.tagName).toBe('DIV');
@@ -494,7 +494,7 @@
 					it('should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops', function(){
 						var nodeProps = ['children', 'parentNode', 'parentElement', 'previousSibling', 'previousElementSibling', 'nextSibling', 'nextElementSibling', 'firstChild', 'firstElementChild', 'lastChild', 'lastElementChild', 'offsetParent', 'ownerDocument']
 						var result = domJSON.toJSON(containerNode, {
-							filter: nodeProps
+							domProperties: nodeProps
 						});
 
 						nodeProps.forEach(function(v){
@@ -504,7 +504,7 @@
 
 					it('should be able to ignore all serialized DOM properties (like outerText, innerText, prefix, etc), overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
-							serials: false
+							serialProperties: false
 						});
 
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBeUndefined();
@@ -514,7 +514,7 @@
 
 					it('should be able to include all serialized DOM properties, overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
-							serials: true
+							serialProperties: true
 						});
 
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBe('This is a test paragraph with a span in the middle of it.');
@@ -524,7 +524,7 @@
 
 					it('should be able to include a specific set of serialized DOM properties, overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
-							serials: [true, 'innerText', 'outerHTML', 'textContent']
+							serialProperties: [true, 'innerText', 'outerHTML', 'textContent']
 						});
 
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBe('This is a test paragraph with a span in the middle of it.');
@@ -537,7 +537,7 @@
 
 					it('should be able to exclude a specific set of serialized DOM properties, overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
-							serials: [false, 'innerText', 'outerHTML', 'textContent']
+							serialProperties: [false, 'innerText', 'outerHTML', 'textContent']
 						});
 
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBeUndefined();

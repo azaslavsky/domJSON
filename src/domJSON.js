@@ -66,7 +66,7 @@
 		htmlOnly: false,
 		metadata: true,
 		//parse: false,
-		serials: false,
+		serialProperties: false,
 		stringify: false
 	};
 
@@ -385,7 +385,7 @@
 			}
 		}
 
-		copy = boolFilter(copy, opts.filter);
+		copy = boolFilter(copy, opts.domProperties);
 		return copy;
 	};
 
@@ -510,11 +510,11 @@
 	 * @param {boolean|string[]} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
 	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
 	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {string[]|boolean} [opts.filter=`false`] An `Array` of all the non-required properties to be copied
+	 * @param {string[]|boolean} [opts.domProperties=`false`] An `Array` of all the non-required properties to be copied
 	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
 	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
 	 * @todo {string[]|boolean} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {boolean|string[]} [opts.serials=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!)
+	 * @param {boolean|string[]} [opts.serialProperties=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serial properties (no boolean search!)
 	 * @param {boolean} [opts.stringify=`false`] Output a JSON string, or just a JSON-ready javascript object?
 	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
 	 * @method
@@ -533,25 +533,25 @@
 		options.absoluteBase = win.location.origin + '/';
 
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
-		if (options.serials !== true) {
-			if (options.serials instanceof Array && options.serials.length) {
-				if (options.serials[0]) {
-					ignoring = ignoring.concat( boolDiff(serials, options.serials) );
+		if (options.serialProperties !== true) {
+			if (options.serialProperties instanceof Array && options.serialProperties.length) {
+				if (options.serialProperties[0]) {
+					ignoring = ignoring.concat( boolDiff(serials, options.serialProperties) );
 				} else {
-					ignoring = ignoring.concat( boolInter(serials, options.serials) );
+					ignoring = ignoring.concat( boolInter(serials, options.serialProperties) );
 				}
 			} else {
 				ignoring = ignoring.concat( serials );
 			}
 		}
-		if (options.filter instanceof Array) {
-			if (options.filter[0] === true) {
-				options.filter = boolDiff( unique(options.filter, ignoring), requiring );
+		if (options.domProperties instanceof Array) {
+			if (options.domProperties[0] === true) {
+				options.domProperties = boolDiff( unique(options.domProperties, ignoring), requiring );
 			} else {
-				options.filter = boolDiff( unique(options.filter, requiring), ignoring );
+				options.domProperties = boolDiff( unique(options.domProperties, requiring), ignoring );
 			}
 		} else {
-			options.filter = [true].concat(ignoring);
+			options.domProperties = [true].concat(ignoring);
 		}
 		
 		//Transform the node into an object literal
