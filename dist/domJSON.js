@@ -1,63 +1,88 @@
-var domJSON = {};
-
-(function(domJSON, win) {
-    var metadata = {
-        node: null,
-        domain: win.location.href
-    };
-    var defaults = {
-        deep: true,
-        html: false,
-        cull: false,
-        computed: false,
-        style: true,
-        attributes: true,
-        serials: false,
-        filter: false,
-        stringify: false,
-        metadata: true,
-        absolute: {
-            base: win.location.origin + "/",
-            action: false,
-            href: false,
-            style: false,
-            src: false,
-            other: false
+(function(root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(function() {
+            return factory(root);
+        });
+    } else if (typeof exports !== "undefined") {
+        var domJSON = factory(root);
+        if (typeof module !== "undefined" && module.exports) {
+            module.exports = domJSON;
         }
+        exports = dmoJSON;
+    } else {
+        window.domJSON = factory(root);
+    }
+})(this, function(win) {
+    "use strict";
+    var domJSON = {};
+    var metadata = {
+        domain: win.location.href || null,
+        userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
+        version: "0.1.0"
+    };
+    var defaultsForToJSON = {
+        absolutePaths: [ "action", "data", "href", "src" ],
+        attributes: true,
+        computedStyle: false,
+        cull: true,
+        deep: true,
+        filter: false,
+        htmlOnly: false,
+        metadata: true,
+        serialProperties: false,
+        stringify: false
+    };
+    var defaultsForToDOM = {
+        noMeta: false
     };
     var banned = [ "link", "script" ];
     var required = [ "nodeType", "nodeValue", "tagName" ];
     var ignored = [ "attributes", "childNodes", "children", "classList", "dataset", "style" ];
-    var serials = [ "innerHTML", "innerText", "outerHTML", "outerText", "prefix", "text", "textContent" ];
-    var boolFilter = function(item, filter) {
-        if (filter && filter instanceof Array && filter.length) {
-            if (typeof filter[0] === "boolean") {
-                if (filter.length > 1) {
-                    if (filter[0] === true) {
-                        return boolDiff(item, filter.slice(1));
-                    } else {
-                        return boolInter(item, filter.slice(1));
-                    }
-                } else {
-                    if (filter[0] === true) {
-                        return item;
-                    } else {
-                        return {};
-                    }
-                }
-            } else {
-                return boolInter(item, filter);
-            }
+    var serials = [ "innerHTML", "innerText", "outerHTML", "outerText", "prefix", "text", "textContent", "wholeText" ];
+    var extend = function(target) {
+        if (!arguments.length) {
+            return arguments[0] || {};
+        }
+        for (var p in arguments[1]) {
+            target[p] = arguments[1][p];
+        }
+        if (arguments.length > 2) {
+            var moreArgs = [ target ].concat(Array.prototype.slice.call(arguments, 2));
+            return extend.apply(null, moreArgs);
         } else {
-            return item;
+            return target;
+        }
+    };
+    var unique = function() {
+        if (!arguments.length) {
+            return [];
+        }
+        var all = Array.prototype.concat.apply([], arguments);
+        for (var a = 0; a < all.length; a++) {
+            if (all.indexOf(all[a]) < a) {
+                all.splice(a, 1);
+                a--;
+            }
+        }
+        return all;
+    };
+    var copy = function(item) {
+        if (item instanceof Array) {
+            return item.slice();
+        } else {
+            var output = {};
+            for (var i in item) {
+                output[i] = item[i];
+            }
+            return output;
         }
     };
     var boolInter = function(item, filter) {
         var output;
         if (item instanceof Array) {
-            output = filter.filter(function(val) {
-                return item.indexOf(val) > -1;
-            });
+            output = unique(item.filter(function(val) {
+                return filter.indexOf(val) > -1;
+            }));
         } else {
             output = {};
             for (var f in filter) {
@@ -69,149 +94,172 @@ var domJSON = {};
         return output;
     };
     var boolDiff = function(item, filter) {
+        var output;
         if (item instanceof Array) {
-            item = item.filter(function(val) {
+            output = unique(item.filter(function(val) {
                 return filter.indexOf(val) === -1;
-            });
+            }));
         } else {
+            output = {};
+            for (var i in item) {
+                output[i] = item[i];
+            }
             for (var f in filter) {
-                if (item.hasOwnProperty(filter[f])) {
-                    delete item[filter[f]];
+                if (output.hasOwnProperty(filter[f])) {
+                    delete output[filter[f]];
                 }
             }
         }
-        return item;
+        return output;
     };
-    var boolUnion = function() {
-        var all = [].concat.apply([], arguments);
-        for (var a = 0; a < all.length; a++) {
-            if (all.indexOf(all[a]) < a) {
-                all.splice(a, 1);
-                a--;
-            }
+    var boolFilter = function(item, filter) {
+        if (filter === false) {
+            return item instanceof Array ? [] : {};
         }
-        return all;
-    };
-    var toAbsolute = function(node, name, value, settings) {
-        if (settings.keys.indexOf(name) !== -1) {
-            if (node[name]) {
-                var sub = node[name].indexOf(value);
-                if (sub !== -1) {
-                    return node[name];
-                }
-            }
-            if (value.match(/(?:^data\:|^[\w\-\+\.]*?\:\/\/|^\/\/)/i)) {
-                return value;
-            }
-            if (value.substr(0, 1) === "/") {
-                return settings.base + value.substr(1);
-            }
-            var stack = settings.base.split("/");
-            var parts = value.split("/");
-            stack.pop();
-            for (var i = 0; i < parts.length; i++) {
-                if (parts[i] == ".") {
-                    continue;
-                }
-                if (parts[i] == "..") {
-                    stack.pop();
+        if (filter instanceof Array && filter.length) {
+            if (typeof filter[0] === "boolean") {
+                if (filter.length == 1 && typeof filter[0] === "boolean") {
+                    if (filter[0] === true) {
+                        return copy(item);
+                    } else {
+                        return item instanceof Array ? [] : {};
+                    }
                 } else {
-                    stack.push(parts[i]);
+                    if (filter[0] === true) {
+                        return boolDiff(item, filter.slice(1));
+                    } else {
+                        return boolInter(item, filter.slice(1));
+                    }
                 }
+            } else {
+                return boolInter(item, filter);
             }
-            return stack.join("/");
+        } else {
+            return copy(item);
         }
-        return value;
+    };
+    var toShorthand = function(filterList) {
+        var outputArray;
+        if (typeof filterList === "boolean") {
+            return filterList;
+        } else if (typeof filterList === "object" && filterList !== null) {
+            if (filterList instanceof Array) {
+                return filterList.filter(function(v, i) {
+                    return typeof v === "string" || i === 0 && v === true ? true : false;
+                });
+            } else {
+                if (!(filterList.values instanceof Array)) {
+                    return false;
+                }
+                outputArray = filterList.values.filter(function(v) {
+                    return typeof v === "string" ? true : false;
+                });
+                if (!outputArray.length) {
+                    return false;
+                }
+                if (filterList.exclude) {
+                    outputArray.unshift(filterList.exclude);
+                }
+                return outputArray;
+            }
+        } else if (filterList) {
+            return true;
+        }
+        return false;
+    };
+    var toAbsolute = function(value, origin) {
+        var protocol, stack, parts;
+        if (value.match(/(?:^data\:|^[\w\-\+\.]*?\:\/\/|^\/\/)/i)) {
+            return value;
+        }
+        if (value.charAt(0) === "/") {
+            return origin + value.substr(1);
+        }
+        protocol = origin.indexOf("://") > -1 ? origin.substring(0, origin.indexOf("://") + 3) : "";
+        stack = (protocol.length ? origin.substring(protocol.length) : origin).split("/");
+        parts = value.split("/");
+        stack.pop();
+        for (var i = 0; i < parts.length; i++) {
+            if (parts[i] == ".") {
+                continue;
+            }
+            if (parts[i] == "..") {
+                if (stack.length > 1) {
+                    stack.pop();
+                }
+            } else {
+                stack.push(parts[i]);
+            }
+        }
+        return protocol + stack.join("/");
     };
     var copyJSON = function(node, opts) {
         var copy = {};
         for (var n in node) {
-            try {
-                if (node.hasOwnProperty(n) && typeof node[n] !== "function") {
-                    if (!(node[n] instanceof Object) || node[n] instanceof Array) {
-                        if (opts.cull) {
-                            if (typeof node[n] !== "null" && node[n] !== null) {
-                                copy[n] = node[n];
-                            }
-                        } else {
+            if (node.hasOwnProperty(n) && typeof node[n] !== "function") {
+                if (!(node[n] instanceof Object) || node[n] instanceof Array) {
+                    if (opts.cull) {
+                        if (node[n] || node[n] === 0 || node[n] === false) {
                             copy[n] = node[n];
                         }
+                    } else {
+                        copy[n] = node[n];
                     }
                 }
-            } catch (e) {
-                console.log(e);
             }
         }
-        copy = boolFilter(copy, opts.filter);
+        copy = boolFilter(copy, opts.domProperties);
         return copy;
     };
     var attrJSON = function(node, opts) {
         var attributes = {};
         var attr = node.attributes;
         var length = attr.length;
-        if (opts.absolute.keys.length > 1 || opts.absolute.keys.length === 1 && opts.absolute.keys[0] !== "style") {
-            for (var i = 0; i < length; i++) {
-                attributes[attr[i].name] = toAbsolute(node, attr[i].name, attr[i].value, opts.absolute);
-            }
-        } else {
-            for (var i = 0; i < length; i++) {
-                attributes[attr[i].name] = attr[i].value;
-            }
+        var absAttr;
+        for (var i = 0; i < length; i++) {
+            attributes[attr[i].name] = attr[i].value;
         }
-        if (opts.attributes) {
-            attributes = boolFilter(attributes, opts.attributes);
+        attributes = opts.attributes ? boolFilter(attributes, opts.attributes) : null;
+        absAttr = boolFilter(attributes, opts.absolutePaths);
+        for (var i in absAttr) {
+            attributes[i] = toAbsolute(absAttr[i], opts.absoluteBase);
         }
         return attributes;
     };
     var styleJSON = function(node, opts) {
-        var style, css = [];
-        if (opts.computed) {
+        var style, css = {};
+        if (opts.computedStyle && node.style instanceof CSSStyleDeclaration) {
             style = win.getComputedStyle(node);
         } else {
-            style = node.style;
+            return null;
         }
-        if (opts.style) {
-            if (style.constructor.name !== Object) {
-                var newStyle = {};
-                for (var s in style) {
-                    if (typeof style[s] !== "function") {
-                        newStyle[s] = style[s];
-                    }
-                }
+        for (var k in style) {
+            if (k !== "cssText" && !k.match(/\d/) && typeof style[k] === "string" && style[k].length) {
+                css[k] = style[k];
             }
-            style = boolFilter(newStyle, opts.style);
         }
-        if (opts.computed) {
-            for (var k in style) {
-                if (k !== "cssText" && !k.match(/\d/) && typeof style[k] === "string" && style[k].length) {
-                    css.push(k + ": " + style[k] + ";");
-                }
-            }
-            return css.join(" ");
-        } else {
-            return style.cssText;
-        }
+        return opts.computedStyle instanceof Array ? boolFilter(css, opts.computedStyle) : css;
     };
     var toJSON = function(node, opts, depth) {
-        var copy = copyJSON(node, opts);
+        var style, kids, kidCount, thisChild, children, copy = copyJSON(node, opts);
         if (node.nodeType === 1) {
             for (var b in banned) {
                 if (node.tagName.toLowerCase() === banned[b]) {
                     return null;
                 }
             }
+        } else if (node.nodeType === 3 && !node.nodeValue.trim()) {
+            return null;
         }
         if (opts.attributes && node.hasOwnProperty("attributes")) {
             copy.attributes = attrJSON(node, opts);
         }
-        if (opts.style && node.hasOwnProperty("style")) {
-            var style = styleJSON(node, opts);
-            copy.attributes = copy.attributes || {};
-            copy.attributes.style = style;
+        if (opts.computedStyle && (style = styleJSON(node, opts))) {
+            copy.style = style;
         }
         if (opts.deep === true || typeof opts.deep === "number" && opts.deep > depth) {
-            var kids, kidCount, thisChild, children = [];
-            kids = opts.html ? node.children : node.childNodes;
+            children = [];
+            kids = opts.htmlOnly ? node.children : node.childNodes;
             kidCount = kids.length;
             for (var c = 0; c < kidCount; c++) {
                 thisChild = toJSON(kids[c], opts, depth + 1);
@@ -224,60 +272,44 @@ var domJSON = {};
         return copy;
     };
     domJSON.toJSON = function(node, opts) {
-        var copy, options = {}, output = {}, timer = new Date().getTime();
-        for (var d in defaults) {
-            options[d] = defaults[d];
-        }
-        for (var o in opts) {
-            if (!options.hasOwnProperty(o)) {
-                delete opts[o];
-                continue;
-            }
-            options[o] = opts[o];
-        }
-        options.absolute = {
-            base: typeof options.absolute === "string" ? win.location.origin + "/" : options.absolute.base || win.location.origin + "/",
-            action: typeof options.absolute === "boolean" ? options.absolute : options.absolute.action || false,
-            href: typeof options.absolute === "boolean" ? options.absolute : options.absolute.href || false,
-            style: typeof options.absolute === "boolean" ? options.absolute : options.absolute.style || false,
-            src: typeof options.absolute === "boolean" ? options.absolute : options.absolute.src || false,
-            other: typeof options.absolute === "boolean" ? options.absolute : options.absolute.other || false
-        };
-        options.absolute.other = false;
-        var keys = [];
-        for (var k in options.absolute) {
-            if (options.absolute[k] && k !== "base") {
-                keys.push(k);
-            }
-        }
-        options.absolute.keys = keys;
-        var requiring = required.concat();
-        var ignoring = ignored.concat();
-        if (options.serials) {
-            if (options.serials instanceof Array) {
-                ignoring = ignoring.concat(options.serials);
+        var copy, keys = [], options = {}, output = {};
+        var timer = new Date().getTime();
+        var requiring = required.slice();
+        var ignoring = ignored.slice();
+        options = extend({}, defaultsForToJSON, opts);
+        options.absolutePaths = toShorthand(options.absolutePaths);
+        options.attributes = toShorthand(options.attributes);
+        options.computedStyle = toShorthand(options.computedStyle);
+        options.domProperties = toShorthand(options.domProperties);
+        options.serialProperties = toShorthand(options.serialProperties);
+        options.absoluteBase = win.location.origin + "/";
+        if (options.serialProperties !== true) {
+            if (options.serialProperties instanceof Array && options.serialProperties.length) {
+                if (options.serialProperties[0] === true) {
+                    ignoring = ignoring.concat(boolDiff(serials, options.serialProperties));
+                } else {
+                    ignoring = ignoring.concat(boolInter(serials, options.serialProperties));
+                }
             } else {
                 ignoring = ignoring.concat(serials);
             }
         }
-        if (options.filter instanceof Array) {
-            if (options.filter[0] === true) {
-                options.filter = boolDiff(boolUnion(options.filter, ignoring), requiring);
+        if (options.domProperties instanceof Array) {
+            if (options.domProperties[0] === true) {
+                options.domProperties = boolDiff(unique(options.domProperties, ignoring), requiring);
             } else {
-                options.filter = boolDiff(boolUnion(options.filter, requiring), ignoring);
+                options.domProperties = boolDiff(unique(options.domProperties, requiring), ignoring);
             }
         } else {
-            options.filter = [ true ].concat(ignoring);
+            options.domProperties = [ true ].concat(ignoring);
         }
         copy = toJSON(node, options, 0);
         if (options.metadata) {
-            for (var m in metadata) {
-                output[m] = metadata[m];
-            }
+            output.meta = extend({}, metadata, {
+                options: options,
+                clock: new Date().getTime() - timer
+            });
             output.node = copy;
-            output.options = options;
-            output.domain = win.location.href;
-            output.clock = new Date().getTime() - timer;
         } else {
             output = copy;
         }
@@ -297,33 +329,21 @@ var domJSON = {};
             }
             return false;
 
-          case 2:
-            if (typeof data.nodeName === "string" && data.nodeName.length) {
-                return doc.createAttribute(data.nodeName);
-            }
-            return false;
-
           case 3:
             if (typeof data.nodeValue === "string" && data.nodeValue.length) {
                 return doc.createTextNode(data.nodeValue);
             }
             return doc.createTextNode("");
 
-          case 4:
-            if (typeof data === "string") {
-                return doc.createCDATASection(data);
-            }
-            return false;
-
           case 7:
             if (data.hasOwnProperty("target") && data.hasOwnProperty("data")) {
-                return doc.implementation.createHTMLDocument(data.target, data.data);
+                return doc.createProcessingInstruction(data.target, data.data);
             }
             return false;
 
           case 8:
-            if (typeof data === "string") {
-                return doc.createComment(data);
+            if (typeof data.nodeValue === "string") {
+                return doc.createComment(data.nodeValue);
             }
             return doc.createComment("");
 
@@ -337,7 +357,7 @@ var domJSON = {};
             return false;
 
           case 11:
-            return doc.implementation.createDocumentFragment();
+            return doc;
 
           default:
             return false;
@@ -369,16 +389,19 @@ var domJSON = {};
             }
         }
     };
-    domJSON.toDOM = function(obj, noMeta) {
+    domJSON.toDOM = function(obj, opts) {
+        var options, node;
         if (typeof obj === "string") {
             obj = JSON.parse(obj);
         }
-        var node = document.createDocumentFragment();
-        if (noMeta) {
+        options = extend({}, defaultsForToDOM, opts);
+        node = document.createDocumentFragment();
+        if (options.noMeta) {
             toDOM(obj, node, node);
         } else {
             toDOM(obj.node, node, node);
         }
         return node;
     };
-})(domJSON, window);
+    return domJSON;
+});

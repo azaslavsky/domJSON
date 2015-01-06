@@ -326,8 +326,7 @@
 		} else if (typeof filterList === 'object' && filterList !== null) {
 			if (filterList instanceof Array) {
 				return filterList.filter(function(v, i){
-					var x = (typeof v === 'string' || (i === 0 && v === true)) ? true : false;
-					return x;
+					return typeof v === 'string' || (i === 0 && v === true) ? true : false;
 				});
 			} else {
 				if (!(filterList.values instanceof Array)) {
@@ -335,7 +334,7 @@
 				}
 
 				outputArray = filterList.values.filter(function(v){
-					return (typeof v === 'string') ? true : false;
+					return typeof v === 'string' ? true : false;
 				});
 
 				if (!outputArray.length) {
