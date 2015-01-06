@@ -3,6 +3,7 @@
  */
 (function() {
 	describe('domJSON', function(){
+		var stringifiedTest;
 		var testArea = $('<div class="testArea" style="padding-left: 100%; position: absolute; top: 0; left: 0; z-index: -1;"></div>');
 		$('body').append(testArea);
 
@@ -300,6 +301,21 @@
 
 					testArea.append(container);
 					containerNode = container.get(0);
+
+					//Append a sample comment to the alpha node
+					var sampleComment = document.createComment('This is a sample comment!');
+					var alpha = document.querySelector('.alpha').appendChild(sampleComment);
+
+					//Append a sample processing instruction to the alpha node
+					var samplePI = document.createProcessingInstruction('xml-stylesheet', 'href="mycss.css" type="text/css"');
+					var alpha = document.querySelector('.alpha').appendChild(samplePI);
+
+					//Save a stringified version
+					if (!stringifiedTest) {
+						stringifiedTest = domJSON.toJSON(containerNode, {
+							stringify: true
+						});
+					}
 				});
 
 				afterEach(function(){
@@ -781,24 +797,18 @@
 		});
 
 		describe('DOM node creation [.toDOM() method]', function(){
-			//A stringified version of the "container" variable from the previous test suite, created using the default options (except stringify = true)
-			var jsonString = '{"meta":{"domain":"http://localhost:5050/#","userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36","version":"0.1.0","options":{"absolute":{"base":"http://localhost:5050/","action":false,"href":false,"style":false,"src":false,"other":false,"keys":[]},"attributes":true,"computedStyle":false,"cull":true,"deep":true,"filter":[true,"attributes","childNodes","children","classList","dataset","style","innerHTML","innerText","outerHTML","outerText","prefix","text","textContent","wholeText"],"htmlOnly":false,"metadata":true,"serials":false,"stringify":true},"clock":8},"node":{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"container otherClass","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"container otherClass"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"alpha","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"alpha","data-test-a":"foo","data-test-b":"bar","style":"margin-top: 10px;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"beta","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"beta","data-test-c":"quux","data-test-d":"baz","style":"color: red;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"charlie","scrollHeight":176,"scrollWidth":63,"scrollTop":0,"scrollLeft":0,"clientHeight":176,"clientWidth":64,"clientTop":1,"clientLeft":1,"offsetHeight":178,"offsetWidth":66,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"DIV","attributes":{"class":"charlie","data-test-e":"norf","data-test-f":"woop","style":"border: 1px solid green;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"delta","scrollHeight":144,"scrollWidth":63,"scrollTop":0,"scrollLeft":0,"clientHeight":144,"clientWidth":64,"clientTop":0,"clientLeft":0,"offsetHeight":144,"offsetWidth":64,"offsetTop":27,"offsetLeft":1512,"localName":"p","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"P","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"P","attributes":{"class":"delta"},"childNodes":[{"length":25,"data":"This is a test paragraph ","baseURI":"http://localhost:5050/","nodeType":3,"nodeValue":"This is a test paragraph ","nodeName":"#text","childNodes":[]},{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":0,"className":"epsilon","scrollHeight":0,"scrollWidth":0,"scrollTop":0,"scrollLeft":0,"clientHeight":0,"clientWidth":0,"clientTop":0,"clientLeft":0,"offsetHeight":71,"offsetWidth":46,"offsetTop":81,"offsetLeft":1512,"localName":"span","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"SPAN","baseURI":"http://localhost:5050/","nodeType":1,"nodeName":"SPAN","attributes":{"class":"epsilon"},"childNodes":[{"length":25,"data":"with a span in the middle","baseURI":"http://localhost:5050/","nodeType":3,"nodeValue":"with a span in the middle","nodeName":"#text","childNodes":[]}]},{"length":7,"data":" of it.","baseURI":"http://localhost:5050/","nodeType":3,"nodeValue":" of it.","nodeName":"#text","childNodes":[]}]}]}]}]}]}}';
-			var jsonParsed = JSON.parse(jsonString);
-			var jsonNoMetaString = JSON.stringify(jsonParsed.node);
-			var jsonNoMetaParsed = JSON.parse(jsonNoMetaString);
-
 			afterEach(function(){
 				testArea.html('');
 			})
 
 			it('should output a document fragment', function(){
-				var result = domJSON.toDOM(jsonParsed);
+				var result = domJSON.toDOM(JSON.parse(stringifiedTest));
 
 				expect(result).toEqual(jasmine.any(DocumentFragment));
 			});
 
 			it('should be able to process a JSON string, with metadata', function(){
-				var result = domJSON.toDOM(jsonString);
+				var result = domJSON.toDOM(stringifiedTest);
 				testArea.append(result);
 
 				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
@@ -815,7 +825,7 @@
 			});
 
 			it('should be able to process a JSON friendly object, with metadata', function(){
-				var result = domJSON.toDOM(jsonParsed);
+				var result = domJSON.toDOM(JSON.parse(stringifiedTest));
 				testArea.append(result);
 
 				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
@@ -832,7 +842,7 @@
 			});
 
 			it('should be able to process a JSON string, without metadata', function(){
-				var result = domJSON.toDOM(jsonNoMetaString, {
+				var result = domJSON.toDOM(JSON.stringify(JSON.parse(stringifiedTest).node), {
 					noMeta: true
 				});
 				testArea.append(result);
@@ -851,7 +861,7 @@
 			});
 
 			it('should be able to process a JSON friendly object, without metadata', function(){
-				var result = domJSON.toDOM(jsonNoMetaParsed, {
+				var result = domJSON.toDOM(JSON.parse(stringifiedTest).node, {
 					noMeta: true
 				});
 				testArea.append(result);

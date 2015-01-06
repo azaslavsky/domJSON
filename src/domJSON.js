@@ -605,13 +605,13 @@
 
 		case 7: //Processing Instruction
 			if (data.hasOwnProperty('target') && data.hasOwnProperty('data')) {
-				return doc.implementation.createHTMLDocument(data.target, data.data);
+				return doc.createProcessingInstruction(data.target, data.data);
 			}
 			return false;
 
 		case 8: //Comment Node
-			if (typeof data === 'string') {
-				return doc.createComment(data);
+			if (typeof data.nodeValue === 'string') {
+				return doc.createComment(data.nodeValue);
 			}
 			return doc.createComment('');
 
@@ -625,7 +625,7 @@
 			return false;
 
 		case 11: //Document Fragment
-			return doc.implementation.createDocumentFragment();
+			return doc;
 
 		default: //Failed
 			return false;
