@@ -6,6 +6,8 @@ Convert DOM trees into compact JSON objects, and vice versa, as fast as possible
 
 ## Jump To
 * [Installation](#installation)
+* [FilterLists](#filterlists)
+* [API](#api)
 * [License](#license)
 
 ## Installation
