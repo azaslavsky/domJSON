@@ -683,7 +683,7 @@
 
 					it('should be able to ignore all relative paths contained in DOM attributes, and keep them as is', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absAttrPaths: false
+							absolutePaths: false
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('../fake.html');
@@ -698,7 +698,7 @@
 
 					it('should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absAttrPaths: true
+							absolutePaths: true
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe(window.location.origin +'/fake.html');
@@ -713,7 +713,7 @@
 
 					it('should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absAttrPaths: ['data-test-a', 'href', 'action']
+							absolutePaths: ['data-test-a', 'href', 'action']
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe(window.location.origin +'/fake.html');
@@ -728,7 +728,7 @@
 
 					it('should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absAttrPaths: [true, 'data-test-a', 'href', 'action']
+							absolutePaths: [true, 'data-test-a', 'href', 'action']
 						});
 
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('../fake.html');
@@ -744,28 +744,39 @@
 
 
 
-				/*describe('about converting relative paths in styles', function(){
+				/*describe('about converting relative paths in computed styles', function(){
 					it('should be able to ignore all relative paths contained in computed styles, and keep them as is', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absStylePaths: false
+							absStylePaths: false,
+							computedStyle: true
+						});
+
+						expect(result.node.childNodes[0].style['borderImageSource']).toBe('url(../w3c_home.png)');
+						expect(result.node.childNodes[0].style['backgroundImage']).toBe('url(https://google.com/images/srpr/logo11w.png)');
+						expect(result.node.childNodes[0].childNodes[0].style['listStyleImage']).toBe('url(./fake)');
+						expect(result.node.childNodes[0].childNodes[0].style['backgroundImage']).toBe('url(data:image/gif;base64,R0lGODlhEAAQAMQAAORH)');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['background']).toBe('url(../../aa/bb/cc)');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['listStyleImage']).toBe('url(aFakeImage)');
+					});
+
+					it('should be able to convert all relative paths contained in computed styles to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absStylePaths: true,
+							computedStyle: true
 						});
 					});
 
-					it('should be able to convert all relative paths contained in computed styles to absolute paths', function(){
+					it('should be able to convert all relative paths contained in a specified list of computed styles to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absStylePaths: true
+							absStylePaths: ['data-test-a', 'href', 'action'],
+							computedStyle: true
 						});
 					});
 
-					it('should be able to convert all relative paths contained in a specified list of computed styles to absolute paths', function(){
+					it('should be able to convert all relative paths contained in computed styles, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
 						var result = domJSON.toJSON(containerNode, {
-							absStylePaths: ['background-image', 'border-image'];
-						});
-					});
-
-					it('should be able to convert all relative paths contained in computed styles, except those contained on a specified list, to absolute paths', function(){
-						var result = domJSON.toJSON(containerNode, {
-							absStylePaths: [true, 'background-image'];
+							absStylePaths: [true, 'data-test-a', 'href', 'action'],
+							computedStyle: true
 						});
 					});
 				});*/

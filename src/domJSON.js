@@ -3,7 +3,7 @@
  *
  * @fileOverview
  * @author  Alex Zaslavsky
- * @version 0.3
+ * @version 0.1.0
  * @license The MIT License: Copyright (c) 2013 Alex Zaslavsky
  */
 
@@ -56,8 +56,8 @@
 	 * @ignore
 	 */
 	var defaultsForToJSON = {
-		absAttrPaths: ['action', 'data', 'href', 'src'],
-		absStylePaths: ['attr', 'background', 'background-image', 'border-image', 'border-image-source', 'content', 'list-style-image', 'mask-image'], //http://stackoverflow.com/questions/27790925/what-are-all-the-css3-properties-that-accept-urls-or-uris
+		absolutePaths: ['action', 'data', 'href', 'src'],
+		//absStylePaths: ['attr', 'background', 'background-image', 'border-image', 'border-image-source', 'content', 'list-style-image', 'mask-image'], //http://stackoverflow.com/questions/27790925/what-are-all-the-css3-properties-that-accept-urls-or-uris
 		attributes: true,
 		computedStyle: false,
 		cull: true,
@@ -410,9 +410,9 @@
 		attributes = opts.attributes ? boolFilter(attributes, opts.attributes) : null;
 
 		//Add the attributes object, converting any specified absolute paths along the way
-		absAttr = boolFilter(attributes, opts.absAttrPaths);
+		absAttr = boolFilter(attributes, opts.absolutePaths);
 		for (var i in absAttr) {
-			attributes[i] = toAbsolute(absAttr[i], opts.absBase);
+			attributes[i] = toAbsolute(absAttr[i], opts.absoluteBase);
 		}
 
 		return attributes;
@@ -505,8 +505,7 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean|string[]} [opts.absAttrPaths=['action', 'data', 'href', 'src']] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
-	 * @param {boolean|string[]} [opts.absStylePaths=['attr', 'background', 'background-image', 'border-image', 'border-image-source', 'content', 'list-style-image', 'mask-image']]  Only relevant if `opts.computedStyle` is not `false`; use `true` to convert all relative paths found in computed CSS properties to absolute paths, or specify an `Array` of keys to boolean search
+	 * @param {boolean|string[]} [opts.absolutePaths=['action', 'data', 'href', 'src']] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
 	 * @param {boolean|string[]} [opts.attributes=true] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
 	 * @param {boolean|string[]} [opts.computedStyle=false] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
 	 * @param {boolean} [opts.cull=false] Use `true` to ignore empty element properties
@@ -531,7 +530,7 @@
 		options = extend({}, defaultsForToJSON, opts);
 
 		//Make sure there is a base URL for absolute path conversions
-		options.absBase = win.location.origin + '/';
+		options.absoluteBase = win.location.origin + '/';
 
 		//Make lists of which DOM properties to skip and/or which are absolutely necessary
 		if (options.serials !== true) {

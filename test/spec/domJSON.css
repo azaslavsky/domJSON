@@ -1,0 +1,12 @@
+.alpha {
+	border-image-source: url(../w3c_home.png);
+	background-image: url(https://google.com/images/srpr/logo11w.png);
+}
+.beta {
+	list-style-image: url(./fake);
+	background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORH);
+}
+.charlie {
+	background: url(../../aa/bb/cc);
+	list-style-image: url(aFakeImage);
+}
