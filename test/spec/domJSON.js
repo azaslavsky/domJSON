@@ -650,6 +650,109 @@
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBeUndefined();
 					});
 				});
+
+
+
+				describe('about converting relative paths in attributes', function(){
+					beforeEach(function(){
+						$('.alpha').attr('data-test-a', '../fake.html');
+						$('.alpha').attr('data-test-b', 'https://google.com/');
+						$('.beta').attr('data-test-c', './a/b/c/fake.html');
+						$('.charlie').attr('data-test-e', 'fake.html');
+						$('.charlie').append('<img class="foxtrot" src="/lib/w3c_home.png">');
+						$('.charlie').append('<a class="golf" href="./lib/w3c_home.png">This is a test link.</a>');
+						$('.charlie').append('<form class="hotel" action="../../aa/bb/cc"></form>');
+						$('.charlie').append('<object class="india" class="india" data="data:image/gif;base64,R0lGODlhEAAQAMQAAORH"></object>');
+					});
+
+					it('should be able to ignore all relative paths contained in DOM attributes, and keep them as is', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absAttrPaths: false
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('../fake.html');
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBe('https://google.com/');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBe('./a/b/c/fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe('fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[1].attributes['src']).toBe('/lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[2].attributes['href']).toBe('./lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[3].attributes['action']).toBe('../../aa/bb/cc');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[4].attributes['data']).toBe('data:image/gif;base64,R0lGODlhEAAQAMQAAORH');
+					});
+
+					it('should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absAttrPaths: true
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBe(window.location.origin +'/fake.html');
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBe('https://google.com/');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBe(window.location.origin +'/a/b/c/fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe(window.location.origin +'/fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[1].attributes['src']).toBe(window.location.origin +'/lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[2].attributes['href']).toBe(window.location.origin +'/lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[3].attributes['action']).toBe(window.location.origin +'/aa/bb/cc');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[4].attributes['data']).toBe('data:image/gif;base64,R0lGODlhEAAQAMQAAORH');
+					});
+
+					it('should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absAttrPaths: ['data-test-a', 'href', 'action']
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBe(window.location.origin +'/fake.html');
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBe('https://google.com/');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBe('./a/b/c/fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe('fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[1].attributes['src']).toBe('/lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[2].attributes['href']).toBe(window.location.origin +'/lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[3].attributes['action']).toBe(window.location.origin +'/aa/bb/cc');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[4].attributes['data']).toBe('data:image/gif;base64,R0lGODlhEAAQAMQAAORH');
+					});
+
+					it('should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absAttrPaths: [true, 'data-test-a', 'href', 'action']
+						});
+
+						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('../fake.html');
+						expect(result.node.childNodes[0].attributes['data-test-b']).toBe('https://google.com/');
+						expect(result.node.childNodes[0].childNodes[0].attributes['data-test-c']).toBe(window.location.origin +'/a/b/c/fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe(window.location.origin +'/fake.html');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[1].attributes['src']).toBe(window.location.origin +'/lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[2].attributes['href']).toBe('./lib/w3c_home.png');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[3].attributes['action']).toBe('../../aa/bb/cc');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[4].attributes['data']).toBe('data:image/gif;base64,R0lGODlhEAAQAMQAAORH');
+					});
+				});
+
+
+
+				/*describe('about converting relative paths in styles', function(){
+					it('should be able to ignore all relative paths contained in computed styles, and keep them as is', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absStylePaths: false
+						});
+					});
+
+					it('should be able to convert all relative paths contained in computed styles to absolute paths', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absStylePaths: true
+						});
+					});
+
+					it('should be able to convert all relative paths contained in a specified list of computed styles to absolute paths', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absStylePaths: ['background-image', 'border-image'];
+						});
+					});
+
+					it('should be able to convert all relative paths contained in computed styles, except those contained on a specified list, to absolute paths', function(){
+						var result = domJSON.toJSON(containerNode, {
+							absStylePaths: [true, 'background-image'];
+						});
+					});
+				});*/
 			});
 
 
