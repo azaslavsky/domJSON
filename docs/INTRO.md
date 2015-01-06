@@ -5,9 +5,14 @@ domJSON
 Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.
 
 ## Jump To
+* [Description](#description)
 * [Installation](#installation)
+* [Usage](#usage)
 * [FilterLists](#filterlists)
 * [API](#api)
+* [Performance](#performance)
+* [Tests](#tests)
+* [Contributing](#contributing)
 * [License](#license)
 
 ## Installation
