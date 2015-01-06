@@ -21,10 +21,10 @@ Take a DOM node and convert it to simple object literal (or JSON string) with no
 | \[opts.computedStyle=`false`\] | <code>boolean</code> \| <code>Array.&lt;string&gt;</code> | Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise! |
 | \[opts.cull=`false`\] | <code>boolean</code> | Use `true` to ignore empty element properties |
 | \[opts.deep=`true`\] | <code>boolean</code> \| <code>number</code> | Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate |
-| \[opts.filter=`false`\] | <code>Array.&lt;string&gt;</code> \| <code>boolean</code> | An `Array` of all the non-required properties to be copied |
+| \[opts.domProperties=`false`\] | <code>Array.&lt;string&gt;</code> \| <code>boolean</code> | An `Array` of all the non-required properties to be copied |
 | \[opts.htmlOnly=`false`\] | <code>boolean</code> | Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true` |
 | \[opts.metadata=`false`\] | <code>boolean</code> | Output a special object of the domJSON class, which includes metadata about this operation |
-| \[opts.serials=`true`\] | <code>boolean</code> \| <code>Array.&lt;string&gt;</code> | Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serials (no boolean search!) |
+| \[opts.serialProperties=`true`\] | <code>boolean</code> \| <code>Array.&lt;string&gt;</code> | Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML), or specify an `Array` of serial properties (no boolean search!) |
 | \[opts.stringify=`false`\] | <code>boolean</code> | Output a JSON string, or just a JSON-ready javascript object? |
 
 **Returns**: <code>Object</code> \| <code>string</code> - A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output  
