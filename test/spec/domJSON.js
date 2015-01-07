@@ -395,8 +395,8 @@
 					var alpha = document.querySelector('.alpha').appendChild(sampleComment);
 
 					//Append a sample processing instruction to the alpha node
-					if (!window.navigator.userAgent.indexOf('MSIE')){
-						//Internet explorer disallows processing instructions when the document isn't XML: http://msdn.microsoft.com/ko-kr/library/windows/desktop/ff975215.aspx
+					if (window.navigator.userAgent.indexOf('MSIE') === -1 && window.navigator.userAgent.indexOf('Safari') === -1){
+						//Internet Explorer disallows processing instructions when the document isn't XML: http://msdn.microsoft.com/ko-kr/library/windows/desktop/ff975215.aspx
 						var samplePI = document.createProcessingInstruction('xml-stylesheet', 'href="mycss.css" type="text/css"');
 						var alpha = document.querySelector('.alpha').appendChild(samplePI);
 					}
