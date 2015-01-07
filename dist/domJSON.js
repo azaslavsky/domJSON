@@ -16,7 +16,7 @@
     "use strict";
     var domJSON = {};
     var metadata = {
-        domain: win.location.href || null,
+        href: win.location.href || null,
         userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
         version: "0.1.0"
     };
@@ -196,7 +196,7 @@
     var copyJSON = function(node, opts) {
         var copy = {};
         for (var n in node) {
-            if (node.hasOwnProperty(n) && typeof node[n] !== "function") {
+            if (typeof node[n] !== "undefined" && typeof node[n] !== "function" && n.charAt(0).toLowerCase() === n.charAt(0)) {
                 if (!(node[n] instanceof Object) || node[n] instanceof Array) {
                     if (opts.cull) {
                         if (node[n] || node[n] === 0 || node[n] === false) {
@@ -251,7 +251,7 @@
         } else if (node.nodeType === 3 && !node.nodeValue.trim()) {
             return null;
         }
-        if (opts.attributes && node.hasOwnProperty("attributes")) {
+        if (opts.attributes && node.attributes) {
             copy.attributes = attrJSON(node, opts);
         }
         if (opts.computedStyle && (style = styleJSON(node, opts))) {
@@ -306,8 +306,19 @@
         copy = toJSON(node, options, 0);
         if (options.metadata) {
             output.meta = extend({}, metadata, {
-                options: options,
-                clock: new Date().getTime() - timer
+                clock: new Date().getTime() - timer,
+                date: new Date().toISOString(),
+                dimensions: {
+                    inner: {
+                        x: window.innerWidth,
+                        y: window.innerHeight
+                    },
+                    outer: {
+                        x: window.outerWidth,
+                        y: window.outerHeight
+                    }
+                },
+                options: options
             });
             output.node = copy;
         } else {
@@ -350,12 +361,6 @@
           case 9:
             return doc.implementation.createHTMLDocument(data);
 
-          case 10:
-            if (data.hasOwnProperty("name") && data.hasOwnProperty("publicId") && data.hasOwnProperty("systemId")) {
-                return doc.implementation.createDocumentType(data.name, data.publicId, data.systemId);
-            }
-            return false;
-
           case 11:
             return doc;
 
@@ -371,8 +376,12 @@
             return false;
         }
         for (var x in obj) {
-            if (!(obj[x] instanceof Object)) {
-                node[x] = obj[x];
+            if (!(obj[x] instanceof Object) && x !== "isContentEditable") {
+                try {
+                    node[x] = obj[x];
+                } catch (e) {
+                    continue;
+                }
             }
         }
         var src;
