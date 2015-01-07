@@ -53,7 +53,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'ChromeCanary', 'Firefox', 'FirefoxDeveloper', 'IE11', 'IE10', 'IE9', 'IE8'], // Compatibility tests
+    browsers: ['Chrome', 'ChromeCanary', 'Firefox', 'FirefoxDeveloper', 'IE11', 'IE10', 'IE9'], // Compatibility tests
 
 
     // browser latency settings
@@ -75,11 +75,7 @@ module.exports = function(config) {
       IE9: {
         base: 'IE',
         'x-ua-compatible': 'IE=9'
-      },
-      IE8: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=8'
-      },
+      }
     },
 
 
