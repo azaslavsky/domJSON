@@ -685,12 +685,6 @@
 		case 9: //HTML Document
 			return doc.implementation.createHTMLDocument(data);
 
-		case 10: //DocType
-			if (data.hasOwnProperty('name') && data.hasOwnProperty('publicId') && data.hasOwnProperty('systemId')) {
-				return doc.implementation.createDocumentType(data.name, data.publicId, data.systemId);
-			}
-			return false;
-
 		case 11: //Document Fragment
 			return doc;
 
