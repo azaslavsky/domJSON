@@ -347,6 +347,33 @@
 
 			describe('for various options', function(){
 				beforeEach(function(){
+					//Custom matchers
+					jasmine.addMatchers({
+						toBeOneOf: function () {
+							return {
+								compare: function (actual, expected) {
+									if (expected instanceof Array) {
+										var matched = false;
+										expected.forEach(function(v){
+											if (v === actual) {
+												matched = true;
+											}
+										});
+										return {
+											pass: matched,
+											message: 'Expected one of the supplied values to be '+ actual
+										}
+									} else {
+										return {
+											pass: actual === expected,
+											message: 'Expected '+ expected +' to be '+ actual
+										}
+									}
+								}
+							};
+						}
+					});
+
 					//Make a DOM Tree with some standard test elements
 					container = $('<div class="container otherClass"></div>');
 
@@ -368,8 +395,11 @@
 					var alpha = document.querySelector('.alpha').appendChild(sampleComment);
 
 					//Append a sample processing instruction to the alpha node
-					var samplePI = document.createProcessingInstruction('xml-stylesheet', 'href="mycss.css" type="text/css"');
-					var alpha = document.querySelector('.alpha').appendChild(samplePI);
+					if (window.navigator.userAgent.indexOf('MSIE') === -1 && window.navigator.userAgent.indexOf('Safari') === -1){
+						//Internet Explorer disallows processing instructions when the document isn't XML: http://msdn.microsoft.com/ko-kr/library/windows/desktop/ff975215.aspx
+						var samplePI = document.createProcessingInstruction('xml-stylesheet', 'href="mycss.css" type="text/css"');
+						var alpha = document.querySelector('.alpha').appendChild(samplePI);
+					}
 
 					//Save a stringified version
 					if (!stringifiedTest) {
@@ -393,7 +423,7 @@
 						expect(result.node.childNodes[0].attributes['data-test-a']).toBe('foo');
 						expect(result.node.childNodes[0].childNodes[0].attributes.style).toBe('color: red;');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBe('woop');
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].tagName).toBe('P');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].tagName.toUpperCase()).toBe('P');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeType).toBe(3);
 					});
 
@@ -419,8 +449,8 @@
 						});
 
 						expect(result.node.id).toBe('');
-						expect(result.node.childNodes[0].nextSibling).toBe(null);
-						expect(result.node.childNodes[0].childNodes[0].oncancel).toBe(null);
+						expect(result.node.childNodes[0].nextSibling).toBeFalsy();
+						expect(result.node.childNodes[0].childNodes[0].oncancel).toBeFalsy();
 					});
 
 					it('should be able to produce a stringified JSON output', function(){
@@ -437,7 +467,7 @@
 						});
 
 						expect(result.meta).toBeUndefined();
-						expect(result.tagName).toBe('DIV');
+						expect(result.tagName.toUpperCase()).toBe('DIV');
 					});
 				});
 
@@ -521,8 +551,8 @@
 							deep: 2
 						});
 
-						expect(result.node.childNodes[0].tagName).toBe('DIV');
-						expect(result.node.childNodes[0].childNodes[0].tagName).toBe('DIV');
+						expect(result.node.childNodes[0].tagName.toUpperCase()).toBe('DIV');
+						expect(result.node.childNodes[0].childNodes[0].tagName.toUpperCase()).toBe('DIV');
 						expect(result.node.childNodes[0].childNodes[0].childNodes).toBeUndefined();
 					});
 
@@ -541,7 +571,7 @@
 				describe('about filtering which DOM properties to include in the output', function(){
 					var noWhiteSpaceAroundTags = function(str){
 						if (typeof str === 'string') {
-							return str.replace(/[\t\r\n]*/gi, '').replace(/>[\s]*</gi, '><').replace(/>[\s]*$/gi, '>').replace(/^[\s]*</gi, '<') //https://regex101.com/r/xX6iW2/3  and  https://regex101.com/r/zE0fQ9/1
+							return str.replace(/[\t\r\n]*/gi, '').replace(/>[\s]*</gi, '><').replace(/>[\s]*$/gi, '>').replace(/^[\s]*</gi, '<').trim() //https://regex101.com/r/xX6iW2/3  and  https://regex101.com/r/zE0fQ9/1
 						}
 						return str;
 					};
@@ -601,11 +631,11 @@
 							domProperties: [true, 'className', 'offsetTop', 'offsetLeft', 'nodeType', 'nodeValue', 'tagName']
 						});
 
-						expect(result.node.tagName).toBe('DIV');
+						expect(result.node.tagName.toUpperCase()).toBe('DIV');
 						expect(result.node.childNodes[0].nodeType).toBe(1);
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].tagName).toBe('P');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].tagName.toUpperCase()).toBe('P');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeType).toBe(3);
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeValue).toBe('This is a test paragraph ');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeValue )).toBe('This is a test paragraph');
 					});
 
 					it('should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops', function(){
@@ -619,13 +649,13 @@
 						})
 					});
 
-					it('should be able to ignore all serialized DOM properties (like outerText, innerText, prefix, etc), overriding other property filters', function(){
+					it('should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
 							serialProperties: false
 						});
 
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBeUndefined();
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBeUndefined();
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBeUndefined();
 					});
 
@@ -634,35 +664,33 @@
 							serialProperties: true
 						});
 
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBe('This is a test paragraph with a span in the middle of it.');
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBe('<div class="charlie" data-test-e="norf" data-test-f="woop" style="border: 1px solid green;"><p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p></div>');
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph ');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph with a span in the middle of it.');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBe('<p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p>');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph');
 					});
 
 					it('should be able to include a specific set of serialized DOM properties, overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
-							serialProperties: [true, 'innerText', 'outerHTML', 'textContent']
+							serialProperties: [true, 'outerHTML', 'textContent']
 						});
 
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBe('This is a test paragraph with a span in the middle of it.');
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].outerText )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph with a span in the middle of it.');
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].innerHTML )).toBeUndefined();
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBe('<div class="charlie" data-test-e="norf" data-test-f="woop" style="border: 1px solid green;"><p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p></div>');
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph ');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBe('<p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p>');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBe('This is a test paragraph');
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].wholeText )).toBeUndefined();
 					});
 
 					it('should be able to exclude a specific set of serialized DOM properties, overriding other property filters', function(){
 						var result = domJSON.toJSON(containerNode, {
-							serialProperties: [false, 'innerText', 'outerHTML', 'textContent']
+							serialProperties: [false, 'outerHTML', 'textContent']
 						});
 
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].innerText )).toBeUndefined();
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].outerText )).toBe('This is a test paragraph with a span in the middle of it.');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].textContent )).toBeUndefined();
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].innerHTML )).toBe('<p class="delta">This is a test paragraph <span class="epsilon">with a span in the middle</span> of it.</p>');
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBeUndefined();
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].outerHTML )).toBeUndefined();
 						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].textContent )).toBeUndefined();
-						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].wholeText )).toBe('This is a test paragraph ');
+						expect(noWhiteSpaceAroundTags( result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].wholeText )).toBe('This is a test paragraph');
 					});
 				});
 
@@ -692,7 +720,8 @@
 						expect(result.node.childNodes[0].childNodes[0].attributes['style']).toBe('color: red;');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBe('norf');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBe('woop');
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBe('border: 1px solid green;');
+						//IE11 adds the "border-image: none" automatically for some stupid reason
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBeOneOf(['border: 1px solid green;', 'border: 1px solid green; border-image: none;']);
 					});
 
 					it('should be able to include a set of HTML attributes, as specified by an array', function(){
@@ -710,7 +739,8 @@
 						expect(result.node.childNodes[0].childNodes[0].attributes['style']).toBe('color: red;');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-e']).toBeUndefined();
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['data-test-f']).toBeUndefined();
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBe('border: 1px solid green;');
+						//IE11 adds the "border-image: none" automatically for some stupid reason
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].attributes['style']).toBeOneOf(['border: 1px solid green;', 'border: 1px solid green; border-image: none;']);
 					});
 
 					it('should be able to exclude a set of HTML attributes, as specified by an array', function(){
@@ -752,11 +782,11 @@
 						});
 
 						expect(result.node.childNodes[0].style['bottom']).toBe('auto');
-						expect(result.node.childNodes[0].style['float']).toBe('none');
+						expect(result.node.childNodes[0].style['cursor']).toBe('auto');
 						expect(result.node.childNodes[0].childNodes[0].style['display']).toBe('block');
 						expect(result.node.childNodes[0].childNodes[0].style['right']).toBe('auto');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['direction']).toBe('ltr');
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['padding']).toBe('0px');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['paddingTop']).toBe('0px');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBe('inline');
 					});
 
@@ -766,11 +796,11 @@
 						});
 
 						expect(result.node.childNodes[0].style['bottom']).toBe('auto');
-						expect(result.node.childNodes[0].style['float']).toBeUndefined();
+						expect(result.node.childNodes[0].style['cursor']).toBeUndefined();
 						expect(result.node.childNodes[0].childNodes[0].style['display']).toBe('block');
 						expect(result.node.childNodes[0].childNodes[0].style['right']).toBeUndefined();
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['direction']).toBe('ltr');
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['padding']).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['paddingTop']).toBeUndefined();
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBe('inline');
 					});
 
@@ -780,11 +810,11 @@
 						});
 
 						expect(result.node.childNodes[0].style['bottom']).toBeUndefined();
-						expect(result.node.childNodes[0].style['float']).toBe('none');
+						expect(result.node.childNodes[0].style['cursor']).toBe('auto');
 						expect(result.node.childNodes[0].childNodes[0].style['display']).toBeUndefined();
 						expect(result.node.childNodes[0].childNodes[0].style['right']).toBe('auto');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['direction']).toBeUndefined();
-						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['padding']).toBe('0px');
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].style['paddingTop']).toBe('0px');
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style['display']).toBeUndefined();
 					});
 				});
@@ -958,13 +988,14 @@
 
 				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
 				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
-				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .alpha').get(0).style['marginTop']).toBe('10px');
 				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
 				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
-				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .beta').get(0).style['color']).toBe('red');
 				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
 				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
-				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .charlie').get(0).style['borderWidth']).toBe('1px');
+				expect($('.testArea .charlie').get(0).style['borderStyle']).toBe('solid');
 				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
 				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
 			});
@@ -975,13 +1006,14 @@
 
 				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
 				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
-				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .alpha').get(0).style['marginTop']).toBe('10px');
 				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
 				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
-				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .beta').get(0).style['color']).toBe('red');
 				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
 				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
-				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .charlie').get(0).style['borderWidth']).toBe('1px');
+				expect($('.testArea .charlie').get(0).style['borderStyle']).toBe('solid');
 				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
 				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
 			});
@@ -994,13 +1026,14 @@
 
 				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
 				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
-				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .alpha').get(0).style['marginTop']).toBe('10px');
 				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
 				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
-				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .beta').get(0).style['color']).toBe('red');
 				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
 				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
-				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .charlie').get(0).style['borderWidth']).toBe('1px');
+				expect($('.testArea .charlie').get(0).style['borderStyle']).toBe('solid');
 				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
 				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
 			});
@@ -1013,13 +1046,14 @@
 
 				expect($('.testArea .alpha').attr('data-test-a')).toBe('foo');
 				expect($('.testArea .alpha').attr('data-test-b')).toBe('bar');
-				expect($('.testArea .alpha').css('margin-top')).toBe('10px');
+				expect($('.testArea .alpha').get(0).style['marginTop']).toBe('10px');
 				expect($('.testArea .beta').attr('data-test-c')).toBe('quux');
 				expect($('.testArea .beta').attr('data-test-d')).toBe('baz');
-				expect($('.testArea .beta').css('color')).toBe('rgb(255, 0, 0)');
+				expect($('.testArea .beta').get(0).style['color']).toBe('red');
 				expect($('.testArea .charlie').attr('data-test-e')).toBe('norf');
 				expect($('.testArea .charlie').attr('data-test-f')).toBe('woop');
-				expect($('.testArea .charlie').css('border')).toBe('1px solid rgb(0, 128, 0)');
+				expect($('.testArea .charlie').get(0).style['borderWidth']).toBe('1px');
+				expect($('.testArea .charlie').get(0).style['borderStyle']).toBe('solid');
 				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
 				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
 			});

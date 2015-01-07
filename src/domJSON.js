@@ -420,7 +420,7 @@
 		//Copy all of the node's properties
 		for (var n in node){
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
-			if (node.hasOwnProperty(n) && typeof node[n] !== 'function') {
+			if (typeof node[n] !== 'undefined' && typeof node[n] !== 'function' && n.charAt(0).toLowerCase() === n.charAt(0)) {
 				//Only allowed objects are arrays
 				if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
 					//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
@@ -523,7 +523,7 @@
 		}
 
 		//Copy all attributes and styles, if allowed
-		if (opts.attributes && node.hasOwnProperty('attributes')) { 
+		if (opts.attributes && node.attributes) { 
 			copy.attributes = attrJSON(node, opts);
 		}
 		if (opts.computedStyle && (style = styleJSON(node, opts))) {
@@ -557,11 +557,11 @@
 	 * @param {Object} [opts] A list of all method options
 	 * @param {boolean|FilterList} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
 	 * @param {boolean|FilterList} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
-	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS proerties to be included via boolean search); this operation is VERY costrly performance-wise!
+	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS properties to be included via boolean search); this operation is VERY costly performance-wise!
 	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
 	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
 	 * @param {FilterList} [opts.domProperties] An `Array` of all the non-required properties to be copied; if unspecified, all of the DOM properties will be copied (except for ones which serialize the DOM Node, which are handled separately by `opts.serialProperties`)
-	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, isntances of HTMLElement); irrelevant if `opts.deep` is `true`
+	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, instances of HTMLElement); irrelevant if `opts.deep` is `true`
 	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
 	 * @todo {boolean|FilterList} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
 	 * @param {boolean|FilterList} [opts.serialProperties=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML, innerText, etc), or specify an `Array` of serial properties (no boolean search!)
@@ -721,8 +721,12 @@
 
 		//Copy all available properties that are not arrays or objects
 		for (var x in obj) {
-			if (!(obj[x] instanceof Object)) {
-				node[x] = obj[x];
+			if (!(obj[x] instanceof Object) && x !== 'isContentEditable') {
+				try {
+					node[x] = obj[x];
+				} catch(e) {
+					continue;
+				}
 			}
 		}
 

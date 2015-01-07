@@ -1,0 +1,2635 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2268.0 Safari/537.36">Browser: Chrome 41.0.2268 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:19</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 1.413s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.029s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.09s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.065s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.044s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.02s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.02s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.022s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.033s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.038s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.022s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.02s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.012s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.019s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.088s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.019s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.022s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.023s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.029s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.021s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.026s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.042s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.044s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.084s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.062s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.079s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.055s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.06s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.03s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.039s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36">Browser: Chrome 39.0.2171 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:19</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 1.843s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.011s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.101s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.098s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.06s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.02s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.04s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.021s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.021s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.021s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.023s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.019s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.049s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.023s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.031s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.021s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.02s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.176s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.044s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.045s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.038s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.039s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.022s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.031s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.184s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.112s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.131s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.05s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.033s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.033s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.051s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; rv:11.0) like Gecko">Browser: IE 11.0.0 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:21</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 2.805s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.023s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.015s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.105s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.167s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.041s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.052s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.07s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.157s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.063s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.132s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.049s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.041s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.032s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.034s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.037s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.025s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.046s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.18s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.057s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.073s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.044s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.071s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.038s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.114s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.072s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.077s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.04s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.034s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.037s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.039s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.037s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.037s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.086s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.082s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.075s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.099s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.154s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.109s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.076s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/7.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)">Browser: IE 9.0.0 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:21</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 3.395s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.015s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.011s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.118s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.283s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.054s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.104s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.134s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.168s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.055s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.044s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.157s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.087s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.059s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.055s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.013s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.063s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.029s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.057s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.151s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.051s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.041s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.047s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.041s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.046s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.075s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.106s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.051s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.131s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.08s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.069s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.127s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.096s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.08s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.106s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.085s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.086s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.127s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.101s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.077s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.064s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/7.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)">Browser: IE 10.0.0 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:22</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 2.631s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.159s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.219s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.048s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.04s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.052s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.134s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.107s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.089s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.035s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.046s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.104s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.058s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.052s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.022s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.034s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.132s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.043s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.04s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.052s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.047s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.053s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.094s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.095s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.041s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.047s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.035s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.033s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.033s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.031s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.071s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.068s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.082s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.096s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.081s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.082s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.081s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.012s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0">Browser: Firefox 36.0.0 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:22</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 1.406s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.102s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.088s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.015s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.015s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.049s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.038s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.026s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.044s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.021s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.023s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.035s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.022s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.017s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.034s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.082s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.078s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.108s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.035s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.035s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.037s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.042s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.018s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.024s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.03s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Unit Test Results</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}table{width:100%;margin-bottom:20px;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Unit Test Results</h1>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0">Browser: Firefox 31.0.0 (Windows 7)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 2015-01-07T02:40:25</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          69 tests / 
+          0 errors / 
+          0 failures / 
+          0 skipped / 
+          runtime: 0.523s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a boolean if provided one</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return true if provided a truthy value that isn&apos;t an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.004s</td>
+        <td>should return false if provided falsey value, or an invalid object (no &quot;values&quot; property)</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>should return a shorthand array if provided a valid object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return a shorthand array if provided a shorthand array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should clean input arrays, and only return strings and shorthand exclude booleans in the output array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; FilterList custom type processing</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should return an empty object if there are no arguments</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return the first argument if it&apos;s the only one provided</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should extend an existing object to contain both new values and replacements for old values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should extend an empty object with multiple supplied objects, without altering the originals</td>
+        <td>domJSON &raquo; private utility APIs &raquo; object extension</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should return only the unique values from a single input array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with internally non-distinct values</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should combine several arrays with non-distinct values, both internally and relative to each other</td>
+        <td>domJSON &raquo; private utility APIs &raquo; unique array union</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should copy only the first level of an array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should copy only the first level of an object</td>
+        <td>domJSON &raquo; private utility APIs &raquo; shallow copying</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an array, return a new array containing only the values that match a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that match a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean intersection</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should, if provided an array, return only the values that match are absent from a second filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should, if provided an object, return a new object keeping only the properties that are absent from a provided filter array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean difference</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is not specified</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return a shallow copy of the provided object/array if a filter property is boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return an empty object/array if the filter property is boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do a difference if the first value of the provided filtering array is a boolean true</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should do an intersection if the first value of the provided filtering array is a boolean false</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0s</td>
+        <td>should do an intersection if the leading boolean is omitted from the provided filtering array</td>
+        <td>domJSON &raquo; private utility APIs &raquo; boolean filtering</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should work with the default settings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should always ignore &quot;link&quot; and &quot;script&quot; tags</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.011s</td>
+        <td>should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should be able to produce a stringified JSON output</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to produce an output of just the JSONified DOM node, excluding all metadata</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about basic output control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should note the version number domJSON when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should sotre the options used to generate this JSON object</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should note the UTC time when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should note how long it took to perform the operation</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should note the domain of the browser when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should note the userAgent information when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should note both the inner and outer dimensions of the window when the operation was performed</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about metadata output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>should be able to ignore child nodes if requested (aka, no recursion)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to recurse through the entire depth of the DOM tree</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.005s</td>
+        <td>should be able to recurse to an arbitrary level of depth</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should be able only recurse through only HTML Elements (nodeType = 1)</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about recursion depth control</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.019s</td>
+        <td>should not perform custom filtering if passed a non-array value, or not specified</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.011s</td>
+        <td>should be able to output only the specified DOM properties if provided an array of strings</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to output all DOM properties except for those specified if provided an array of strings with a leading boolean true</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should always exclude the following DOM properties from the output, even if they are included in a filter array: children, classList, dataset</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should always include the following DOM properties in the output, even if they are excluded by a filter array: nodeType, nodeValue, tagName</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should never include DOM properties that reference other DOM Nodes (nextSibling, parentElement, etc), in order to prevent infinite recursion loops</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.012s</td>
+        <td>should be able to ignore all serialized DOM properties (like outerHTML, textContent, prefix, etc), overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to include all serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to include a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should be able to exclude a specific set of serialized DOM properties, overriding other property filters</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about filtering which DOM properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should be able to ignore all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.008s</td>
+        <td>should be able to include all HTML attributes</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should be able to include a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should be able to exclude a set of HTML attributes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which attributes to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.007s</td>
+        <td>should be able to ignore computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.028s</td>
+        <td>should be able to include all computed styles</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.025s</td>
+        <td>should be able to include a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.026s</td>
+        <td>should be able to exclude a set of computed style properties on the given nodes, as specified by an array</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about enumerating which computed style properties to include in the output</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.019s</td>
+        <td>should be able to ignore all relative paths contained in DOM attributes, and keep them as is</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.016s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.014s</td>
+        <td>should be able to convert all relative paths contained in a specified list of DOM attributes to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.015s</td>
+        <td>should be able to convert all relative paths contained in DOM attributes, except those contained on a specified list, to absolute paths, while leaving absolute URLs and dataURIs untouched</td>
+        <td>domJSON &raquo; JSON object creation [.toJSON() method] &raquo; for various options &raquo; about converting relative paths in attributes</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>should output a document fragment</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.009s</td>
+        <td>should be able to process a JSON string, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should be able to process a JSON friendly object, with metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.01s</td>
+        <td>should be able to process a JSON string, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.012s</td>
+        <td>should be able to process a JSON friendly object, without metadata</td>
+        <td>domJSON &raquo; DOM node creation [.toDOM() method]</td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+</html>
