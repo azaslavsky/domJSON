@@ -66,7 +66,7 @@ gulp.task('unit-chrome', function(done) {
 
 //Unit for browser compatibility
 gulp.task('unit-browsers', function(done) {
-	unitOpts.browsers = ['Chrome', 'ChromeCanary', 'Firefox', 'FirefoxDeveloper', /*'IE11', 'IE10', 'IE9', 'IE8'*/];
+	unitOpts.browsers = ['Chrome', 'ChromeCanary', 'Firefox', 'FirefoxDeveloper', 'IE11', 'IE10', 'IE9', /*'IE8'*/];
 	unitOpts.htmlReporter = {
 		outputFile: 'test/results/spec/compatibility.html'
 	};
