@@ -71,6 +71,7 @@
 		computedStyle: false,
 		cull: true,
 		deep: true,
+		domProperties: true,
 		filter: false,
 		htmlOnly: false,
 		metadata: true,
@@ -560,7 +561,7 @@
 	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS properties to be included via boolean search); this operation is VERY costly performance-wise!
 	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
 	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {FilterList} [opts.domProperties] An `Array` of all the non-required properties to be copied; if unspecified, all of the DOM properties will be copied (except for ones which serialize the DOM Node, which are handled separately by `opts.serialProperties`)
+	 * @param {boolean|FilterList} [opts.domProperties] 'false' means only 'tagName', 'nodeType', and 'nodeValue' properties will be copied, while an `Array` of all the non-required properties to be copied; if unspecified, all of the DOM properties will be copied (except for ones which serialize the DOM Node, which are handled separately by `opts.serialProperties`)
 	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, instances of HTMLElement); irrelevant if `opts.deep` is `true`
 	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
 	 * @todo {boolean|FilterList} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
@@ -608,7 +609,11 @@
 				options.domProperties = boolDiff( unique(options.domProperties, requiring), ignoring );
 			}
 		} else {
-			options.domProperties = [true].concat(ignoring);
+			if (options.domProperties === false) {
+				options.domProperties = requiring;
+			} else {
+				options.domProperties = [true].concat(ignoring);
+			}
 		}
 		
 		//Transform the node into an object literal
