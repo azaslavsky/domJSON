@@ -6,71 +6,17 @@
 
     <!-- styles -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css"></link>
-    <style>
-      input[type="radio"] {
-        margin-left: 14px;
-      }
-
-      input[type="text"] {
-        width: 400px;
-        margin-left: 14px;
-      }
-
-      body {
-        display: flex;
-        font-weight: normal;
-        font-family: 'Arial', sans-serif;
-        font-size: 14px;
-        margin: 20px;
-      }
-
-      h2 {
-        margin-left: -10px;
-      }
-
-      body>div{
-        width: 600px;
-        float: left;
-        margin-left: 12px;
-        max-height: 600px;
-      }
-
-      #sample1Opts {
-        line-height: 42px;
-      }
-
-      #sample1Container, #sample1Result {
-        border: 1px solid #888;
-        position: relative;
-      }
-
-      #sample1Container>div {
-        width: 80%;
-        height: 100%;
-        padding: 20px;
-      }
-
-      #sample1Result {
-        background: #242432;
-        overflow: auto;
-      }
-
-      pre {
-        margin: 0 !important;
-        padding: 12px;
-        overflow: visible;
-      }
-    </style>
-    <link rel="stylesheet" type="text/css" href="./renderjson.css"></link>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="./css/renderjson.css"></link>
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <!-- renderjson -->
-    <script type="text/javascript" src="./renderjson.js"></script>
+    <script type="text/javascript" src="./js/renderjson.js"></script>
 
     <!-- domJSON -->
-    <script type="text/javascript" src="../dist/domJSON.js"></script>
+    <script type="text/javascript" src="../src/domJSON.js"></script>
   </head>
 
   <body>
@@ -101,8 +47,22 @@
     <div id="sample1Result">
     </div>
 
+    <div id="sample2Controls">
+      <h2>Sample 2: Speed Up Batch DOM Updates</h2>
+      <p>Which is faster: to increment every item in this 2,500 row table using tradition jQuery, or with domJSON + Web Workers?  <b>Note: this can take up to 20 seconds per run - please be patient!</b></p>
+      <button id="reset2">Reset</button>
+      <input name="increment" type="text" value="" placeHolder="Type in an integer to increment every cell in the table"/>
+      <button id="doWithout2">without domJSON</button>
+      <button id="doWith2">with domJSON</button>
+      <br/>
+      <span id="sample2Result"></span>
+    </div>
+
+    <iframe id="sample2Frame">
+    </iframe>
+
     <!-- sample files -->
-    <script type="text/javascript" src="./sample1.js"></script>
-    <script type="text/javascript" src="./sample2.js"></script>
+    <script type="text/javascript" src="./js/sample1.js"></script>
+    <script type="text/javascript" src="./js/sample2.js"></script>
   </body>
   </html>
