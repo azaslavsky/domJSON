@@ -1,6 +1,6 @@
 domJSON
 =======
-[![License](https://img.shields.io/cocoapods/l/AFNetworking.svg)](https://github.com/azaslavsky/domJSON#license) [![Bower version](https://badge.fury.io/bo/domJSON.svg)](http://badge.fury.io/bo/domJSON) [![npm version](https://badge.fury.io/js/domJSON.svg)](http://badge.fury.io/js/domJSON) [![Coverage Status](https://img.shields.io/coveralls/azaslavsky/domJSON.svg)](https://coveralls.io/r/azaslavsky/domJSON?branch=master) [![Dependencies](https://david-dm.org/azaslavsky/domJSON/dev-status.svg)](https://david-dm.org/azaslavsky/domJSON#info=devDependencies&view=table) [![Travis Build](https://api.travis-ci.org/azaslavsky/domJSON.svg)](https://travis-ci.org/azaslavsky/domJSON) 
+[![License](https://img.shields.io/cocoapods/l/AFNetworking.svg)](https://github.com/azaslavsky/domJSON#license) [![Bower version](https://badge.fury.io/bo/domjson.svg)](http://badge.fury.io/bo/domjson) [![npm version](https://badge.fury.io/js/domjson.svg)](http://badge.fury.io/js/domjson) [![Coverage Status](https://img.shields.io/coveralls/azaslavsky/domJSON.svg)](https://coveralls.io/r/azaslavsky/domJSON?branch=master) [![Dependencies](https://david-dm.org/azaslavsky/domJSON/dev-status.svg)](https://david-dm.org/azaslavsky/domJSON#info=devDependencies&view=table) [![Travis Build](https://api.travis-ci.org/azaslavsky/domJSON.svg)](https://travis-ci.org/azaslavsky/domJSON) 
 
 Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.
 
@@ -231,6 +231,17 @@ Take the JSON-friendly object created by the `.toJSON()` method and rebuild it b
 
 ## Performance
 A major goal of this library is performance.  That being said, there is one way to _significantly_ slow it down: setting `opts.computedStyle` to `true`.  This forces the browser to run [`window.getComputedStyle()`](https://developer.mozilla.org/en-US/docs/Web/API/Window.getComputedStyle) on every node in the DOM Tree, which is [really, really slow](http://jsperf.com/getcomputedstyle-vs-style-vs-css/2), since it forces a redraw _each time it does it!_  Obviously, there are situations where this you need the computed style and this performance hit is unavoidable, but otherwise, keep `opts.computedStyle` set to `false`.  Besides that, I'm working on writing some benchmark tests to give developers an idea of how each option affects the speed of domJSON, but this will take some time!
+
+Generally speaking, avoid using `FilterList` type options for best performance.  The optimal settings in terms of speed, without sacrificing any information, are as follows:
+```javascript
+var jsonOutput = domJSON.toJSON(someNode, {
+	absolutePaths: false,
+	attributes: false,
+	cull: false
+});
+```
+
+A downside of the above setup is that you may well end up with a very bloated output containing a lot of frivolous fields.  As of now, this is the cost of getting a quick turnaround - in the future, domJSON will be optimized to work more quickly for more precise setups.
 
 ## Tests
 
