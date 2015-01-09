@@ -1,6 +1,6 @@
 {
   "name": "domjson",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.",
   "main": "dist/domJSON.js",
   "license": "MIT",
