@@ -1,0 +1,231 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+ /* General Styles */
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+}
+
+h1, h2 {
+    margin: 17px 0;
+}
+
+p {
+    font-size: 15px;
+    line-height: 24px;
+    margin-top: 24px;
+}
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+    margin-top: 8px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 0 48px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+/* Custom Toggler */
+
+#sidebar-toggle {
+    height: 48px;
+    width: 60px;
+    position: fixed;
+    top: 12px;
+    left:230px;
+    background: #000;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    cursor: pointer;
+    -webkit-transition: left 0.5s ease;
+    -moz-transition: left 0.5s ease;
+    -o-transition: left 0.5s ease;
+    transition: left 0.5s ease;
+}
+
+.toggled #sidebar-toggle {
+    left: 0px;
+}
+
+#sidebar-toggle>i {
+    width: 32px;
+    float: right;
+    margin-right: 6px;
+    line-height: 48px;
+    font-size: 24px;
+    text-align: center;
+    color: #999;
+    -webkit-transition: margin-right 0.5s ease;
+    -moz-transition: margin-right 0.5s ease;
+    -o-transition: margin-right 0.5s ease;
+    transition: margin-right 0.5s ease;
+}
+
+.toggled #sidebar-toggle>i {
+    margin-right: 16px;
+}
+
+#sidebar-toggle:hover>i {
+    color: white;
+}
+
+.row {
+    margin-bottom: 40px;
+}
+
+.container-fluid {
+    width: 100%;
+    -webkit-transition: width 0.5s ease;
+    -moz-transition: width 0.5s ease;
+    -o-transition: width 0.5s ease;
+    transition: width 0.5s ease;
+}
+
+.toggled .container-fluid {
+    width: calc(100% - 250px);
+}
+
+#top p {
+    color: #888;
+    margin-top: -15px;
+}
+
+#wrapper pre {
+    color: #d1d1d1;
+    background: #242432;
+    word-break: normal;
+    white-space: pre-line;
+    padding-left: 20px;
+}
+
+#wrapper pre.indented {
+    text-indent: -40px;
+    padding-left: 60px;
+}
+
+#wrapper .inline-code {
+    padding: 2px 6px 3px 6px;
+    background: #ddd;
+    color: #444;
+    border-radius: 4px;
+}

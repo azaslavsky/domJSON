@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>domJSON</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- FontAwesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"></link>
+
+	<!-- OpenSans -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+
+	<!-- Custom CSS -->
+	<link href="./css/demo.css" rel="stylesheet">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+
+<body>
+
+	<div id="wrapper" class="toggled">
+
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand">
+					<a href="#top">
+						domJSON
+					</a>
+				</li>
+				<li>
+					<a href="#whatfor">What's it for?</a>
+				</li>
+				<li>
+					<a href="#startup">Getting Started</a>
+				</li>
+				<li>
+					<a href="#api">API Options</a>
+				</li>
+				<li>
+					<a href="#makejson">Sample: Make Some JSON</a>
+				</li>
+				<li>
+					<a href="#webworkers">Sample: Speedy Web Workers</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div id="sidebar-toggle">
+				<i class="sidebar-icon fa fa-navicon"></i>
+			</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id="top">
+						<h1>domJSON v0.1.0</h1>
+						<p>Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.</p>
+						<a style="display: none" href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="whatfor">
+						<h2>What is domJSON for?</h2>
+						<p>The purpose of domJSON is to produce very accurate representations of the DOM as JSON objects, and to do it very quickly.  While there are probably dozens of varied use cases for this project, two stick out in my mind.  The first is as a front-end debugging or snapshotting tool, which allows end users to send reports that include "snapshots" of the DOM (including computed CSS) at any given point in time.  Imagine an "I found a bug button" on your web page, which, when clicked, would send an easily rebuildable copy of the DOM in its current state (computed styles included!) to the dev team.  DomJSON can do that - to take a peek, check out the <a href="">first example.</a>  Another potential use case is as a poor man's <a href="http://stackoverflow.com/a/21117404/2230156">virtual DOM</a>, allowing domJSON to do batch updats on your DOM tree much quicker than normal.  Check out the second example <a href="">for a demonstration.</a>  I'm sure there are plent of other use cases for domJSON  that I'm not even considering, but these are the two that make the most sense at first glance.</p>
+
+						<p>Broadly speaking, the goals of this project are:</p>
+
+						<ul>
+							<li>Provide as accurate a copy of a given node's DOM properties as possible, but allow optional filtering to remove useless information</li>
+							<li>Be able to rebuild JSON nodes into DOM nodes as performantly as possible</li>
+							<li>Speed, speed, speed</li>
+							<li>No frivolous data: produce JSON objects that are as compact as possible, removing all information not relevant to the developer</li>
+							<li>Keep the library lightweight, with no dependencies</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="startup">
+						<h2>Getting Started</h2>
+						<p>Installing domJSON is easy. You can pull it from Bower...</p>
+
+						<pre>
+							<code>bower install domjson</code>
+						</pre>
+						<pre>
+							<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">bower_components/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
+						</pre>
+
+						<p>...or grab it from NPM and manually include it as a script tag.</p>
+
+						<pre>
+							<code>npm install domjson --save</code>
+						</pre>
+						<pre>
+							<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">node_modules/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
+						</pre>
+
+						<p>Of course, you can also do it the old fashioned way and just download it <a href="">directly from Github</a>, then include the script tag.  Once you've got domJSON installed, working with it is super easy: use the <b>.toJSON()</b> method to create a JSON representation of the DOM tree:</p>
+
+						<pre>
+							<span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+							<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+						</pre>
+
+						<p>And then rebuild the DOM Node from that JSON using <b>.toDOM()</b>:</p>
+
+						<pre>
+							<span style='color:#e66170; font-weight:bold; '>var</span> DOMDocumentFragment <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toDOM<span style='color:#d2cd86; '>(</span>jsonOutput<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+							someDOMElement<span style='color:#d2cd86; '>.</span>parentNode<span style='color:#d2cd86; '>.</span>replaceChild<span style='color:#d2cd86; '>(</span>someDOMElement<span style='color:#d2cd86; '>,</span> DOMDocumentFragment<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+						</pre>
+
+						<p>When creating the JSON object, there are many precise options available, ensuring that developers can produce very specific and compact outputs. For example, the following will produce a JSON copy of <span class="inline-code">someDOMElement</span>'s DOM tree that is only two levels deep, contains no "offset," "client," or "scroll*" type DOM properties, only keeps the "id" attribute on each DOM Node, and outputs a string (rather than a JSON-friendly object):</p>
+
+						<pre class="indented">
+							<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
+							    attributes<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'id'</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>,</span>
+							    domProperties<span style='color:#b060b0; '>:</span> <span style='color:#b060b0; '>{</span>
+							        exclude<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span><span style='color:#d2cd86; '>,</span>
+							        values<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'clientHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollWidth'</span><span style='color:#d2cd86; '>]</span>
+							    <span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>,</span>
+							    deep<span style='color:#b060b0; '>:</span> <span style='color:#008c00; '>2</span><span style='color:#d2cd86; '>,</span>
+							    stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span>
+							<span style='color:#b060b0; margin-left: -40px; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+						</pre>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="api">
+						<h2>API Options</h2>
+						<p>Below is a list of all the <b>.toJSON()</b> options, and an explanation of what each one does:</p>
+
+						<ul>
+							<li><a href="#absolutePaths">absolutePaths</a></li>
+							<li><a href="#attributes">attributes</a></li>
+							<li><a href="#computedstyle">computedStyle</a></li>
+							<li><a href="#cull">cull</a></li>
+							<li><a href="#deep">deep</a></li>
+							<li><a href="#domproperties">domProperties</a></li>
+							<li><a href="#htmlonly">htmlOnly</a></li>
+							<li><a href="#metadata">metadata</a></li>
+							<li><a href="#serialproperties">serialProperties</a></li>
+							<li><a href="#stringify">stringify</a></li>
+						</ul>
+
+						<div id="absolutepaths">
+							<h3>absolutePaths</h3>
+						</div>
+
+						<div id="attributes">
+							<h3>attributes</h3>
+						</div>
+
+						<div id="computedstyle">
+							<h3>computedStyle</h3>
+						</div>
+
+						<div id="cull">
+							<h3>cull</h3>
+						</div>
+
+						<div id="deep">
+							<h3>deep</h3>
+						</div>
+
+						<div id="domproperties">
+							<h3>domProperties</h3>
+						</div>
+
+						<div id="htmlonly">
+							<h3>htmlonly</h3>
+						</div>
+
+						<div id="metadata">
+							<h3>metadata</h3>
+						</div>
+
+						<div id="serialproperties">
+							<h3>serialProperties</h3>
+						</div>
+
+						<div id="stringify">
+							<h3>stringify</h3>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="makejson">
+						<h2>Sample: Turning the DOM into JSON</h2>
+						<p>This is a simple example of how domJSON can take a DOM Tree (everything in the body of the iframe below), and turn it into a usable and representative JSON object.</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="webworkers">
+						<h2>Sample: Speeding Up Batch DOM Updates with Web Workers</h2>
+						<p>In theory, rather than updating the DOM piecemeal, forcing a redraw each time, developers can grab a branch of the DOM tree and convert it to JSON.  They could then make all of the changes in JS (which is much more performant than the DOM), then re-build a Document Fragment from this modified JSON. Finally, this new fragmetn could easily replace the DOM tree branch they were looking to update.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+	<!-- JS -->
+	<script src="./js/demo.js"></script>
+
+</body>
+
+</html>
