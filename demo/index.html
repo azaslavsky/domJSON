@@ -31,14 +31,15 @@
       body>div{
         width: 600px;
         float: left;
+        margin-left: 12px;
+        max-height: 600px;
       }
 
       #sample1Opts {
-        margin-left: 20px;
         line-height: 42px;
       }
 
-      #sample1Container {
+      #sample1Container, #sample1Result {
         border: 1px solid #888;
         position: relative;
       }
@@ -48,13 +49,25 @@
         height: 100%;
         padding: 20px;
       }
+
+      #sample1Result {
+        background: #242432;
+        overflow: auto;
+      }
+
+      pre {
+        margin: 0 !important;
+        padding: 12px;
+        overflow: visible;
+      }
     </style>
+    <link rel="stylesheet" type="text/css" href="./renderjson.css"></link>
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <!-- renderjson -->
-    <script type="text/javascript" src="../dist/domJSON.js"></script>
+    <script type="text/javascript" src="./renderjson.js"></script>
 
     <!-- domJSON -->
     <script type="text/javascript" src="../dist/domJSON.js"></script>
@@ -67,9 +80,9 @@
       absolutePaths: <select name="absolutePaths"><option value="false">False</option><option value="true" selected>True</option></select><br/>
       attributes: <select name="attributes"><option value="false">False</option><option value="true" selected>True</option></select><br/>
       computedStyle: <select name="computedStyle"><option value="false" selected>False</option><option value="true">True</option></select><br/>
-      cull: <select name="cull"><option value="false" selected>False</option><option value="true">True</option></select><br/>
+      cull: <select name="cull"><option value="false">False</option><option value="true" selected>True</option></select><br/>
       deep: <select name="deep"><option value="false">False</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="true" selected>True</option></select><br/>
-      domProperties: <select name="cull"><option value="include" selected>Include</option><option value="exclude">Exclude</option></select><input name="domProperties" type="text" value="" placeHolder="Type the properties you want, separated by commas"/><br/>
+      domProperties: <select name="dpExclude"><option value="include" selected>Include</option><option value="exclude">Exclude</option></select><input name="domProperties" type="text" value="" placeHolder="Type the properties you want, separated by commas"/><br/>
       htmlOnly: <select name="htmlOnly"><option value="false" selected>False</option><option value="true">True</option></select><br/>
       metadata: <select name="metadata"><option value="false">False</option><option value="true" selected>True</option></select><br/>
       serialProperties: <select name="serialProperties"><option value="false" selected>False</option><option value="true">True</option></select><br/>
@@ -83,6 +96,9 @@
         <br/>
         <img src="../test/lib/w3c_home.png"></img>
       </div>
+    </div>
+
+    <div id="sample1Result">
     </div>
 
     <!-- sample files -->

@@ -6,7 +6,7 @@ logger.setLevel(log4js.levels.DEBUG);
 // Document-Root: './public' directory
 var fileServer = new staticAlias.Server('./', {
   alias: {
-    match: /^\/domJSON\/demo\/{0,1}.*$/i, //https://regex101.com/r/aC7iY1/1
+    match: /^\/domJSON\/demo\/i, //https://regex101.com/r/aC7iY1/1
     serve: 'demo/index.html',
     logger: logger
   }
