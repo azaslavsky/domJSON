@@ -576,12 +576,12 @@
 						return str;
 					};
 
-					it('should not perform custom filtering if passed a non-array value, or not specified', function(){
+					it('should not perform custom filtering if passed a non-array value that isn\'t false, or not specified', function(){
 						var result = domJSON.toJSON(containerNode, {
 							domProperties: true
 						});
 						var result2 = domJSON.toJSON(containerNode, {
-							domProperties: false
+							domProperties: 'yes'
 						});
 						var result3 = domJSON.toJSON(containerNode, {
 							domProperties: 12345
@@ -590,6 +590,18 @@
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
 						expect(result2.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
 						expect(result3.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes.length).toBe(3);
+					});
+
+					it('should only copy required properties (nodeType, nodeValue, tagName) when custom filtering flag is set to false', function(){
+						var result = domJSON.toJSON(containerNode, {
+							domProperties: false
+						});
+
+						expect(result.node.tagName.toUpperCase()).toBe('DIV');
+						expect(result.node.childNodes[0].nodeType).toBe(1);
+						expect(result.node.childNodes[0].clientTop).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].offsetLeft).toBeUndefined();
+						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].innerHTML).toBeUndefined();
 					});
 
 					it('should be able to output only the specified DOM properties if provided an array of strings', function(){

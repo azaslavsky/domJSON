@@ -3,7 +3,7 @@
  *
  * @fileOverview
  * @author  Alex Zaslavsky
- * @version 0.1.0
+ * @version 0.1.1
  * @license The MIT License: Copyright (c) 2013 Alex Zaslavsky
  */
 
@@ -54,7 +54,7 @@
 	var metadata = {
 		href: win.location.href || null,
 		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
-		version: /* version */'0.1.0'/* end-version */
+		version: /* version */'0.1.1'/* end-version */
 	};
 	
 	
@@ -71,6 +71,7 @@
 		computedStyle: false,
 		cull: true,
 		deep: true,
+		domProperties: true,
 		filter: false,
 		htmlOnly: false,
 		metadata: true,
@@ -422,7 +423,7 @@
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
 			if (typeof node[n] !== 'undefined' && typeof node[n] !== 'function' && n.charAt(0).toLowerCase() === n.charAt(0)) {
 				//Only allowed objects are arrays
-				if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
+				if ( typeof node[n] !== 'object' || node[n] instanceof Array ) {
 					//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
 					if (opts.cull) {
 						if (node[n] || node[n] === 0 || node[n] === false) {
@@ -555,16 +556,16 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
-	 * @param {boolean|FilterList} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify an `Array` of keys to boolean search
-	 * @param {boolean|FilterList} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify an `Array` of keys to boolean search
-	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify an `Array` of CSS properties to be included via boolean search); this operation is VERY costly performance-wise!
+	 * @param {boolean|FilterList} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify a `FilterList` of keys to boolean search
+	 * @param {boolean|FilterList} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify a `FilterList` of keys to boolean search
+	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify a `FilterList` of CSS properties to be included via boolean search); this operation is VERY costly performance-wise!
 	 * @param {boolean} [opts.cull=`false`] Use `true` to ignore empty element properties
 	 * @param {boolean|number} [opts.deep=`true`] Use `true` to iterate and copy all childNodes, or an INTEGER indicating how many levels down the DOM tree to iterate
-	 * @param {FilterList} [opts.domProperties] An `Array` of all the non-required properties to be copied; if unspecified, all of the DOM properties will be copied (except for ones which serialize the DOM Node, which are handled separately by `opts.serialProperties`)
+	 * @param {boolean|FilterList} [opts.domProperties=true] 'false' means only 'tagName', 'nodeType', and 'nodeValue' properties will be copied, while a `FilterList` can specify DOM properties to include or exclude in the output (except for ones which serialize the DOM Node, which are handled separately by `opts.serialProperties`)
 	 * @param {boolean} [opts.htmlOnly=`false`] Use `true` to only iterate through childNodes where nodeType = 1 (aka, instances of HTMLElement); irrelevant if `opts.deep` is `true`
 	 * @param {boolean} [opts.metadata=`false`] Output a special object of the domJSON class, which includes metadata about this operation
-	 * @todo {boolean|FilterList} [opts.parse=`false`] An `Array` of properties that are DOM nodes, but will still be copied **PLANNED**
-	 * @param {boolean|FilterList} [opts.serialProperties=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML, innerText, etc), or specify an `Array` of serial properties (no boolean search!)
+	 * @todo {boolean|FilterList} [opts.parse=`false`] a `FilterList` of properties that are DOM nodes, but will still be copied **PLANNED**
+	 * @param {boolean|FilterList} [opts.serialProperties=`true`] Use `true` to ignore the properties that store a serialized version of this DOM Node (ex: outerHTML, innerText, etc), or specify a `FilterList` of serial properties (no boolean search!)
 	 * @param {boolean} [opts.stringify=`false`] Output a JSON string, or just a JSON-ready javascript object?
 	 * @return {Object|string} A JSON-friendly object, or JSON string, of the DOM node -> JSON conversion output
 	 * @method
@@ -608,7 +609,11 @@
 				options.domProperties = boolDiff( unique(options.domProperties, requiring), ignoring );
 			}
 		} else {
-			options.domProperties = [true].concat(ignoring);
+			if (options.domProperties === false) {
+				options.domProperties = requiring;
+			} else {
+				options.domProperties = [true].concat(ignoring);
+			}
 		}
 		
 		//Transform the node into an object literal
@@ -715,7 +720,7 @@
 
 		//Copy all available properties that are not arrays or objects
 		for (var x in obj) {
-			if (!(obj[x] instanceof Object) && x !== 'isContentEditable') {
+			if (typeof obj[x] !== 'object' && x !== 'isContentEditable' && x !== 'childNodes') {
 				try {
 					node[x] = obj[x];
 				} catch(e) {
@@ -771,6 +776,7 @@
 
 		//Create a document fragment, and away we go!
 		node = document.createDocumentFragment();
+		debugger;
 		if (options.noMeta) {
 			toDOM(obj, node, node);
 		} else {

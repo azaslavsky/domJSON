@@ -18,7 +18,7 @@
     var metadata = {
         href: win.location.href || null,
         userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
-        version: "0.1.0"
+        version: "0.1.1"
     };
     var defaultsForToJSON = {
         absolutePaths: [ "action", "data", "href", "src" ],
@@ -26,6 +26,7 @@
         computedStyle: false,
         cull: true,
         deep: true,
+        domProperties: true,
         filter: false,
         htmlOnly: false,
         metadata: true,
@@ -197,7 +198,7 @@
         var copy = {};
         for (var n in node) {
             if (typeof node[n] !== "undefined" && typeof node[n] !== "function" && n.charAt(0).toLowerCase() === n.charAt(0)) {
-                if (!(node[n] instanceof Object) || node[n] instanceof Array) {
+                if (typeof node[n] !== "object" || node[n] instanceof Array) {
                     if (opts.cull) {
                         if (node[n] || node[n] === 0 || node[n] === false) {
                             copy[n] = node[n];
@@ -301,7 +302,11 @@
                 options.domProperties = boolDiff(unique(options.domProperties, requiring), ignoring);
             }
         } else {
-            options.domProperties = [ true ].concat(ignoring);
+            if (options.domProperties === false) {
+                options.domProperties = requiring;
+            } else {
+                options.domProperties = [ true ].concat(ignoring);
+            }
         }
         copy = toJSON(node, options, 0);
         if (options.metadata) {
@@ -376,7 +381,7 @@
             return false;
         }
         for (var x in obj) {
-            if (!(obj[x] instanceof Object) && x !== "isContentEditable") {
+            if (typeof obj[x] !== "object" && x !== "isContentEditable" && x !== "childNodes") {
                 try {
                     node[x] = obj[x];
                 } catch (e) {
@@ -405,6 +410,7 @@
         }
         options = extend({}, defaultsForToDOM, opts);
         node = document.createDocumentFragment();
+        debugger;
         if (options.noMeta) {
             toDOM(obj, node, node);
         } else {

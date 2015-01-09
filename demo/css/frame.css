@@ -1,0 +1,8 @@
+section {
+	min-width: 85%;
+}
+div {
+	border: 1px solid #ccc;
+	margin-bottom: -1px;
+	padding: 3px 12px;
+}

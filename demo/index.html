@@ -1,0 +1,68 @@
+  <!DOCTYPE HTML>
+  <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>domJSON demos</title>
+
+    <!-- styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"></link>
+    <link rel="stylesheet" type="text/css" href="./css/renderjson.css"></link>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- renderjson -->
+    <script type="text/javascript" src="./js/renderjson.js"></script>
+
+    <!-- domJSON -->
+    <script type="text/javascript" src="../src/domJSON.js"></script>
+  </head>
+
+  <body>
+    <div id="sample1Opts">
+      <h2>Sample 1: Convert a few DOM noes into JSON</h2>
+      <p>Mess around with the option toggles, then check out the output in the blue area.</p>
+      absolutePaths: <select name="absolutePaths"><option value="false">False</option><option value="true" selected>True</option></select><br/>
+      attributes: <select name="attributes"><option value="false">False</option><option value="true" selected>True</option></select><br/>
+      computedStyle: <select name="computedStyle"><option value="false" selected>False</option><option value="true">True</option></select><br/>
+      cull: <select name="cull"><option value="false">False</option><option value="true" selected>True</option></select><br/>
+      deep: <select name="deep"><option value="false">False</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="true" selected>True</option></select><br/>
+      domProperties: <select name="dpExclude"><option value="include" selected>Include</option><option value="exclude">Exclude</option></select><input name="domProperties" type="text" value="" placeHolder="Type the properties you want, separated by commas"/><br/>
+      htmlOnly: <select name="htmlOnly"><option value="false" selected>False</option><option value="true">True</option></select><br/>
+      metadata: <select name="metadata"><option value="false">False</option><option value="true" selected>True</option></select><br/>
+      serialProperties: <select name="serialProperties"><option value="false" selected>False</option><option value="true">True</option></select><br/>
+      <button id="submit1">See Results</button>
+    </div>
+
+    <div id="sample1Container" style="margin-left: 20px;">
+      <div>
+        <h3>This is a sample article</h3>
+        <p>Here is some sample text.  <b>We will include some bold text in there, and then <i>some italicized text</i> inside of that!</b>  This should allow for a reasonably deep tree for the demo that includes both HTML and text nodes.  Below is an image with a relative URL path:</p>
+        <br/>
+        <img src="../test/lib/w3c_home.png"></img>
+      </div>
+    </div>
+
+    <div id="sample1Result">
+    </div>
+
+    <div id="sample2Controls">
+      <h2>Sample 2: Speed Up Batch DOM Updates</h2>
+      <p>Which is faster: to increment every item in this 2,500 row table using tradition jQuery, or with domJSON + Web Workers?  <b>Note: this can take up to 20 seconds per run - please be patient!</b></p>
+      <button id="reset2">Reset</button>
+      <input name="increment" type="text" value="" placeHolder="Type in an integer to increment every cell in the table"/>
+      <button id="doWithout2">without domJSON</button>
+      <button id="doWith2">with domJSON</button>
+      <br/>
+      <span id="sample2Result"></span>
+    </div>
+
+    <iframe id="sample2Frame">
+    </iframe>
+
+    <!-- sample files -->
+    <script type="text/javascript" src="./js/sample1.js"></script>
+    <script type="text/javascript" src="./js/sample2.js"></script>
+  </body>
+  </html>
