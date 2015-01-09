@@ -422,7 +422,7 @@
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
 			if (typeof node[n] !== 'undefined' && typeof node[n] !== 'function' && n.charAt(0).toLowerCase() === n.charAt(0)) {
 				//Only allowed objects are arrays
-				if ( !(node[n] instanceof Object) || node[n] instanceof Array ) {
+				if ( typeof node[n] !== 'object' || node[n] instanceof Array ) {
 					//If we are eliminating empty fields, make sure this value is not NULL or UNDEFINED
 					if (opts.cull) {
 						if (node[n] || node[n] === 0 || node[n] === false) {
@@ -715,7 +715,7 @@
 
 		//Copy all available properties that are not arrays or objects
 		for (var x in obj) {
-			if (!(obj[x] instanceof Object) && x !== 'isContentEditable') {
+			if (typeof obj[x] !== 'object' && x !== 'isContentEditable' && x !== 'childNodes') {
 				try {
 					node[x] = obj[x];
 				} catch(e) {
@@ -771,6 +771,7 @@
 
 		//Create a document fragment, and away we go!
 		node = document.createDocumentFragment();
+		debugger;
 		if (options.noMeta) {
 			toDOM(obj, node, node);
 		} else {
