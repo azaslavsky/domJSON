@@ -54,7 +54,7 @@
 	var metadata = {
 		href: win.location.href || null,
 		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
-		version: /* version */'0.1.1'/* end-version */
+		version: '0.1.1'
 	};
 	
 	
