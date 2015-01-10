@@ -28,6 +28,12 @@ Broadly speaking, the goals of this project are:
 * No frivolous data: produce JSON objects that are as compact as possible, removing all information not relevant to the developer
 * Keep the library lightweight, with no dependencies
 
+DomJSON is currently supporting the following browsers:
+* Chrome: Desktyop 39+, Mobile 339+
+* Firefox Desktop 24+, Mobile 31+
+* Safari Desktop 7+, Mobile 7+
+* IE: Desktop 9+
+
 ## Installation
 
 Installing domJSON is easy.  You can pull it from Bower...
