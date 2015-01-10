@@ -6,7 +6,6 @@ var fs = require('fs-extra');
 var args = require('yargs').argv;
 
 //Get all the other modules necessary to build this out
-var bump = require('gulp-bump');
 var concat = require('gulp-concat');
 var debug = require('gulp-debug');
 var check = require('gulp-if');
@@ -145,10 +144,45 @@ gulp.task('build', ['copy'], function() {
 		.pipe(gulp.dest('./dist'))
 });
 
+
+
+//Custom bump script
+var customBump = function(semver, type) {
+	var parts = semver.trim().split('.');
+	if (parts.length < 2 || parts.length > 3) {
+		return match;
+	}
+
+	if (type === 'major') {
+		parts[0]++;
+	} else if (type === 'patch') {
+		if (parts[2]) {
+			parts[2]++;
+		}
+	} else {
+		parts[1]++;
+	}
+
+	return parts.join('.');
+}
+
 //Build, and bump the version
 gulp.task('bump', ['build'], function() {
-	return gulp.src(['./package.json', './bower.json'])
-		.pipe(bump({type: args.vers || 'patch'}))
+	//var otherNames = args.otherNames.replace(/[\s]/gi, '').replace(',', '|').trim();
+	//var versionString = 'version' + otherNames.length ? '|' + otherNames : ''; 
+
+	return gulp.src(['./package.json', './bower.json', '**/src/**/*.js', '**/dist/**/*.js'])
+		//Update jsDOC version: https://regex101.com/r/yE7oK1/1
+		.pipe(replace(/@version[\s]*([\S]*)/gi, function(match, p1){
+			match.replace(p1, customBump(p1, args.vers))
+			console.log(match);
+			return match.replace(p1, customBump(p1, args.vers));
+		}))
+
+		//Update inline version: https://regex101.com/r/mB4wK2/3
+		.pipe(replace(/\"{0,1}version\"{0,1}\:[\s]*[\"\']([\S]*?)[\'\"][\s]*(?:\,|\})/gi, function(match, p1){
+			return match.replace(p1, customBump(p1, args.vers));
+		}))
 		.pipe(gulp.dest('./'));
 });
 
