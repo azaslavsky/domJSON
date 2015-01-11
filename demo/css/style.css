@@ -1,0 +1,77 @@
+input[type="radio"] {
+  margin-left: 14px;
+}
+
+input[type="text"] {
+  width: 400px;
+  margin-left: 24px;
+}
+
+body {
+  font-weight: normal;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  margin: 20px;
+}
+
+h2 {
+  margin-left: -10px;
+}
+
+body>div{
+  width: 700px;
+  margin-left: 12px;
+  margin-bottom: 40px;
+}
+
+#sample1Opts {
+  line-height: 42px;
+}
+
+#sample1Container, #sample1Result {
+  border: 1px solid #888;
+  position: relative;
+  float: left;
+  height: 600px;
+}
+
+#sample1Container>div {
+  width: 80%;
+  height: 100%;
+  padding: 20px;
+}
+
+#sample1Result {
+  background: #242432;
+  overflow: auto;
+}
+
+#sample2Controls {
+  margin-top: 720px;
+  width: 80%;
+}
+
+#sample2Result {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+  position: relative;
+  top: 20px;
+}
+
+#sample2Result.green {
+  color: green;
+}
+
+pre {
+  margin: 0 !important;
+  padding: 12px;
+  overflow: visible;
+}
+
+iframe {
+  width: 700px;
+  height: 800px;
+  margin-left: 16px;
+  border: 1px solid #888;
+}
