@@ -21,7 +21,14 @@
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
 
 	<!-- Custom CSS -->
+	<link href="./demo/css/renderjson.css" rel="stylesheet">
 	<link href="./css/demo.css" rel="stylesheet">
+
+	<!-- renderjson -->
+    <script type="text/javascript" src="./js/renderjson.js"></script>
+
+    <!-- domJSON -->
+    <script type="text/javascript" src="../dist/domJSON.js"></script>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -141,7 +148,7 @@
 
 						<div class="codeblock lang js">
 							<pre>
-								<div class="lang">Javascript</div><span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+								<span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 							</pre>
 						</div>
@@ -162,11 +169,11 @@
 								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
 								    attributes<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'id'</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>,</span>
 								    domProperties<span style='color:#b060b0; '>:</span> <span style='color:#b060b0; '>{</span>
-								        exclude<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span><span style='color:#d2cd86; '>,</span>
+								        exclude<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>true</span><span style='color:#d2cd86; '>,</span>
 								        values<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'clientHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollWidth'</span><span style='color:#d2cd86; '>]</span>
 								    <span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>,</span>
 								    deep<span style='color:#b060b0; '>:</span> <span style='color:#008c00; '>2</span><span style='color:#d2cd86; '>,</span>
-								    stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span>
+								    stringify<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>true</span>
 								<span style='color:#b060b0; margin-left: -40px; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 							</pre>
 						</div>
@@ -273,8 +280,8 @@
 
 							<div class="codeblock lang js">
 								<pre>
-									domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someNode<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span><span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-									JSON<span style='color:#d2cd86; '>.</span>stringify<span style='color:#d2cd86; '>(</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someNode<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>false</span><span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someNode<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>stringify<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>true</span><span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									JSON<span style='color:#d2cd86; '>.</span>stringify<span style='color:#d2cd86; '>(</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someNode<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>stringify<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>false</span><span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 								</pre>
 							</div>
 						</div>
@@ -285,14 +292,164 @@
 				<div class="row">
 					<div class="col-lg-12" id="makejson">
 						<h2>Sample: Turning the DOM into JSON</h2>
-						<p>This is a simple example of how domJSON can take a DOM Tree (everything in the body of the iframe below), and turn it into a usable and representative JSON object.</p>
+						<p>This is a simple example of how domJSON can take a DOM Tree and turn it into a usable and representative JSON object.  When you click the "Go!" button, the output box will show a JSON representation of <a id="boundary-highlight">the div containing this sample</a>.  Mess around with the option toggles, then check out the output in the blue area.</p>
+
+						<div class="sample-form" id="makejsonOpts">
+							<span>absolutePaths: </span>
+							<select name="absolutePaths" class="form-control" disabled>
+								<option value="false" selected>False</option>
+								<option value="true">True</option>
+							</select>
+							<br/>
+							
+							<span>attributes: </span>
+							<select name="attributes" class="form-control">
+								<option value="false">False</option>
+								<option value="true" selected>True</option>
+							</select>
+							<br/>
+							
+							<span>computedStyle: </span>
+							<select name="computedStyle" class="form-control">
+								<option value="false" selected>False</option>
+								<option value="true">True</option>
+							</select>
+							<br/>
+							
+							<span>cull: </span>
+							<select name="cull" class="form-control">
+								<option value="false">False</option>
+								<option value="true" selected>True</option>
+							</select>
+							<br/>
+							
+							<span>deep: </span>
+							<select name="deep" class="form-control" disabled>
+								<option value="false">False</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4" selected>4</option>
+								<option value="5">5</option>
+								<option value="true">True</option>
+							</select>
+							<br/>
+
+							<span>domProperties: </span>
+							<select name="dpExclude" class="form-control">
+								<option value="include" selected>Include</option>
+								<option value="exclude">Exclude</option>
+							</select>
+							<input name="domProperties" class="form-control" type="text" value="" placeHolder="List properties, separated by commas"/>
+							<br/>
+							
+							<span>htmlOnly: </span>
+							<select name="htmlOnly" class="form-control">
+								<option value="false" selected>False</option>
+								<option value="true">True</option>
+							</select>
+							<br/>
+							
+							<span>metadata: </span>
+							<select name="metadata" class="form-control">
+								<option value="false">False</option>
+								<option value="true" selected>True</option>
+							</select>
+							<br/>
+							
+							<span>serialProperties: </span>
+							<select name="serialProperties" class="form-control">
+								<option value="false" selected>False</option>
+								<option value="true">True</option>
+							</select>
+							<br/>
+
+							<button type="button" class="btn" id="makejsonReset">Reset</button>
+							<button type="button" class="btn btn-primary" style="margin-right: 12px;" id="makejsonSubmit">Go!</button>
+						</div>
+
+						<div id="makejsonOutput"></div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-lg-12" id="webworkers">
 						<h2>Sample: Speeding Up Batch DOM Updates with Web Workers</h2>
-						<p>In theory, rather than updating the DOM piecemeal, forcing a redraw each time, developers can grab a branch of the DOM tree and convert it to JSON.  They could make all of the changes in JS (which is much more performant than the DOM), then re-build a Document Fragment from this modified JSON. Finally, this new fragment could easily replace the DOM tree branch that's being worked on.</p>
+						<p>In theory, rather than updating the DOM piecemeal, developers can grab a branch of the DOM tree and convert it to JSON.  They could make all of the changes they want in a <a target="blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/basic_usage">JavaScript Web Worker</a>, then re-build a <a target="blank" href="http://ejohn.org/blog/dom-documentfragments/">Document Fragment</a> from this modified JSON. Finally, this new fragment could easily inserted into the DOM, replacing the old branch.  This should be much more performant than repeatedly updating the DOM.</p>
+
+						<p>The reasons for this are twofold.  First, the browser can hang during large JavaScript operations, due to JavaScript's <a target="blank" href="http://www.quora.com/What-is-the-best-way-to-run-expensive-code-in-JavaScript-without-freezing-up-the-UI">single-threaded nature</a>.  By using a Web Worker, we can cut down on that "browser freezing" significantly, offering a vastly improved user experience.  Secondly, repeated jQuery updates means we have to do many DOM redraws, which can take <i>forever</i>.  Instead, we can just convert the DOM to JSON, do all of our updating in JavaScript, and then replace the existing DOM Tree with a new Document Fragment.  That's only one redraw - way faster!</p>
+
+						<p>For this example, we have a 2500 row table of numbered entries that can be incremented by a specified amount.  So what will be quicker: iterating over the table cells using jQuery:</p>
+
+						<div class="codeblock lang js">
+							<pre>
+								<span style='color:#e66170; font-weight:bold; '>var</span> increment <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>parseInt</span><span style='color:#d2cd86; '>(</span>$<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'[name="increment"]'</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>first<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>val<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>trim<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#e66170; font-weight:bold; '>var</span> frameDoc <span style='color:#d2cd86; '>=</span> $<span style='color:#d2cd86; '>(</span> $<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'#webworkersFrame'</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>get<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>contentDocument<span style='color:#d2cd86; '>.</span>activeElement <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#e66170; font-weight:bold; '>var</span> timer <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> Date<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span><span style='color:#e66170; font-weight:bold; '>getTime</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+									<span style='color:#9999a9; '>//Update each row</span>
+									$<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'div'</span><span style='color:#d2cd86; '>,</span> frameDoc<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>each<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>function</span><span style='color:#d2cd86; '>(</span>i<span style='color:#d2cd86; '>,</span>v<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>{</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;$<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>this</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>html<span style='color:#d2cd86; '>(</span> <span style='color:#e66170; font-weight:bold; '>parseInt</span><span style='color:#d2cd86; '>(</span>v<span style='color:#d2cd86; '>.</span>innerText<span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>10</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>+</span> increment <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									$<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'#webworkersResults'</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>prepend<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'&lt;div class="webworkers-red">Using jQuery ieration, the incrementation took: '</span><span style='color:#d2cd86; '>+</span> <span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Date<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span><span style='color:#e66170; font-weight:bold; '>getTime</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>-</span> timer<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>/</span><span style='color:#008c00; '>1000</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>+</span><span style='color:#00c4c4; '>' seconds!&lt;/div>'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+							</pre>
+						</div>
+
+						<p>or using domJSON with a Web Worker?</p>
+
+						<div class="codeblock lang js">
+							<pre>
+								<span style='color:#e66170; font-weight:bold; '>var</span> worker <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> Worker<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'./worker.js'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+								<span style='color:#e66170; font-weight:bold; '>var</span> increment <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>parseInt</span><span style='color:#d2cd86; '>(</span>$<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'[name="increment"]'</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>first<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>val<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>trim<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#e66170; font-weight:bold; '>var</span> frameDoc <span style='color:#d2cd86; '>=</span> $<span style='color:#d2cd86; '>(</span> $<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'#webworkersFrame'</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>get<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>contentDocument<span style='color:#d2cd86; '>.</span>activeElement <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#e66170; font-weight:bold; '>var</span> timer <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> Date<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span><span style='color:#e66170; font-weight:bold; '>getTime</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+									<span style='color:#9999a9; '>//Update each row using a web worker and domJSON</span>
+									worker<span style='color:#d2cd86; '>.</span>postMessage<span style='color:#d2cd86; '>(</span> <span style='color:#d2cd86; '>[</span>domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>$<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'section'</span><span style='color:#d2cd86; '>,</span> frameDoc<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>get<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;attributes<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>false</span><span style='color:#d2cd86; '>,</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;domProperties<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>false</span><span style='color:#d2cd86; '>,</span>
+									<span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>,</span> increment<span style='color:#d2cd86; '>]</span> <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									worker<span style='color:#d2cd86; '>.</span>onmessage <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>function</span><span style='color:#d2cd86; '>(</span>e<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>{</span>
+										<span style='color:#e66170; font-weight:bold; '>&nbsp;&nbsp;&nbsp;&nbsp;var</span> x <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toDOM<span style='color:#d2cd86; '>(</span>e<span style='color:#d2cd86; '>.</span>data<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;frameDoc<span style='color:#d2cd86; '>.</span>html<span style='color:#d2cd86; '>(</span>x<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;$<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'#webworkersResults'</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span>prepend<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'&lt;div class="webworkers-green">Using domJSON and Web Workers, the incrementation took: '</span><span style='color:#d2cd86; '>+</span> <span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Date<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>.</span><span style='color:#e66170; font-weight:bold; '>getTime</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>-</span> timer<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>/</span><span style='color:#008c00; '>1000</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>+</span><span style='color:#00c4c4; '>' seconds!&lt;/div>'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#b060b0; '>}</span><span style='color:#b060b0; '>;</span>
+								</pre>
+						</div>
+
+						<div class="codeblock lang js">
+								<pre>
+									<span style='color:#9999a9; '>//In a separate file located at './worker.js'</span>
+									onmessage <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>function</span><span style='color:#d2cd86; '>(</span>e<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>{</span>
+										<span style='color:#e66170; font-weight:bold; '>&nbsp;&nbsp;&nbsp;&nbsp;var</span> increment <span style='color:#d2cd86; '>=</span> e<span style='color:#d2cd86; '>.</span>data<span style='color:#d2cd86; '>[</span><span style='color:#008c00; '>1</span><span style='color:#d2cd86; '>]</span><span style='color:#b060b0; '>;</span>
+										<span style='color:#e66170; font-weight:bold; '>&nbsp;&nbsp;&nbsp;&nbsp;var</span> rows <span style='color:#d2cd86; '>=</span> e<span style='color:#d2cd86; '>.</span>data<span style='color:#d2cd86; '>[</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>.</span>node<span style='color:#d2cd86; '>.</span>childNodes<span style='color:#b060b0; '>;</span>
+										<span style='color:#e66170; font-weight:bold; '>&nbsp;&nbsp;&nbsp;&nbsp;var</span> length <span style='color:#d2cd86; '>=</span> rows<span style='color:#d2cd86; '>.</span>length<span style='color:#b060b0; '>;</span>
+										<span style='color:#e66170; font-weight:bold; '>&nbsp;&nbsp;&nbsp;&nbsp;for</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>var</span> i <span style='color:#d2cd86; '>=</span> <span style='color:#008c00; '>0</span><span style='color:#b060b0; '>;</span> i <span style='color:#d2cd86; '>&lt;</span> length<span style='color:#b060b0; '>;</span> i<span style='color:#d2cd86; '>++</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>{</span>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows<span style='color:#d2cd86; '>[</span>i<span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>.</span>childNodes<span style='color:#d2cd86; '>[</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>.</span>nodeValue <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>parseInt</span><span style='color:#d2cd86; '>(</span>rows<span style='color:#d2cd86; '>[</span>i<span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>.</span>childNodes<span style='color:#d2cd86; '>[</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>.</span>nodeValue<span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>10</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>+</span> increment<span style='color:#b060b0; '>;</span>
+										<span style='color:#b060b0; '>&nbsp;&nbsp;&nbsp;&nbsp;}</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;postMessage<span style='color:#d2cd86; '>(</span>e<span style='color:#d2cd86; '>.</span>data<span style='color:#d2cd86; '>[</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									<span style='color:#b060b0; '>}</span><span style='color:#b060b0; '>;</span>
+									</pre>
+						</div>
+
+						<p><b>Note: this demo can take up to 20 seconds per run - please be patient!</b></p>
+
+						<div>
+							<iframe id="webworkersFrame"></iframe>
+						</div>
+
+						<div id="webworkersResults">
+						</div>
+
+						<div class="sample-form" id="webworkersOpts">
+							<input name="increment" class="form-control" type="text" value="" placeHolder="Type in an integer to increment every cell in the table"/>
+							<br/>
+
+							<button type="button" class="btn" id="webworkersReset">Reset</button>
+							<button type="button" class="btn btn-primary" id="webworkersJQuery">Use jQuery</button>
+							<button type="button" class="btn btn-primary"id="webworkersDomJSON">Use domJSON</button>
+						</div>
 					</div>
 				</div>
 

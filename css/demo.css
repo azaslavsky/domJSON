@@ -33,6 +33,10 @@ ul img {
     margin: 0 8px 0 20px;
 }
 
+button {
+    margin-top: 12px;
+}
+
 /* Toggle Styles */
 
 #wrapper {
@@ -182,6 +186,10 @@ ul img {
     margin-bottom: 80px;
 }
 
+.col-lg-12 {
+    border: 1px solid transparent;
+}
+
 .container-fluid {
     width: 100%;
     -webkit-transition: width 0.5s ease;
@@ -247,15 +255,6 @@ ul img {
     margin: 0;
 }
 
-/*#wrapper pre>div.lang {
-    padding: 10px 6px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    background: #eee;
-    color: #777;
-}*/
-
 #wrapper pre.indented {
     text-indent: -40px;
     padding-left: 60px;
@@ -313,6 +312,84 @@ ul img {
     color: #444;
 }
 
+/* Make JSON Sample */
+
+#boundary-highlight {
+    cursor: pointer;
+    color: red;
+}
+
+#boundary-highlight:hover {
+    opacity: 0.5;
+}
+
+.sample-form {
+    margin: 16px 0;
+}
+
+.sample-form>span {
+    line-height: 40px;
+}
+
+.sample-form>.form-control {
+    margin-left: 12px;
+    display: inline-block;
+}
+
+.sample-form>select.form-control {
+    display: inline-block;
+    width: 32%;
+}
+
+.sample-form>input.form-control {
+    width: 100%;
+    position: relative;
+    top: -1px;
+}
+
+.sample-form>button {
+    width: 40%;
+}
+
+#wrapper #makejson pre.renderjson {
+    white-space: pre;
+}
+
+/* Web Worker Sample */
+#webworkers #webworkersFrame {
+    max-height: 200px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#webworkers .sample-form>input {
+    width: 100%;
+    margin-left: 0;
+}
+
+#webworkers .sample-form>button {
+    width: 30%;
+    margin-right: calc(5% - 4px);
+    margin-left: 0;
+}
+
+#webworkers .sample-form>button:last-child {
+    margin-right: 0;
+}
+
+#webworkers #webworkersResults {
+    margin: 12px 0;
+}
+
+#webworkers #webworkersResults>.webworkers-green {
+    color: green;
+}
+
+#webworkers #webworkersResults>.webworkers-red {
+    color: red;
+}
+
 /* Dekstop Only Style */
 @media(min-width:768px) {
     #wrapper {
@@ -343,5 +420,13 @@ ul img {
 
     #sidebar-toggle {
         display: block;
+    }
+
+    .sample-form>select.form-control {
+        width: 20%;
+    }
+
+    .sample-form>input.form-control {
+        width: 60%;
     }
 }

@@ -52,7 +52,7 @@ var worker = new Worker('./js/worker2.js');
 //Increment WITHOUT using domJSON
 $('#doWith2').click(function(){
 	var increment = parseInt($('[name="increment"]').first().val().trim());
-	var frameDoc = $( $('#sample2Frame').get(0).contentDocument.activeElement );;
+	var frameDoc = $( $('#sample2Frame').get(0).contentDocument.activeElement );
 	var timer = new Date().getTime();
 	if ( !checkIncrementIsNumber(increment) ) {
 		return false;
