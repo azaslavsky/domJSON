@@ -226,13 +226,62 @@ ul img {
     margin-top: -15px;
 }
 
+.codeblock {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    position: relative;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.codeblock.lang:before {
+    content: '';
+    padding: 10px 6px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #eee;
+    color: #777;
+}
+
+.codeblock.lang.bash:before {
+    content: 'Bash';
+}
+
+.codeblock.lang.css:before {
+    content: 'CSS';
+}
+
+.codeblock.lang.html:before {
+    content: 'HTML';
+}
+
+.codeblock.lang.js:before {
+    content: 'Javascript';
+}
+
+.codeblock.lang.json:before {
+    content: 'JSON';
+}
+
 #wrapper pre {
     color: #d1d1d1;
     background: #242432;
+    border: none;
     word-break: normal;
     white-space: pre-line;
-    padding-left: 20px;
+    padding: 10px 40px 10px 20px;
+    margin: 0;
 }
+
+/*#wrapper pre>div.lang {
+    padding: 10px 6px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #eee;
+    color: #777;
+}*/
 
 #wrapper pre.indented {
     text-indent: -40px;
@@ -244,6 +293,26 @@ ul img {
     background: #ddd;
     color: #444;
     border-radius: 4px;
+}
+
+.apiopt{
+    margin-top: 60px;
+    padding: 0 18px;
+}
+
+.apiopt:first-child{
+    margin-top: 0;
+}
+
+.apiopt h3 {
+    position: relative;
+    left: -18px;
+}
+
+.apiopt h3 .inline-code {
+    font-size: 16px;
+    position: relative;
+    bottom: 2px;
 }
 
 #footer {

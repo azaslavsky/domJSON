@@ -113,49 +113,63 @@
 						<h2>Getting Started</h2>
 						<p>Installing domJSON is easy. You can pull it from Bower...</p>
 
-						<pre>
-							<code>bower install domjson</code>
-						</pre>
-						<pre>
-							<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">bower_components/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
-						</pre>
+						<div class="codeblock lang bash">
+							<pre>
+								<code>bower install domjson</code>
+							</pre>
+						</div>
+						<div class="codeblock lang html">
+							<pre>
+								<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">bower_components/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
+							</pre>
+						</div>
 
 						<p>...or grab it from NPM and manually include it as a script tag.</p>
 
-						<pre>
-							<code>npm install domjson --save</code>
-						</pre>
-						<pre>
-							<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">node_modules/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
-						</pre>
+						<div class="codeblock lang bash">
+							<pre>
+								<code>npm install domjson --save</code>
+							</pre>
+						</div>
+						<div class="codeblock lang html">
+							<pre>
+								<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">node_modules/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
+							</pre>
+						</div>
 
 						<p>Of course, you can also do it the old fashioned way and just download it <a target="_blank" href="https://github.com/azaslavsky/domJSON">directly from Github</a>, then include the script tag.  Once you've got domJSON installed, working with it is super easy: use the <b>.toJSON()</b> method to create a JSON representation of the DOM tree:</p>
 
-						<pre>
-							<span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-							<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-						</pre>
+						<div class="codeblock lang js">
+							<pre>
+								<div class="lang">Javascript</div><span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+							</pre>
+						</div>
 
 						<p>And then rebuild the DOM Node from that JSON using <b>.toDOM()</b>:</p>
 
-						<pre>
-							<span style='color:#e66170; font-weight:bold; '>var</span> DOMDocumentFragment <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toDOM<span style='color:#d2cd86; '>(</span>jsonOutput<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-							someDOMElement<span style='color:#d2cd86; '>.</span>parentNode<span style='color:#d2cd86; '>.</span>replaceChild<span style='color:#d2cd86; '>(</span>someDOMElement<span style='color:#d2cd86; '>,</span> DOMDocumentFragment<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-						</pre>
+						<div class="codeblock lang js">
+							<pre>
+								<span style='color:#e66170; font-weight:bold; '>var</span> DOMDocumentFragment <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toDOM<span style='color:#d2cd86; '>(</span>jsonOutput<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+								someDOMElement<span style='color:#d2cd86; '>.</span>parentNode<span style='color:#d2cd86; '>.</span>replaceChild<span style='color:#d2cd86; '>(</span>someDOMElement<span style='color:#d2cd86; '>,</span> DOMDocumentFragment<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+							</pre>
+						</div>
 
 						<p>When creating the JSON object, there are many precise options available, ensuring that developers can produce very specific and compact outputs. For example, the following will produce a JSON copy of <span class="inline-code">someDOMElement</span>'s DOM tree that is only two levels deep, contains no "offset," "client," or "scroll*" type DOM properties, only keeps the "id" attribute on each DOM Node, and outputs a string (rather than a JSON-friendly object):</p>
 
-						<pre class="indented">
-							<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
-							    attributes<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'id'</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>,</span>
-							    domProperties<span style='color:#b060b0; '>:</span> <span style='color:#b060b0; '>{</span>
-							        exclude<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span><span style='color:#d2cd86; '>,</span>
-							        values<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'clientHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollWidth'</span><span style='color:#d2cd86; '>]</span>
-							    <span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>,</span>
-							    deep<span style='color:#b060b0; '>:</span> <span style='color:#008c00; '>2</span><span style='color:#d2cd86; '>,</span>
-							    stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span>
-							<span style='color:#b060b0; margin-left: -40px; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-						</pre>
+						<div class="codeblock lang js">	
+							<pre class="indented">
+								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
+								    attributes<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'id'</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>,</span>
+								    domProperties<span style='color:#b060b0; '>:</span> <span style='color:#b060b0; '>{</span>
+								        exclude<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span><span style='color:#d2cd86; '>,</span>
+								        values<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'clientHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'clientTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'offsetWidth'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollHeight'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollLeft'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollTop'</span><span style='color:#d2cd86; '>,</span> <span style='color:#00c4c4; '>'scrollWidth'</span><span style='color:#d2cd86; '>]</span>
+								    <span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>,</span>
+								    deep<span style='color:#b060b0; '>:</span> <span style='color:#008c00; '>2</span><span style='color:#d2cd86; '>,</span>
+								    stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span>
+								<span style='color:#b060b0; margin-left: -40px; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+							</pre>
+						</div>
 					</div>
 				</div>
 
@@ -177,45 +191,94 @@
 							<li><a href="#stringify">stringify</a></li>
 						</ul>
 
-						<div id="absolutepaths">
-							<h3>absolutePaths</h3>
+						<div id="absolutepaths" class="apiopt">
+							<h3>absolutePaths <span class="inline-code">Boolean|FilterList</span></h3>
+
+							<p>Default: <span class="inline-code">['action', 'data', 'href', 'src']</span></p>
+
+							<p>On most modern browsers, relative paths in DOM properties and CSS styles are converted to absolute paths during runtime.  Put another way, is you write <span class="inline-code">background: url('./something.png');</span> in a CSS file, you'll see <span class="inline-code">background: url('http://www.example.com/something.png');</span> when you query it while the app is running.  However, that same luxury is not provided for DOM attributes.  So, if you want to make sure all of the paths in the DOM attributes are absolute, set this option to <b>true</b>, or provide a <b><a target="_blank" href="https://github.com/azaslavsky/domJSON#filterlists">FilterList</a></b> of attributes to try and convert.  The default setup for this option should cover 99% of use cases.</p>
+
 						</div>
 
-						<div id="attributes">
-							<h3>attributes</h3>
+						<div id="attributes" class="apiopt">
+							<h3>attributes <span class="inline-code">Boolean|FilterList</span></h3>
+
+							<p>Default: <span class="inline-code">true</span></p>
+
+							<p>Set <b>true</b> to copy all DOM attributes, <b>false</b> to not copy any, or provide a <b><a target="_blank" href="https://github.com/azaslavsky/domJSON#filterlists">FilterList</a></b>.</p>
 						</div>
 
-						<div id="computedstyle">
-							<h3>computedStyle</h3>
+						<div id="computedstyle" class="apiopt">
+							<h3>computedStyle <span class="inline-code">Boolean|FilterList</span></h3>
+
+							<p>Default: <span class="inline-code">false</span></p>
+
+							<p>Set <b>true</b> to grab the computed styles for every DOM node in your tree, <b>false</b> to not copy any, or provide a <b><a target="_blank" href="https://github.com/azaslavsky/domJSON#filterlists">FilterList</a></b>.  Please that setting this to anything but <b>false</b> will cause a <i>significant</i> performance lag, since <span class="inline-code">window.getComputedStyle()</span> is <a target="_blank" href="http://jsperf.com/check-hidden/9">slow</a> <i>and</i> forces a redraw.  Use this option only if you absolutely need it!</p>
 						</div>
 
-						<div id="cull">
-							<h3>cull</h3>
+						<div id="cull" class="apiopt">
+							<h3>cull <span class="inline-code">Boolean</span></h3>
+
+							<p>Default: <span class="inline-code">true</span></p>
+
+							<p>Many, if not most, of the properties on any given DOM node are <b>null</b> or just empty strings.  Setting this option to true removes, or culls, all of those empty and redundant DOM properties from the final output.  It does <i>not</i> remove DOM properties whose value is <b>false</b> or <b>0</b>, since that is still useful information.</p>
 						</div>
 
-						<div id="deep">
-							<h3>deep</h3>
+						<div id="deep" class="apiopt">
+							<h3>deep <span class="inline-code">Boolean|Integer</span></h3>
+
+							<p>Default: <span class="inline-code">true</span></p>
+
+							<p>By default, the entire DOM tree will be parsed and turned into a JSON object.  But what if you only want to go two levels deep, or ignore child nodes completely?  In that case, set this value either to an <b>integer</b> describing how deep you want to recurse into the DOM tree, or <b>false</b> to completely ignore all children.</p>
 						</div>
 
-						<div id="domproperties">
-							<h3>domProperties</h3>
+						<div id="domproperties" class="apiopt">
+							<h3>domProperties <span class="inline-code">Boolean|FilterList</span></h3>
+
+							<p>Default: <span class="inline-code">true</span></p>
+
+							<p>Which DOM properties you'd like to copy.  Setting this <b>true</b> means that every DOM property will be copied, while <b>false</b> means that they will all be completely ignored.  You can also set a <b><a target="_blank" href="https://github.com/azaslavsky/domJSON#filterlists">FilterList</a></b> enumerating exactly which properties to include or exclude.  Remember, the properties <span class="inline-code">nodeType</span>, <span class="inline-code">nodeValue</span>, and <span class="inline-code">tagName</span> are copied no matter what (even if this options is set to <b>false</b>)!</p>
 						</div>
 
-						<div id="htmlonly">
-							<h3>htmlOnly</h3>
+						<div id="htmlonly" class="apiopt">
+							<h3>htmlOnly <span class="inline-code">Boolean</span></h3>
+
+							<p>Default: <span class="inline-code">true</span></p>
+
+							<p>When this is <b>true</b>, only DOM Nodes of type 1 (HTML Elements) are copied.  This means that all comments AND all text content is ignored!</p>
 						</div>
 
-						<div id="metadata">
-							<h3>metadata</h3>
+						<div id="metadata" class="apiopt">
+							<h3>metadata <span class="inline-code">Boolean</span></h3>
+
+							<p>Default: <span class="inline-code">true</span></p>
+
+							<p>Controls whether or not to export metadata with the result.  It is <i>strongly</i> recommended that you leave this set to true, as it is possible that the output format will change slightly in future versions of domJSON, and it would be a real shame to you couldn't rebuild your JSON objects into DOM Nodes because you left out the metadata...</p>
 						</div>
 
-						<div id="serialproperties">
-							<h3>serialProperties</h3>
+						<div id="serialproperties" class="apiopt">
+							<h3>serialProperties <span class="inline-code">Boolean|FilterList</span></h3>
+
+							<p>Default: <span class="inline-code">false</span></p>
+
+							<p>Some DOM Nodes contain a few properties, notably <span class="inline-code">innertHTML</span> and <span class="inline-code">outerHTML</span>, simply contain serialized copies of the node's contents.  Copying this information essentially amounts to copying every DOM Node's contents twice over, and is very wasteful in terms of speed and JSON output size.  By setting this option to <b>false</b>, fields that are merely serializations of the DOM Node are ignored.  Conversely, <b>true</b> will copy all serialized properties, while a <b><a target="_blank" href="https://github.com/azaslavsky/domJSON#filterlists">FilterList</a></b> enumerates which serialized properties to include or exclude.  It is strongly recommended that you not change the default for this option unless you really need to keep the serializations, as including them has a seriously negative effect on performance.</p>
 						</div>
 
-						<div id="stringify">
-							<h3>stringify</h3>
+						<div id="stringify" class="apiopt">
+							<h3>stringify <span class="inline-code">Boolean</span></h3>
+
+							<p>Default: <span class="inline-code">false</span></p>
+
+							<p>When this is <b>true</b>, the output will be a string.  All it does is execute <span class="inline-code">JSON.stringify()</span> for you, so the following two statements will have an identical output:</p>
+
+							<div class="codeblock lang js">
+								<pre>
+									domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someNode<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>true</span><span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+									JSON<span style='color:#d2cd86; '>.</span>stringify<span style='color:#d2cd86; '>(</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someNode<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>stringify<span style='color:#b060b0; '>:</span> <span style='color:#0f4d75; '>false</span><span style='color:#b060b0; '>}</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+								</pre>
+							</div>
 						</div>
+
 					</div>
 				</div>
 
@@ -236,11 +299,11 @@
 				<div class="row">
 					<div class="col-lg-12" id="contributing">
 						<h2>Contributing</h2>
-						<p>If you'd like to contribute, check out the <a target="_blank" href="https://github.com/azaslavsky/domJSON">Github repo</a>, but please make sure to check the <a target="_blank" href="https://github.com/azaslavsky/domJSON#contributing">contribution guidelines</a></p>
+						<p>If you'd like to contribute, check out the <a target="_blank" href="https://github.com/azaslavsky/domJSON">Github repo</a>, but please make sure to check the <a target="_blank" href="https://github.com/azaslavsky/domJSON#contributing">contribution guidelines</a> before you make pull requests.</p>
 
-						<p>Is one of your browsers not listed above?  You could run the test suite <a target="_blank" href="https://github.com/azaslavsky/domJSON#tests">using the instructions here</a> to see if it passes - if it does, you're (probably) in the clear.  Please note that Internet Explorer 8 and lower is explicitly not supported.</p>
+						<p>Are you curious about compatibility with a browser not list above?  You can run the test suite <a target="_blank" href="https://github.com/azaslavsky/domJSON#tests">using the instructions here</a> to see if it passes - if it does, you're (probably) in the clear.  Please note that Internet Explorer 8 and lower is explicitly not supported.</p>
 
-						<p>The domJSON library uses the standard <a target="_blank" href="https://github.com/azaslavsky/domJSON#license">MIT License.</a></p>
+						<p>The domJSON library is published under the standard <a target="_blank" href="https://github.com/azaslavsky/domJSON#license">MIT License.</a></p>
 					</div>
 				</div>
 			</div>
