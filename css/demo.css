@@ -24,6 +24,15 @@ p {
     margin-top: 24px;
 }
 
+ul {
+    line-height: 30px;
+}
+
+ul img {
+    position: relative;
+    margin: 0 8px 0 20px;
+}
+
 /* Toggle Styles */
 
 #wrapper {
@@ -45,7 +54,7 @@ p {
     width: 0;
     height: 100%;
     margin-left: -250px;
-    overflow-y: auto;
+    overflow-x: hidden;
     background: #000;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -147,6 +156,13 @@ p {
 
 /* Custom Toggler */
 
+.forkme {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+
 #sidebar-toggle {
     height: 48px;
     width: 60px;
@@ -190,7 +206,7 @@ p {
 }
 
 .row {
-    margin-bottom: 40px;
+    margin-bottom: 80px;
 }
 
 .container-fluid {
@@ -228,4 +244,29 @@ p {
     background: #ddd;
     color: #444;
     border-radius: 4px;
+}
+
+#footer {
+    height: 60px;
+    line-height: 48px;
+    font-size: 13px;
+    color: #888;
+    width: calc(100% - 24px);
+    border-top: 1px solid #bbb;
+    margin: 0 12px;
+}
+
+#footer>span {
+    margin-right: 12px;
+}
+
+#footer>a {
+    color: #888;
+    font-size: 18px;
+    margin: 0 6px;
+    position: relative;
+}
+
+#footer>a:hover {
+    color: #444;
 }

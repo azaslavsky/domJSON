@@ -34,7 +34,7 @@
 
 <body>
 
-	<div id="wrapper" class="toggled">
+	<div id="wrapper">
 
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
@@ -59,19 +59,23 @@
 				<li>
 					<a href="#webworkers">Sample: Speedy Web Workers</a>
 				</li>
+				<li>
+					<a href="#contributing">Contributing, Tests, etc</a>
+				</li>
 			</ul>
 		</div>
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
+			<a class="forkme" target="_blank" href="https://github.com/azaslavsky/domJSON"><img src="./img/fork.png"></img></a>
 			<div id="sidebar-toggle">
-				<i class="sidebar-icon fa fa-navicon"></i>
+				<i class="sidebar-icon fa fa-close"></i>
 			</div>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12" id="top">
-						<h1>domJSON v0.1.0</h1>
+						<h1>domJSON v0.1.1</h1>
 						<p>Convert DOM trees into compact JSON objects, and vice versa, as fast as possible.</p>
 						<a style="display: none" href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
 					</div>
@@ -80,9 +84,8 @@
 				<div class="row">
 					<div class="col-lg-12" id="whatfor">
 						<h2>What is domJSON for?</h2>
-						<p>The purpose of domJSON is to produce very accurate representations of the DOM as JSON objects, and to do it very quickly.  While there are probably dozens of varied use cases for this project, two stick out in my mind.  The first is as a front-end debugging or snapshotting tool, which allows end users to send reports that include "snapshots" of the DOM (including computed CSS) at any given point in time.  Imagine an "I found a bug button" on your web page, which, when clicked, would send an easily rebuildable copy of the DOM in its current state (computed styles included!) to the dev team.  DomJSON can do that - to take a peek, check out the <a href="">first example.</a>  Another potential use case is as a poor man's <a href="http://stackoverflow.com/a/21117404/2230156">virtual DOM</a>, allowing domJSON to do batch updats on your DOM tree much quicker than normal.  Check out the second example <a href="">for a demonstration.</a>  I'm sure there are plent of other use cases for domJSON  that I'm not even considering, but these are the two that make the most sense at first glance.</p>
 
-						<p>Broadly speaking, the goals of this project are:</p>
+						<p>The purpose of domJSON is to produce very accurate representations of the DOM as JSON objects, and to do it very quickly.  Broadly speaking, the goals of this project are:</p>
 
 						<ul>
 							<li>Provide as accurate a copy of a given node's DOM properties as possible, but allow optional filtering to remove useless information</li>
@@ -91,6 +94,17 @@
 							<li>No frivolous data: produce JSON objects that are as compact as possible, removing all information not relevant to the developer</li>
 							<li>Keep the library lightweight, with no dependencies</li>
 						</ul>
+
+						<p>DomJSON works in the following browsers (mobile and desktop versions supported):</p>
+
+						<ul style="list-style-type: none; padding-left: 0px;">
+							<li><img src="./img/chrome.png"/>Chrome 36+</li>
+							<li><img src="./img/ff.png"/>Firefox 24+</li>
+							<li><img src="./img/safari.png"/>Safari 7+</li>
+							<li><img src="./img/ie.png"/>Internet Explorer 9+</li>
+						</ul>
+
+						<p>While there are probably dozens of varied use cases for this project, two stick out in my mind.  The first is as a front-end debugging or snapshotting tool, which would allow end users to send reports that include "snapshots" of the DOM at any given point in time.  Imagine an <b>"I Found a Bug!"</b> button on your web app, which, when clicked, would send an easily rebuildable copy of the DOM in its current state (computed styles included!) to the dev team.  DomJSON can do that - to take a peek, check out the <a href="#makejson">first example.</a>  Another potential use case is as a poor man's <a target"_blank" href="http://stackoverflow.com/a/21117404/2230156">virtual DOM</a>, allowing domJSON to do batch updates on your DOM tree much quicker than normal.  Check out the second example <a href="#webworkers">for a demonstration.</a>  I'm sure there are plenty of other use cases for domJSON  that I'm not even considering, but these are the two that make the most sense at first glance.</p>
 					</div>
 				</div>
 
@@ -115,7 +129,7 @@
 							<span style='color:#ffdc99; '>&lt;</span><span style='color:#e66170; font-weight:bold; '>script src="<span style="color: #d1d1d1;">node_modules/domjson/dist/domjson.min.js</span>"</span><span style='color:#ffdc99; '>></span><span style='color:#ffdc99; '>&lt;/</span><span style='color:#e66170; font-weight:bold; '>script</span><span style='color:#ffdc99; '>></span>
 						</pre>
 
-						<p>Of course, you can also do it the old fashioned way and just download it <a href="">directly from Github</a>, then include the script tag.  Once you've got domJSON installed, working with it is super easy: use the <b>.toJSON()</b> method to create a JSON representation of the DOM tree:</p>
+						<p>Of course, you can also do it the old fashioned way and just download it <a target="_blank" href="https://github.com/azaslavsky/domJSON">directly from Github</a>, then include the script tag.  Once you've got domJSON installed, working with it is super easy: use the <b>.toJSON()</b> method to create a JSON representation of the DOM tree:</p>
 
 						<pre>
 							<span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
@@ -188,7 +202,7 @@
 						</div>
 
 						<div id="htmlonly">
-							<h3>htmlonly</h3>
+							<h3>htmlOnly</h3>
 						</div>
 
 						<div id="metadata">
@@ -215,9 +229,28 @@
 				<div class="row">
 					<div class="col-lg-12" id="webworkers">
 						<h2>Sample: Speeding Up Batch DOM Updates with Web Workers</h2>
-						<p>In theory, rather than updating the DOM piecemeal, forcing a redraw each time, developers can grab a branch of the DOM tree and convert it to JSON.  They could then make all of the changes in JS (which is much more performant than the DOM), then re-build a Document Fragment from this modified JSON. Finally, this new fragmetn could easily replace the DOM tree branch they were looking to update.</p>
+						<p>In theory, rather than updating the DOM piecemeal, forcing a redraw each time, developers can grab a branch of the DOM tree and convert it to JSON.  They could make all of the changes in JS (which is much more performant than the DOM), then re-build a Document Fragment from this modified JSON. Finally, this new fragment could easily replace the DOM tree branch that's being worked on.</p>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="contributing">
+						<h2>Contributing</h2>
+						<p>If you'd like to contribute, check out the <a target="_blank" href="https://github.com/azaslavsky/domJSON">Github repo</a>, but please make sure to check the <a target="_blank" href="https://github.com/azaslavsky/domJSON#contributing">contribution guidelines</a></p>
+
+						<p>Is one of your browsers not listed above?  You could run the test suite <a target="_blank" href="https://github.com/azaslavsky/domJSON#tests">using the instructions here</a> to see if it passes - if it does, you're (probably) in the clear.  Please note that Internet Explorer 8 and lower is explicitly not supported.</p>
+
+						<p>The domJSON library uses the standard <a target="_blank" href="https://github.com/azaslavsky/domJSON#license">MIT License.</a></p>
+					</div>
+				</div>
+			</div>
+
+			<div id="footer">
+				<span>&copy; Alex Zaslavsky, 2014</span>
+				<a target="_blank" title="Email" href="mailto://alex.y.zaslavsky@gmail.com"><i class="fa fa-envelope" style="font-size: 19px; position: relative; top: 1px;"></i></a>
+				<a target="_blank" title="Github" href="https://github.com/azaslavsky"><i class="fa fa-github-alt" style="font-size: 21px; position: relative; top: 1px;"></i></a>
+				<a target="_blank" title="Stack Overflow" href="http://stackoverflow.com/users/2230156/alexz"><i class="fa fa-stack-overflow" style="font-size: 17px; position: relative; top: -1px;"></i></a>
+				<a target="_blank" title="Twitter" href="https://twitter.com/alex__zaslavsky"><i class="fa fa-twitter" style="font-size: 22px; position: relative; top: 2px;"></i></a>
 			</div>
 		</div>
 		<!-- /#page-content-wrapper -->
