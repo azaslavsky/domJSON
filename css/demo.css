@@ -126,34 +126,6 @@ ul img {
     background: none;
 }
 
-@media(min-width:768px) {
-    #wrapper {
-        padding-left: 250px;
-    }
-
-    #wrapper.toggled {
-        padding-left: 0;
-    }
-
-    #sidebar-wrapper {
-        width: 250px;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
-
-    #page-content-wrapper {
-        padding: 0 48px;
-        position: relative;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
-}
-
 /* Custom Toggler */
 
 .forkme {
@@ -164,6 +136,7 @@ ul img {
 }
 
 #sidebar-toggle {
+    display: none;
     height: 48px;
     width: 60px;
     position: fixed;
@@ -338,4 +311,37 @@ ul img {
 
 #footer>a:hover {
     color: #444;
+}
+
+/* Dekstop Only Style */
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 0 48px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+
+    #sidebar-toggle {
+        display: block;
+    }
 }
