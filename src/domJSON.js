@@ -3,7 +3,7 @@
  *
  * @fileOverview
  * @author  Alex Zaslavsky
- * @version 0.1.1
+ * @version 0.1.2
  * @license The MIT License: Copyright (c) 2013 Alex Zaslavsky
  */
 
@@ -54,7 +54,7 @@
 	var metadata = {
 		href: win.location.href || null,
 		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
-		version: '0.1.1'
+		version: '0.1.2'
 	};
 	
 	
