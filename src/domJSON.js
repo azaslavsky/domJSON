@@ -776,7 +776,6 @@
 
 		//Create a document fragment, and away we go!
 		node = document.createDocumentFragment();
-		debugger;
 		if (options.noMeta) {
 			toDOM(obj, node, node);
 		} else {

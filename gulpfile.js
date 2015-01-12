@@ -175,7 +175,7 @@ gulp.task('bump', ['build'], function() {
 		//Update jsDOC version: https://regex101.com/r/yE7oK1/1
 		.pipe(replace(/@version[\s]*([\S]*)/gi, function(match, p1){
 			match.replace(p1, customBump(p1, args.vers))
-			console.log(match);
+			console.log( match.replace(p1, customBump(p1, args.vers)) );
 			return match.replace(p1, customBump(p1, args.vers));
 		}))
 
