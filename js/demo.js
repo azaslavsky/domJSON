@@ -80,9 +80,9 @@ $('#webworkersJQuery').click(function(){
 
 	//Update each row
 	$('div', frameDoc).each(function(i,v){
-		$(this).html( parseInt(v.innerText, 10) + increment );
+		$(this).html( parseInt(v.textContent, 10) + increment );
 	});
-	$('#webworkersResults').prepend('<div class="webworkers-red">Using jQuery ieration, the incrementation took: '+ ((new Date().getTime() - timer)/1000) +' seconds!</div>');
+	$('#webworkersResults').prepend('<div class="webworkers-red">Using jQuery iteration, the incrementation took: '+ ((new Date().getTime() - timer)/1000) +' seconds!</div>');
 });
 
 
