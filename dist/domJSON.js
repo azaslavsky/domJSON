@@ -18,7 +18,7 @@
     var metadata = {
         href: win.location.href || null,
         userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
-        version: "0.1.1"
+        version: "0.1.2"
     };
     var defaultsForToJSON = {
         absolutePaths: [ "action", "data", "href", "src" ],
@@ -410,7 +410,6 @@
         }
         options = extend({}, defaultsForToDOM, opts);
         node = document.createDocumentFragment();
-        debugger;
         if (options.noMeta) {
             toDOM(obj, node, node);
         } else {
