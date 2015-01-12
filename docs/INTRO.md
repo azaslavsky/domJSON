@@ -18,7 +18,7 @@ Convert DOM trees into compact JSON objects, and vice versa, as fast as possible
 
 ## Description
 
-The purpose of domJSON is to create very accurate representations of the DOM as JSON, and to do it very quickly.  While there are probably dozens of varied use cases for this project, two stick out in my mind.  The first is as a front-end debugging or snapshotting tool, by allowing end users to send reports that include "snapshots" of the DOM (including computed CSS) at any given point in time.  The second is as a poor man's [virtual DOM](http://stackoverflow.com/a/21117404/2230156).  In theory, rather than updating the DOM piecemeal, forcing a redraw each time, developers can grab a branch of the DOM tree and convert it to JSON.  They could then make all of the changes in JS (which is much more performant than the DOM), then re-build the DOM and replace the branch they were working on with the updated segment.  I'm sure there are even more use cases for JSON representations of the DOM that I'm not even considering, but these are the two that make the most sense to me
+The purpose of domJSON is to create very accurate representations of the DOM as JSON, and to do it very quickly.  While there are probably dozens of viable use cases for this project, I've made two quick demos to showcase the library's versatility.  [The first](https://azaslavsky.github.io/domJSON/#makejson) simply makes a copy of a given branch of the DOM tree, which could be useful for end user bug logging, state tracking, etc.  [The second demo](https://azaslavsky.github.io/domJSON/#webworkers) does a batch update of a large number of DOM Nodes, but much more performantly than the "traditional" jQuery select > .each() > update pattern.
 
 Broadly speaking, the goals of this project are:
 
@@ -28,11 +28,12 @@ Broadly speaking, the goals of this project are:
 * No frivolous data: produce JSON objects that are as compact as possible, removing all information not relevant to the developer
 * Keep the library lightweight, with no dependencies
 
-DomJSON is currently supporting the following browsers:
-* Chrome: Desktyop 39+, Mobile 339+
-* Firefox Desktop 24+, Mobile 31+
-* Safari Desktop 7+, Mobile 7+
-* IE: Desktop 9+
+DomJSON works in the following browsers (mobile and desktop versions supported):
+
+* ![Chrome](https://azaslavsky.github.io/domJSON/img/chrome.png) Chrome 39+
+* ![Chrome](https://azaslavsky.github.io/domJSON/img/ff.png) Firefox 24+
+* ![Chrome](https://azaslavsky.github.io/domJSON/img/safari.png) Safari 7+
+* ![Chrome](https://azaslavsky.github.io/domJSON/img/ie.png) IE 9+
 
 ## Installation
 
