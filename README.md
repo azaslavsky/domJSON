@@ -72,7 +72,7 @@ And then rebuild the DOM Node from that JSON using [`.toDOM()`](#domJSON.toDOM):
 
 ```javascript
 var DOMDocumentFragment = domJSON.toDOM(jsonOutput);
-someDOMElement.parentNode.replaceChild(someDOMElement, DOMDocumentFragment);
+someDOMElement.parentNode.replaceChild(DOMDocumentFragment, someDOMElement);
 ```
 When creating the JSON object, there are many precise options available, ensuring that developers can produce very specific and compact outputs.  For example, the following will produce a JSON copy of `someDOMElement`'s DOM tree that is only two levels deep, contains no "offset*," "client*," or "scroll*" type DOM properties, only keeps the "id" attribute on each DOM Node, and outputs a string (rather than a JSON-friendly object):
 
