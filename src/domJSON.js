@@ -21,7 +21,7 @@
 		if (typeof module !== 'undefined' && module.exports) {
 			module.exports = domJSON;
 		}
-		exports = dmoJSON;
+		exports = domJSON;
 	} else { //Browser global
 		window.domJSON = factory(root);
 	}
