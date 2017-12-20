@@ -23,9 +23,9 @@
 		}
 		exports = domJSON;
 	} else { //Browser global
-		window.domJSON = factory(root);
+		root.domJSON = factory(root);
 	}
-})(this, function(win){
+})(this || window, function(win){
 	"use strict";
 
 	/** 
@@ -53,7 +53,7 @@
 	 */
 	var metadata = {
 		href: win.location.href || null,
-		userAgent: window.navigator && window.navigator.userAgent ? window.navigator.userAgent : null,
+		userAgent: win.navigator && win.navigator.userAgent ? win.navigator.userAgent : null,
 		version: '0.1.2'
 	};
 	
@@ -626,12 +626,12 @@
 				date: new Date().toISOString(),
 				dimensions: {
 					inner: {
-						x: window.innerWidth,
-						y: window.innerHeight
+						x: win.innerWidth,
+						y: win.innerHeight
 					},
 					outer: {
-						x: window.outerWidth,
-						y: window.outerHeight
+						x: win.outerWidth,
+						y: win.outerHeight
 					}
 				},
 				options: options
