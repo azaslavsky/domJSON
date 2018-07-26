@@ -187,7 +187,7 @@ The result:
 	"tagName": "DIV"
 }
 ```
-##API
+## API
 domJSON is a global variable to store two methods: `.toJSON()` to convert a DOM Node into a JSON object, and `.toDOM()` to turn that JSON object back into a DOM Node
 
 
@@ -198,7 +198,7 @@ domJSON is a global variable to store two methods: `.toJSON()` to convert a DOM 
 <a name="domJSON.toJSON"></a>
 
 * * *
-####domJSON.toJSON(node, [opts]) ⇒ <code>Object</code> \| <code>string</code>
+#### domJSON.toJSON(node, [opts]) ⇒ <code>Object</code> \| <code>string</code>
 Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 
 | Param | Type | Description |
@@ -224,7 +224,7 @@ Take a DOM node and convert it to simple object literal (or JSON string) with no
 <a name="domJSON.toDOM"></a>
 
 * * *
-####domJSON.toDOM(obj, [opts]) ⇒ <code>DocumentFragment</code>
+#### domJSON.toDOM(obj, [opts]) ⇒ <code>DocumentFragment</code>
 Take the JSON-friendly object created by the `.toJSON()` method and rebuild it back into a DOM Node
 
 | Param | Type | Description |
@@ -280,7 +280,7 @@ If you make changes that you feel need to be documented in the readme, please up
 ```
 gulp docs
 ```
-##License
+## License
 
 The MIT License (MIT)
 
