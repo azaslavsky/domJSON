@@ -420,6 +420,13 @@
 		var copy = {};
 		//Copy all of the node's properties
 		for (var n in node){
+			//Make sure this property can be accessed
+			try {
+				//accessing `selectionDirection`, `selectionStart`, or `selectionEnd` throws in WebKit-based browsers
+				node[n];
+			} catch (e) {
+				continue;
+			}
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
 			if (typeof node[n] !== 'undefined' && typeof node[n] !== 'function' && n.charAt(0).toLowerCase() === n.charAt(0)) {
 				//Only allowed objects are arrays
