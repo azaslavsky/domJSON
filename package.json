@@ -52,7 +52,7 @@
     "gulp-util": "^3.0.1",
     "http-server": "^0.7.4",
     "jasmine-core": "2.0.4",
-    "karma": "~0.12.28",
+    "karma": "~0.13.22",
     "karma-chrome-launcher": "~0.1.7",
     "karma-coverage": "~0.2.7",
     "karma-firefox-launcher": "^0.1.4",
