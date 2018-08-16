@@ -77,7 +77,8 @@
 		metadata: true,
 		//parse: false,
 		serialProperties: false,
-		stringify: false
+		stringify: false,
+		allowDangerousElements: false
 	};
 
 
@@ -88,7 +89,8 @@
 	 * @ignore
 	 */
 	var defaultsForToDOM = {
-		noMeta: false
+		noMeta: false,
+		allowDangerousElements: false
 	};
 
 
@@ -511,11 +513,13 @@
 	var toJSON = function(node, opts, depth) {
 		var style, kids, kidCount, thisChild, children, copy = copyJSON(node, opts);
 
-		//Some tags are not allowed
+		//Per default, some tags are not allowed
 		if (node.nodeType === 1) {
-			for (var b in banned) {
-				if (node.tagName.toLowerCase() === banned[b]) {
-					return null;
+			if (!opts.allowDangerousElements) {
+				for (var b in banned) {
+					if (node.tagName.toLowerCase() === banned[b]) {
+						return null;
+					}
 				}
 			}
 		} else if (node.nodeType === 3 && !node.nodeValue.trim()) {
@@ -706,12 +710,21 @@
 	 * @param {Object} obj The JSON representation of the DOM Node we are about to create
 	 * @param {HTMLElement} parent The HTML Element to which this DOM Node will be appended
 	 * @param {DocumentFragment} doc The document fragment to which this newly created DOM Node will be added
+	 * @param {Object} [opts] A list of all method options
 	 * @private
 	 * @ignore
 	*/
-	var toDOM = function(obj, parent, doc) {
+	var toDOM = function(obj, parent, doc, opts) {
 		//Create the node, if possible
 		if (obj.nodeType) {
+			//Per default, some tags are not allowed
+			if (obj.nodeType === 1 && !opts.allowDangerousElements) {
+				for (var b in banned) {
+					if (obj.tagName.toLowerCase() === banned[b]) {
+						return false;
+					}
+				}
+			}
 			var node = createNode(obj.nodeType, doc, obj);
 			parent.appendChild(node);
 		} else {
@@ -749,7 +762,7 @@
 		//Finally, if we have childNodes, recurse through them
 		if (obj.childNodes && obj.childNodes.length) {
 			for (var c in obj.childNodes) {
-				toDOM(obj.childNodes[c], node, doc);
+				toDOM(obj.childNodes[c], node, doc, opts);
 			}
 		}
 	};
@@ -777,9 +790,9 @@
 		//Create a document fragment, and away we go!
 		node = document.createDocumentFragment();
 		if (options.noMeta) {
-			toDOM(obj, node, node);
+			toDOM(obj, node, node, options);
 		} else {
-			toDOM(obj.node, node, node);
+			toDOM(obj.node, node, node, options);
 		}
 		return node;
 	};
