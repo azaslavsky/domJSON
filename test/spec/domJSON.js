@@ -401,10 +401,23 @@
 						var alpha = document.querySelector('.alpha').appendChild(samplePI);
 					}
 
+					//Append a link tag to the alpha node
+					var sampleLink = document.createElement('link');
+					sampleLink.href = 'style.css';
+					sampleLink.rel = 'stylesheet';
+					document.querySelector('.alpha').appendChild(sampleLink);
+
+					//Append a script tag to the alpha node
+					var sampleScript = document.createElement('script');
+					sampleScript.type = 'text/javascript';
+					sampleScript.textContent = '// nothing here';
+					document.querySelector('.alpha').appendChild(sampleScript);
+
 					//Save a stringified version
 					if (!stringifiedTest) {
 						stringifiedTest = domJSON.toJSON(containerNode, {
-							stringify: true
+							stringify: true,
+							allowDangerousElements: true
 						});
 					}
 				});
@@ -427,7 +440,7 @@
 						expect(result.node.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeType).toBe(3);
 					});
 
-					it('should always ignore "link" and "script" tags', function(){
+					it('should ignore "link" and "script" tags per default', function(){
 						var fails = 0;
 						domJSON.toJSON($('head').get(0)).node.childNodes.forEach(function(v,i){
 							if (v.tagName === 'SCRIPT' || v.tagName === 'LINK') {
@@ -441,6 +454,17 @@
 						});
 						
 						expect(fails).toBe(0);
+					});
+
+					it('should not ignore "link" and "script" tags with `allowDangerousElements: true` option', function(){
+						var count = 0;
+						domJSON.toJSON($('body').get(0), { allowDangerousElements: true }).node.childNodes.forEach(function(v){
+							if (v.tagName === 'SCRIPT' || v.tagName === 'LINK') {
+								count++;
+							}
+						});
+
+						expect(count).toBeGreaterThan(0);
 					});
 
 					it('should be able to not cull falsey DOM properties (excepting 0 and boolean false) from the output object', function(){
@@ -980,7 +1004,7 @@
 		describe('DOM node creation [.toDOM() method]', function(){
 			beforeEach(function(){
 				if (!stringifiedTest) {
-					stringifiedTest = '{"meta":{"domain":"http://localhost:5050/","userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36","version":"0.1.0","options":{"absolutePaths":["action","data","href","src"],"attributes":true,"computedStyle":false,"cull":true,"deep":true,"filter":false,"htmlOnly":false,"metadata":true,"serialProperties":false,"stringify":true,"domProperties":[true,"attributes","childNodes","children","classList","dataset","style","innerHTML","innerText","outerHTML","outerText","prefix","text","textContent","wholeText"],"absoluteBase":"http://localhost:5050/"},"clock":6},"node":{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"container otherClass","scrollHeight":184,"scrollWidth":71,"scrollTop":0,"scrollLeft":0,"clientHeight":184,"clientWidth":72,"clientTop":0,"clientLeft":0,"offsetHeight":184,"offsetWidth":72,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/?","nodeType":1,"nodeName":"DIV","attributes":{"class":"container otherClass"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"alpha","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":3,"clientLeft":3,"offsetHeight":184,"offsetWidth":72,"offsetTop":10,"offsetLeft":1511,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/?","nodeType":1,"nodeName":"DIV","attributes":{"class":"alpha","data-test-a":"foo","data-test-b":"bar","style":"margin-top: 10px;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"beta","scrollHeight":178,"scrollWidth":65,"scrollTop":0,"scrollLeft":0,"clientHeight":178,"clientWidth":66,"clientTop":0,"clientLeft":0,"offsetHeight":178,"offsetWidth":66,"offsetTop":13,"offsetLeft":1514,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/?","nodeType":1,"nodeName":"DIV","attributes":{"class":"beta","data-test-c":"quux","data-test-d":"baz","style":"color: red;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"charlie","scrollHeight":176,"scrollWidth":63,"scrollTop":0,"scrollLeft":0,"clientHeight":176,"clientWidth":64,"clientTop":1,"clientLeft":1,"offsetHeight":178,"offsetWidth":66,"offsetTop":13,"offsetLeft":1514,"localName":"div","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"DIV","baseURI":"http://localhost:5050/?","nodeType":1,"nodeName":"DIV","attributes":{"class":"charlie","data-test-e":"norf","data-test-f":"woop","style":"border: 1px solid green;"},"childNodes":[{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":1,"className":"delta","scrollHeight":144,"scrollWidth":63,"scrollTop":0,"scrollLeft":0,"clientHeight":144,"clientWidth":64,"clientTop":0,"clientLeft":0,"offsetHeight":144,"offsetWidth":64,"offsetTop":30,"offsetLeft":1515,"localName":"p","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"P","baseURI":"http://localhost:5050/?","nodeType":1,"nodeName":"P","attributes":{"class":"delta"},"childNodes":[{"length":25,"data":"This is a test paragraph ","baseURI":"http://localhost:5050/?","nodeType":3,"nodeValue":"This is a test paragraph ","nodeName":"#text","childNodes":[]},{"spellcheck":true,"isContentEditable":false,"contentEditable":"inherit","hidden":false,"draggable":false,"tabIndex":-1,"translate":true,"childElementCount":0,"className":"epsilon","scrollHeight":0,"scrollWidth":0,"scrollTop":0,"scrollLeft":0,"clientHeight":0,"clientWidth":0,"clientTop":0,"clientLeft":0,"offsetHeight":71,"offsetWidth":46,"offsetTop":84,"offsetLeft":1515,"localName":"span","namespaceURI":"http://www.w3.org/1999/xhtml","tagName":"SPAN","baseURI":"http://localhost:5050/?","nodeType":1,"nodeName":"SPAN","attributes":{"class":"epsilon"},"childNodes":[{"length":25,"data":"with a span in the middle","baseURI":"http://localhost:5050/?","nodeType":3,"nodeValue":"with a span in the middle","nodeName":"#text","childNodes":[]}]},{"length":7,"data":" of it.","baseURI":"http://localhost:5050/?","nodeType":3,"nodeValue":" of it.","nodeName":"#text","childNodes":[]}]}]}]},{"length":25,"data":"This is a sample comment!","baseURI":"http://localhost:5050/?","nodeType":8,"nodeValue":"This is a sample comment!","nodeName":"#comment","childNodes":[]},{"target":"xml-stylesheet","length":32,"data":"href=\"mycss.css\" type=\"text/css\"","baseURI":"http://localhost:5050/?","nodeType":7,"nodeValue":"href=\"mycss.css\" type=\"text/css\"","nodeName":"xml-stylesheet","childNodes":[]}]}]}}';
+					stringifiedTest = '{"meta":{"href":"http://localhost:9876/context.html","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36","version":"0.1.2","clock":22,"date":"2018-08-16T16:01:14.506Z","dimensions":{"inner":{"x":1200,"y":628},"outer":{"x":1200,"y":702}},"options":{"absolutePaths":["action","data","href","src"],"attributes":true,"computedStyle":false,"cull":true,"deep":true,"domProperties":[true,"attributes","childNodes","children","classList","dataset","style","innerHTML","innerText","outerHTML","outerText","prefix","text","textContent","wholeText"],"filter":false,"htmlOnly":false,"metadata":true,"serialProperties":false,"stringify":true,"allowDangerousElements":true,"absoluteBase":"http://localhost:9876/"}},"node":{"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":10,"offsetLeft":1200,"offsetWidth":66,"offsetHeight":178,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"div","tagName":"DIV","className":"container otherClass","scrollTop":0,"scrollLeft":0,"scrollWidth":66,"scrollHeight":178,"clientTop":0,"clientLeft":0,"clientWidth":66,"clientHeight":178,"childElementCount":1,"nodeType":1,"nodeName":"DIV","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"class":"container otherClass"},"childNodes":[{"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":10,"offsetLeft":1200,"offsetWidth":66,"offsetHeight":178,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"div","tagName":"DIV","className":"alpha","scrollTop":0,"scrollLeft":0,"scrollWidth":66,"scrollHeight":178,"clientTop":0,"clientLeft":0,"clientWidth":66,"clientHeight":178,"childElementCount":3,"nodeType":1,"nodeName":"DIV","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"class":"alpha","data-test-a":"foo","data-test-b":"bar","style":"margin-top: 10px;"},"childNodes":[{"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":10,"offsetLeft":1200,"offsetWidth":66,"offsetHeight":178,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"div","tagName":"DIV","className":"beta","scrollTop":0,"scrollLeft":0,"scrollWidth":66,"scrollHeight":178,"clientTop":0,"clientLeft":0,"clientWidth":66,"clientHeight":178,"childElementCount":1,"nodeType":1,"nodeName":"DIV","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"class":"beta","data-test-c":"quux","data-test-d":"baz","style":"color: red;"},"childNodes":[{"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":10,"offsetLeft":1200,"offsetWidth":66,"offsetHeight":178,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"div","tagName":"DIV","className":"charlie","scrollTop":0,"scrollLeft":0,"scrollWidth":64,"scrollHeight":176,"clientTop":1,"clientLeft":1,"clientWidth":64,"clientHeight":176,"childElementCount":1,"nodeType":1,"nodeName":"DIV","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"class":"charlie","data-test-e":"norf","data-test-f":"woop","style":"border: 1px solid green;"},"childNodes":[{"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":27,"offsetLeft":1201,"offsetWidth":64,"offsetHeight":144,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"p","tagName":"P","className":"delta","scrollTop":0,"scrollLeft":0,"scrollWidth":64,"scrollHeight":144,"clientTop":0,"clientLeft":0,"clientWidth":64,"clientHeight":144,"childElementCount":1,"nodeType":1,"nodeName":"P","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"class":"delta"},"childNodes":[{"data":"This is a test paragraph ","length":25,"nodeType":3,"nodeName":"#text","baseURI":"http://localhost:9876/context.html","isConnected":true,"nodeValue":"This is a test paragraph ","childNodes":[]},{"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":81,"offsetLeft":1201,"offsetWidth":46,"offsetHeight":72,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"span","tagName":"SPAN","className":"epsilon","scrollTop":0,"scrollLeft":0,"scrollWidth":0,"scrollHeight":0,"clientTop":0,"clientLeft":0,"clientWidth":0,"clientHeight":0,"childElementCount":0,"nodeType":1,"nodeName":"SPAN","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"class":"epsilon"},"childNodes":[{"data":"with a span in the middle","length":25,"nodeType":3,"nodeName":"#text","baseURI":"http://localhost:9876/context.html","isConnected":true,"nodeValue":"with a span in the middle","childNodes":[]}]},{"data":" of it.","length":7,"nodeType":3,"nodeName":"#text","baseURI":"http://localhost:9876/context.html","isConnected":true,"nodeValue":" of it.","childNodes":[]}]}]}]},{"data":"This is a sample comment!","length":25,"nodeType":8,"nodeName":"#comment","baseURI":"http://localhost:9876/context.html","isConnected":true,"nodeValue":"This is a sample comment!","childNodes":[]},{"disabled":false,"href":"http://localhost:9876/style.css","rel":"stylesheet","translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":0,"offsetLeft":0,"offsetWidth":0,"offsetHeight":0,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"link","tagName":"LINK","scrollTop":0,"scrollLeft":0,"scrollWidth":0,"scrollHeight":0,"clientTop":0,"clientLeft":0,"clientWidth":0,"clientHeight":0,"childElementCount":0,"nodeType":1,"nodeName":"LINK","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"href":"http://localhost:9876/style.css","rel":"stylesheet"},"childNodes":[]},{"type":"text/javascript","noModule":false,"async":true,"defer":false,"translate":true,"hidden":false,"tabIndex":-1,"draggable":false,"spellcheck":true,"contentEditable":"inherit","isContentEditable":false,"offsetTop":0,"offsetLeft":0,"offsetWidth":0,"offsetHeight":0,"namespaceURI":"http://www.w3.org/1999/xhtml","localName":"script","tagName":"SCRIPT","scrollTop":0,"scrollLeft":0,"scrollWidth":0,"scrollHeight":0,"clientTop":0,"clientLeft":0,"clientWidth":0,"clientHeight":0,"childElementCount":0,"nodeType":1,"nodeName":"SCRIPT","baseURI":"http://localhost:9876/context.html","isConnected":true,"attributes":{"type":"text/javascript"},"childNodes":[{"data":"// nothing here","length":15,"nodeType":3,"nodeName":"#text","baseURI":"http://localhost:9876/context.html","isConnected":true,"nodeValue":"// nothing here","childNodes":[]}]}]}]}}';
 				}
 			});
 
@@ -1068,6 +1092,24 @@
 				expect($('.testArea .charlie').get(0).style['borderStyle']).toBe('solid');
 				expect($('.testArea .delta').text()).toBe('This is a test paragraph with a span in the middle of it.')
 				expect($('.testArea .epsilon').text()).toBe('with a span in the middle');
+			});
+
+			it('should skip "link" and "script" tags per default', function(){
+				var result = domJSON.toDOM(JSON.parse(stringifiedTest));
+				testArea.append(result);
+
+				expect($('.testArea link').length).toBe(0);
+				expect($('.testArea script').length).toBe(0);
+			});
+
+			it('should not skip "link" and "script" tags with `allowDangerousElements: true` option', function(){
+				var result = domJSON.toDOM(JSON.parse(stringifiedTest), {
+					allowDangerousElements: true
+				});
+				testArea.append(result);
+
+				expect($('.testArea link').length).toBe(1);
+				expect($('.testArea script').length).toBe(1);
 			});
 		});
 	});
