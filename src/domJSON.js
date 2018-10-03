@@ -560,6 +560,7 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
+	 * @param {boolean} [opts.allowDangerousElements=`false`] Use `true` to parse the potentially dangerous elements `<link>` and `<script>`
 	 * @param {boolean|FilterList} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify a `FilterList` of keys to boolean search
 	 * @param {boolean|FilterList} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify a `FilterList` of keys to boolean search
 	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify a `FilterList` of CSS properties to be included via boolean search); this operation is VERY costly performance-wise!
@@ -773,6 +774,7 @@
 	 * Take the JSON-friendly object created by the `.toJSON()` method and rebuild it back into a DOM Node
 	 * @param {Object} obj A JSON friendly object, or even JSON string, of some DOM Node
 	 * @param {Object} [opts] A list of all method options
+	 * @param {boolean} [opts.allowDangerousElements=`false`] Use `true` to include the potentially dangerous elements `<link>` and `<script>`
 	 * @param {boolean} [opts.noMeta=`false`] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
 	 * @return {DocumentFragment} A `DocumentFragment` (nodeType 11) containing the result of unpacking the input `obj`
 	 * @method
