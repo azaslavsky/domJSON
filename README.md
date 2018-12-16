@@ -291,7 +291,7 @@ A downside of the above setup is that you may well end up with a very bloated ou
 
 ## Tests
 
-You can give the test suite for domJSON a quick run through in the browser of your choice [here](http://cdn.rawgit.com/azaslavsky/domJSON/master/test/jasmine.html).  You can also view results from local [Chrome tests](http://cdn.rawgit.com/azaslavsky/domJSON/master/test/results/spec/chrome.html), or the entire [browser compatibility suite](http://cdn.rawgit.com/azaslavsky/domJSON/master/test/results/spec/compatibility.html).  Please note that [Rawgit](http://rawgit.com/) caches the tests after you run them the first time, so if something seems off, clear your cache!
+You can give the test suite for domJSON a quick run through in the browser of your choice [here](http://cdn.combinatronics.com/azaslavsky/domJSON/master/test/jasmine.html).  You can also view results from local [Chrome tests](http://cdn.combinatronics.com/azaslavsky/domJSON/master/test/results/spec/chrome.html), or the entire [browser compatibility suite](http://cdn.combinatronics.com/azaslavsky/domJSON/master/test/results/spec/compatibility.html).  Please note that [Rawgit](http://combinatronics.com/) caches the tests after you run them the first time, so if something seems off, clear your cache!
 
 ## Contributing
 
