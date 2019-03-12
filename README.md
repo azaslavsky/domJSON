@@ -320,7 +320,8 @@ If you make changes that you feel need to be documented in the readme, please up
 ```
 gulp docs
 ```
-##License
+
+## License
 
 The MIT License (MIT)
 
