@@ -149,7 +149,7 @@
 						<div class="codeblock lang js">
 							<pre>
 								<span style='color:#e66170; font-weight:bold; '>var</span> someDOMElement <span style='color:#d2cd86; '>=</span> document<span style='color:#d2cd86; '>.</span>getElementById<span style='color:#d2cd86; '>(</span><span style='color:#00c4c4; '>'sampleId'</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someDOMElement<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 							</pre>
 						</div>
 
@@ -166,7 +166,7 @@
 
 						<div class="codeblock lang js">	
 							<pre class="indented">
-								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>myDiv<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
+								<span style='color:#e66170; font-weight:bold; '>var</span> jsonOutput <span style='color:#d2cd86; '>=</span> domJSON<span style='color:#d2cd86; '>.</span>toJSON<span style='color:#d2cd86; '>(</span>someDOMElement<span style='color:#d2cd86; '>,</span> <span style='color:#b060b0; '>{</span>
 								    attributes<span style='color:#b060b0; '>:</span> <span style='color:#d2cd86; '>[</span><span style='color:#00c4c4; '>'id'</span><span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>,</span>
 								    domProperties<span style='color:#b060b0; '>:</span> <span style='color:#b060b0; '>{</span>
 								        exclude<span style='color:#b060b0; '>:</span> <span style='color:#ff45e5; '>true</span><span style='color:#d2cd86; '>,</span>
