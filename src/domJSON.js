@@ -21,7 +21,7 @@
 		if (typeof module !== 'undefined' && module.exports) {
 			module.exports = domJSON;
 		}
-		exports = dmoJSON;
+		exports = domJSON;
 	} else { //Browser global
 		window.domJSON = factory(root);
 	}
@@ -77,7 +77,8 @@
 		metadata: true,
 		//parse: false,
 		serialProperties: false,
-		stringify: false
+		stringify: false,
+		allowDangerousElements: false
 	};
 
 
@@ -88,7 +89,8 @@
 	 * @ignore
 	 */
 	var defaultsForToDOM = {
-		noMeta: false
+		noMeta: false,
+		allowDangerousElements: false
 	};
 
 
@@ -420,6 +422,13 @@
 		var copy = {};
 		//Copy all of the node's properties
 		for (var n in node){
+			//Make sure this property can be accessed
+			try {
+				//accessing `selectionDirection`, `selectionStart`, or `selectionEnd` throws in WebKit-based browsers
+				node[n];
+			} catch (e) {
+				continue;
+			}
 			//Make sure this is an own property, and isn't a live javascript function for security reasons
 			if (typeof node[n] !== 'undefined' && typeof node[n] !== 'function' && n.charAt(0).toLowerCase() === n.charAt(0)) {
 				//Only allowed objects are arrays
@@ -511,11 +520,13 @@
 	var toJSON = function(node, opts, depth) {
 		var style, kids, kidCount, thisChild, children, copy = copyJSON(node, opts);
 
-		//Some tags are not allowed
+		//Per default, some tags are not allowed
 		if (node.nodeType === 1) {
-			for (var b in banned) {
-				if (node.tagName.toLowerCase() === banned[b]) {
-					return null;
+			if (!opts.allowDangerousElements) {
+				for (var b in banned) {
+					if (node.tagName.toLowerCase() === banned[b]) {
+						return null;
+					}
 				}
 			}
 		} else if (node.nodeType === 3 && !node.nodeValue.trim()) {
@@ -556,6 +567,7 @@
 	 * Take a DOM node and convert it to simple object literal (or JSON string) with no circular references and no functions or events
 	 * @param {Node} node The actual DOM Node which will be the starting point for parsing the DOM Tree
 	 * @param {Object} [opts] A list of all method options
+	 * @param {boolean} [opts.allowDangerousElements=`false`] Use `true` to parse the potentially dangerous elements `<link>` and `<script>`
 	 * @param {boolean|FilterList} [opts.absolutePaths=`'action', 'data', 'href', 'src'`] Only relevant if `opts.attributes` is not `false`; use `true` to convert all relative paths found in attribute values to absolute paths, or specify a `FilterList` of keys to boolean search
 	 * @param {boolean|FilterList} [opts.attributes=`true`] Use `true` to copy all attribute key-value pairs, or specify a `FilterList` of keys to boolean search
 	 * @param {boolean|FilterList} [opts.computedStyle=`false`] Use `true` to parse the results of "window.getComputedStyle()" on every node (specify a `FilterList` of CSS properties to be included via boolean search); this operation is VERY costly performance-wise!
@@ -706,12 +718,21 @@
 	 * @param {Object} obj The JSON representation of the DOM Node we are about to create
 	 * @param {HTMLElement} parent The HTML Element to which this DOM Node will be appended
 	 * @param {DocumentFragment} doc The document fragment to which this newly created DOM Node will be added
+	 * @param {Object} [opts] A list of all method options
 	 * @private
 	 * @ignore
 	*/
-	var toDOM = function(obj, parent, doc) {
+	var toDOM = function(obj, parent, doc, opts) {
 		//Create the node, if possible
 		if (obj.nodeType) {
+			//Per default, some tags are not allowed
+			if (obj.nodeType === 1 && !opts.allowDangerousElements) {
+				for (var b in banned) {
+					if (obj.tagName.toLowerCase() === banned[b]) {
+						return false;
+					}
+				}
+			}
 			var node = createNode(obj.nodeType, doc, obj);
 			parent.appendChild(node);
 		} else {
@@ -749,7 +770,7 @@
 		//Finally, if we have childNodes, recurse through them
 		if (obj.childNodes && obj.childNodes.length) {
 			for (var c in obj.childNodes) {
-				toDOM(obj.childNodes[c], node, doc);
+				toDOM(obj.childNodes[c], node, doc, opts);
 			}
 		}
 	};
@@ -760,6 +781,7 @@
 	 * Take the JSON-friendly object created by the `.toJSON()` method and rebuild it back into a DOM Node
 	 * @param {Object} obj A JSON friendly object, or even JSON string, of some DOM Node
 	 * @param {Object} [opts] A list of all method options
+	 * @param {boolean} [opts.allowDangerousElements=`false`] Use `true` to include the potentially dangerous elements `<link>` and `<script>`
 	 * @param {boolean} [opts.noMeta=`false`] `true` means that this object is not wrapped in metadata, which it makes it somewhat more difficult to rebuild properly...
 	 * @return {DocumentFragment} A `DocumentFragment` (nodeType 11) containing the result of unpacking the input `obj`
 	 * @method
@@ -777,9 +799,9 @@
 		//Create a document fragment, and away we go!
 		node = document.createDocumentFragment();
 		if (options.noMeta) {
-			toDOM(obj, node, node);
+			toDOM(obj, node, node, options);
 		} else {
-			toDOM(obj.node, node, node);
+			toDOM(obj.node, node, node, options);
 		}
 		return node;
 	};
