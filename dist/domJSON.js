@@ -8,7 +8,7 @@
         if (typeof module !== "undefined" && module.exports) {
             module.exports = domJSON;
         }
-        exports = dmoJSON;
+        exports = domJSON;
     } else {
         window.domJSON = factory(root);
     }
